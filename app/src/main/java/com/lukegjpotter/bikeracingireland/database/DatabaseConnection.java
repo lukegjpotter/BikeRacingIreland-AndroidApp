@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.lukegjpotter.bikeracingireland.model.BikeRace;
+
 public class DatabaseConnection extends SQLiteOpenHelper {
 
     // Database Information.
@@ -55,5 +57,18 @@ public class DatabaseConnection extends SQLiteOpenHelper {
 
             onCreate(database);
         }
+    }
+
+    public synchronized void insertBikeRace(BikeRace bikeRace) {
+
+        // Abandon if this BikeRace is a duplicate.
+        if (DatabaseConnectionUtils.isBikeRaceInDatabase(getReadableDatabase(), bikeRace.getId()))
+            return;
+
+        // Proceed with the insert.
+        SQLiteDatabase database = getWritableDatabase();
+        database.insert(BikeRaceTableOperation.TABLE_NAME, null, bikeRaceTable.getInsertContentValues(bikeRace));
+        // TODO: Add Insert for StageDetails.
+        database.close();
     }
 }

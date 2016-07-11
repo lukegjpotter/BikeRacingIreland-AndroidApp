@@ -1,5 +1,7 @@
 package com.lukegjpotter.bikeracingireland.database;
 
+import android.content.ContentValues;
+
 interface TableOperation<T> {
 
     String getCreateSql();
@@ -7,4 +9,6 @@ interface TableOperation<T> {
     String getDropSql();
 
     void create(T t);
+
+    ContentValues getInsertContentValues(T t);
 }

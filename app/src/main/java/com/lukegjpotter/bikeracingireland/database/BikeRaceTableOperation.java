@@ -1,6 +1,9 @@
 package com.lukegjpotter.bikeracingireland.database;
 
+import android.content.ContentValues;
+
 import com.lukegjpotter.bikeracingireland.model.BikeRace;
+import com.lukegjpotter.bikeracingireland.utils.Utils;
 
 class BikeRaceTableOperation implements TableOperation<BikeRace> {
 
@@ -66,5 +69,35 @@ class BikeRaceTableOperation implements TableOperation<BikeRace> {
     @Override
     public void create(BikeRace bikeRace) {
 
+    }
+
+    @Override
+    public ContentValues getInsertContentValues(BikeRace bikeRace) {
+
+        ContentValues cv = new ContentValues();
+        cv.put(PK_COLUMN, bikeRace.getId());
+        cv.put(startDate, Utils.convertDateToString(bikeRace.getStartDate()));
+        cv.put(bookingsOpenDate, Utils.convertDateToString(bikeRace.getBookingsOpenDate()));
+        cv.put(bookingsCloseDate, Utils.convertDateToString(bikeRace.getBookingsCloseDate()));
+        cv.put(eventName, bikeRace.getEventName());
+        cv.put(promotingClub, bikeRace.getPromotingClub());
+        cv.put(organiser, bikeRace.getOrganiser());
+        cv.put(registrationLink, bikeRace.getRegistrationLink());
+        cv.put(organiserPhoneNumber, bikeRace.getOrganiserPhoneNumber());
+        cv.put(organiserEmail, bikeRace.getOrganiserEmail());
+        cv.put(location, bikeRace.getLocation());
+        cv.put(province, bikeRace.getProvince());
+        cv.put(isAPlus, Utils.convertBooleanToInteger(bikeRace.isAPlus()));
+        cv.put(isA1, Utils.convertBooleanToInteger(bikeRace.isA1()));
+        cv.put(isA2, Utils.convertBooleanToInteger(bikeRace.isA2()));
+        cv.put(isA3, Utils.convertBooleanToInteger(bikeRace.isA3()));
+        cv.put(isA4, Utils.convertBooleanToInteger(bikeRace.isA4()));
+        cv.put(isVets, Utils.convertBooleanToInteger(bikeRace.isVets()));
+        cv.put(isWoman, Utils.convertBooleanToInteger(bikeRace.isWoman()));
+        cv.put(isJunior, Utils.convertBooleanToInteger(bikeRace.isJunior()));
+        cv.put(isYouth, Utils.convertBooleanToInteger(bikeRace.isYouth()));
+        cv.put(isParacycling, Utils.convertBooleanToInteger(bikeRace.isParacycling()));
+
+        return cv;
     }
 }

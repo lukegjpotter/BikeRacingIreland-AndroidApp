@@ -1,5 +1,7 @@
 package com.lukegjpotter.bikeracingireland.database;
 
+import android.content.ContentValues;
+
 import com.lukegjpotter.bikeracingireland.model.StageDetail;
 
 class StageDetailTableOperation implements TableOperation<StageDetail> {
@@ -50,5 +52,10 @@ class StageDetailTableOperation implements TableOperation<StageDetail> {
     @Override
     public void create(StageDetail stageDetail) {
 
+    }
+
+    @Override
+    public ContentValues getInsertContentValues(StageDetail stageDetail) {
+        return null;
     }
 }
