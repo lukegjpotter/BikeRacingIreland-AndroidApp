@@ -3,14 +3,15 @@ package com.lukegjpotter.bikeracingireland.database;
 import android.content.ContentValues;
 
 import com.lukegjpotter.bikeracingireland.model.StageDetail;
+import com.lukegjpotter.bikeracingireland.utils.Utils;
 
 class StageDetailTableOperation implements TableOperation<StageDetail> {
 
-    private String tableName = "StageDetail";
+    static final String TABLE_NAME = "StageDetail";
 
     // Column Names.
-    private String id = "id";
-    private String bikeRaceId = "bikeRaceId"; // Foreign Key.
+    private String pk_id = "pk_id";
+    private String fk_bikeRaceId = "fk_bikeRaceId"; // Foreign Key.
     private String date = "date";
     private String raceNumber = "raceNumber";
     private String stageNumber = "stageNumber";
@@ -25,9 +26,9 @@ class StageDetailTableOperation implements TableOperation<StageDetail> {
 
     @Override
     public String getCreateSql() {
-        return "CREATE TABLE " + tableName + " ("
-                + id + " INTEGER PRIMARY KEY, "
-                + bikeRaceId + " INTEGER, "
+        return "CREATE TABLE " + TABLE_NAME + " ("
+                + pk_id + " INTEGER PRIMARY KEY, "
+                + fk_bikeRaceId + " INTEGER, "
                 + date + " TEXT, "
                 + raceNumber + " INTEGER, "
                 + stageNumber + " INTEGER, "
@@ -39,23 +40,34 @@ class StageDetailTableOperation implements TableOperation<StageDetail> {
                 + routeLinkUrl + " TEXT, "
                 + kilometers + " REAL, "
                 + miles + " REAL, "
-                + " FOREIGN KEY (" + bikeRaceId + ") REFERENCES "
+                + " FOREIGN KEY (" + fk_bikeRaceId + ") REFERENCES "
                 + BikeRaceTableOperation.TABLE_NAME + " (" + BikeRaceTableOperation.PK_COLUMN + ")"
                 + ");";
     }
 
     @Override
     public String getDropSql() {
-        return "DROP TABLE IF EXISTS " + tableName;
+        return "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 
     @Override
-    public void create(StageDetail stageDetail) {
+    public ContentValues getInsertContentValues(StageDetail stageDetail, Long bikeRaceId) {
 
-    }
+        ContentValues cv = new ContentValues();
+        cv.put(pk_id, stageDetail.getId());
+        cv.put(fk_bikeRaceId, bikeRaceId);
+        cv.put(date, Utils.convertDateToString(stageDetail.getDate()));
+        cv.put(raceNumber, stageDetail.getRaceNumber());
+        cv.put(stageNumber, stageDetail.getStageNumber());
+        cv.put(location, stageDetail.getLocation());
+        cv.put(raceType, stageDetail.getRaceType());
+        cv.put(category, stageDetail.getCategory());
+        cv.put(signOnTime, stageDetail.getSignOnTime());
+        cv.put(startTime, stageDetail.getStartTime());
+        cv.put(routeLinkUrl, stageDetail.getRouteLinkUrl());
+        cv.put(kilometers, stageDetail.getKilometers());
+        cv.put(miles, stageDetail.getMiles());
 
-    @Override
-    public ContentValues getInsertContentValues(StageDetail stageDetail) {
-        return null;
+        return cv;
     }
 }

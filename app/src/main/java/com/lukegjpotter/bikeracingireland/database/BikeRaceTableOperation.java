@@ -7,10 +7,10 @@ import com.lukegjpotter.bikeracingireland.utils.Utils;
 
 class BikeRaceTableOperation implements TableOperation<BikeRace> {
 
-    static String TABLE_NAME = "BikeRace";
+    static final String TABLE_NAME = "BikeRace";
 
     // Column Names.
-    static String PK_COLUMN = "id";
+    static final String PK_COLUMN = "id";
     private String startDate = "startDate";
     private String bookingsOpenDate = "bookingsOpenDate";
     private String bookingsCloseDate = "bookingsCloseDate";
@@ -67,12 +67,7 @@ class BikeRaceTableOperation implements TableOperation<BikeRace> {
     }
 
     @Override
-    public void create(BikeRace bikeRace) {
-
-    }
-
-    @Override
-    public ContentValues getInsertContentValues(BikeRace bikeRace) {
+    public ContentValues getInsertContentValues(BikeRace bikeRace, Long bikeRaceId) {
 
         ContentValues cv = new ContentValues();
         cv.put(PK_COLUMN, bikeRace.getId());

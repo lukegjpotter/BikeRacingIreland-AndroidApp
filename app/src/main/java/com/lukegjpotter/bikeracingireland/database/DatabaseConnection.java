@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.lukegjpotter.bikeracingireland.model.BikeRace;
+import com.lukegjpotter.bikeracingireland.model.StageDetail;
 
 public class DatabaseConnection extends SQLiteOpenHelper {
 
@@ -67,8 +68,10 @@ public class DatabaseConnection extends SQLiteOpenHelper {
 
         // Proceed with the insert.
         SQLiteDatabase database = getWritableDatabase();
-        database.insert(BikeRaceTableOperation.TABLE_NAME, null, bikeRaceTable.getInsertContentValues(bikeRace));
-        // TODO: Add Insert for StageDetails.
+        database.insert(BikeRaceTableOperation.TABLE_NAME, null, bikeRaceTable.getInsertContentValues(bikeRace, null));
+        for (StageDetail stageDetail : bikeRace.getStageDetails()) {
+            database.insert(StageDetailTableOperation.TABLE_NAME, null, stageDetailTable.getInsertContentValues(stageDetail, bikeRace.getId()));
+        }
         database.close();
     }
 }

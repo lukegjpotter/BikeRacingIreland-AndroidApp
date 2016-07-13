@@ -8,7 +8,5 @@ interface TableOperation<T> {
 
     String getDropSql();
 
-    void create(T t);
-
-    ContentValues getInsertContentValues(T t);
+    ContentValues getInsertContentValues(T t, Long bikeRaceId);
 }
