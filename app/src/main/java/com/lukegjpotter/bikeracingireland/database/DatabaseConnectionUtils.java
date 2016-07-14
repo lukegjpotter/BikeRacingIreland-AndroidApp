@@ -3,7 +3,7 @@ package com.lukegjpotter.bikeracingireland.database;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-public class DatabaseConnectionUtils {
+class DatabaseConnectionUtils {
 
     public static boolean isBikeRaceInDatabase(SQLiteDatabase database, long id) {
 
