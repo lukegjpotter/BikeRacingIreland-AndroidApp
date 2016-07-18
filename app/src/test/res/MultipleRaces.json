@@ -1,0 +1,82 @@
+[
+  {
+    "id": 130,
+    "startDate": "20160605",
+    "bookingsOpenDate": "20160605",
+    "bookingsCloseDate": "20160605",
+    "eventName": "Finn Wheeler's Time Trial",
+    "promotingClub": "Finn Wheelers",
+    "organiser": "Tony Brogan",
+    "registrationLink": "",
+    "organiserPhoneNumber": "+353877932118",
+    "organiserEmail": "tonybrog@gmail.com",
+    "location": "Glenfin Road, Ballybofey",
+    "province": "",
+    "stageDetails": [
+      {
+        "id": 434,
+        "date": "20160605",
+        "raceNumber": 1,
+        "stageNumber": 1,
+        "location": "Glenfin Road",
+        "raceType": "APlus,A1,A2,A3,A4,Women,Junior,Elite,Espoir,Senior,M40,M50,M60,LC",
+        "category": "Time Trial",
+        "signOnTime": "18:30",
+        "startTime": "19:00",
+        "routeLinkUrl": "",
+        "kilometers": 16,
+        "miles": 10
+      }
+    ],
+    "paracycling": false,
+    "aplus": true,
+    "a1": true,
+    "a2": true,
+    "a3": true,
+    "a4": true,
+    "vets": true,
+    "woman": true,
+    "junior": true,
+    "youth": false
+  },
+  {
+    "id": 131,
+    "startDate": "20160606",
+    "bookingsOpenDate": "20160606",
+    "bookingsCloseDate": "20150608",
+    "eventName": "Temple",
+    "promotingClub": "Maryland Wheelers",
+    "organiser": "Phil Holland",
+    "registrationLink": "",
+    "organiserPhoneNumber": "+447766655644",
+    "organiserEmail": "phil.holland4@btopenworld.com",
+    "location": "Carr Road, Lisburn",
+    "province": "",
+    "stageDetails": [
+      {
+        "id": 435,
+        "date": "20160606",
+        "raceNumber": 1,
+        "stageNumber": 1,
+        "location": "Carr Road",
+        "raceType": "A1,A2,A3,A4,Women,Vets,Junior",
+        "category": "Road",
+        "signOnTime": "18:00",
+        "startTime": "18:45",
+        "routeLinkUrl": "",
+        "kilometers": 48.3,
+        "miles": 30
+      }
+    ],
+    "paracycling": false,
+    "aplus": false,
+    "a1": true,
+    "a2": true,
+    "a3": true,
+    "a4": true,
+    "vets": true,
+    "woman": true,
+    "junior": true,
+    "youth": false
+  }
+]
