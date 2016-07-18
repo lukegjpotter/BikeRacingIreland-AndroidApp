@@ -74,4 +74,7 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         }
         database.close();
     }
+    
+    // TODO: Add method to allow Update of BikeRace objects.
+    // TODO: Add methods to allow Retrieval of BikeRace object. The selection criterial might need to be based on the date of the race.
 }
