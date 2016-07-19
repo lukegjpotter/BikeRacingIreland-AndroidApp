@@ -12,7 +12,9 @@ public class Utils {
 
     @SuppressLint("SimpleDateFormat")
     public static String convertDateToString(Date date) {
+
         String dateFormat = Resources.getSystem().getString(R.string.date_format);
+
         return new SimpleDateFormat(dateFormat).format(date);
     }
 

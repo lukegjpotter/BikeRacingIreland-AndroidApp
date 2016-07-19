@@ -270,4 +270,8 @@ public class BikeRace {
 
         return sb.toString();
     }
+
+    public void addStageDetail(StageDetail stageDetail) {
+        stageDetails.add(stageDetail);
+    }
 }
