@@ -5,6 +5,10 @@ import com.lukegjpotter.bikeracingireland.model.StageDetail;
 
 public class TestResources {
 
+    public String getSingleRaceFilename() {
+        return "./src/test/res/SingleRace.json";
+    }
+
     public BikeRace getSingleRace() {
 
         BikeRace bikeRace = new BikeRace();
@@ -41,8 +45,8 @@ public class TestResources {
         stageDetail.setSignOnTime("18:30");
         stageDetail.setStartTime("19:00");
         stageDetail.setRouteLinkUrl("");
-        stageDetail.setKilometers(16.0);
-        stageDetail.setMiles(10.0);
+        stageDetail.setKilometers((double) 16);
+        stageDetail.setMiles((double) 10);
         bikeRace.addStageDetail(stageDetail);
 
         return bikeRace;

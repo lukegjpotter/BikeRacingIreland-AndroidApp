@@ -1,22 +1,23 @@
 package com.lukegjpotter.bikeracingireland.service.json;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.lukegjpotter.bikeracingireland.constant.Constants;
 import com.lukegjpotter.bikeracingireland.model.BikeRace;
 
-import org.json.JSONObject;
-
-import java.util.ArrayList;
+import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.List;
 
 class JsonParsingService {
 
-    public List<BikeRace> parseJsonObject(JSONObject jsonObject) {
+    public List<BikeRace> parseInputStreamReader(InputStreamReader in) {
 
-        List<BikeRace> bikeRaces = new ArrayList<>();
-        BikeRace bikeRace = new BikeRace();
+        // Parsing Logic using GSON.
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.setDateFormat(Constants.DATE_FORMAT);
+        Gson gson = gsonBuilder.create();
 
-        // Add Parsing Logic, look into GSON.
-        bikeRaces.add(bikeRace);
-
-        return bikeRaces;
+        return Arrays.asList(gson.fromJson(in, BikeRace.class));
     }
 }

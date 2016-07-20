@@ -6,8 +6,6 @@ import com.lukegjpotter.bikeracingireland.R;
 import com.lukegjpotter.bikeracingireland.model.BikeRace;
 import com.lukegjpotter.bikeracingireland.utils.Utils;
 
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -18,11 +16,9 @@ import java.util.List;
 public class JsonRequestService {
 
     JsonParsingService jsonParser;
-    JsonInputStreamReader jsonInputStreamReader;
 
     public JsonRequestService() {
         jsonParser = new JsonParsingService();
-        jsonInputStreamReader = new JsonInputStreamReader();
     }
 
     public List<BikeRace> requestBikeRacesBetween(Date fromDate, Date toDate) {
@@ -38,10 +34,9 @@ public class JsonRequestService {
 
             // Assign the Response to a Stream Object
             InputStreamReader inputStreamReader = new InputStreamReader(connection.getInputStream());
-            JSONObject parentBikeRacesJsonObject = jsonInputStreamReader.readJson(inputStreamReader);
 
             // Parse Stream in jsonParser
-            bikeRaces = jsonParser.parseJsonObject(parentBikeRacesJsonObject);
+            bikeRaces = jsonParser.parseInputStreamReader(inputStreamReader);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
