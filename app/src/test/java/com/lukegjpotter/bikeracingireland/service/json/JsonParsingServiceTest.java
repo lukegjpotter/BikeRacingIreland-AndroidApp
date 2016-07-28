@@ -8,6 +8,7 @@ import org.junit.Test;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -31,6 +32,28 @@ public class JsonParsingServiceTest {
         BikeRace actualBikeRace = jsonParsingService.parseInputStreamReader(inputStreamReader).get(0);
         BikeRace expectedBikeRace = tr.getSingleRace();
         compareBikeRaces(actualBikeRace, expectedBikeRace);
+    }
+
+    @Test
+    public void parseInputStreamReader_MultipleRace() {
+
+        InputStreamReader inputStreamReader = null;
+
+        try {
+            inputStreamReader = new InputStreamReader(new FileInputStream(tr.getMultipleRaceFilename()));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        List<BikeRace> actualBikeRaces = jsonParsingService.parseInputStreamReader(inputStreamReader);
+        List<BikeRace> expectedBikeRaces = tr.getMultipleRace();
+
+        assertTrue(actualBikeRaces.size() == expectedBikeRaces.size());
+
+        for (int i = 0; i < actualBikeRaces.size(); i++) {
+            System.out.print("Comparing BikeRaces in List Position " + i);
+            compareBikeRaces(actualBikeRaces.get(i), expectedBikeRaces.get(i));
+        }
     }
 
 

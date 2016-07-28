@@ -3,10 +3,17 @@ package com.lukegjpotter.bikeracingireland.testresources;
 import com.lukegjpotter.bikeracingireland.model.BikeRace;
 import com.lukegjpotter.bikeracingireland.model.StageDetail;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TestResources {
 
     public String getSingleRaceFilename() {
         return "./src/test/res/SingleRace.json";
+    }
+
+    public String getMultipleRaceFilename() {
+        return "./src/test/res/MultipleRaces.json";
     }
 
     public BikeRace getSingleRace() {
@@ -50,5 +57,13 @@ public class TestResources {
         bikeRace.addStageDetail(stageDetail);
 
         return bikeRace;
+    }
+
+    public List<BikeRace> getMultipleRace() {
+        List<BikeRace> bikeRaces = new ArrayList<>();
+
+        bikeRaces.add(getSingleRace());
+
+        return bikeRaces;
     }
 }
