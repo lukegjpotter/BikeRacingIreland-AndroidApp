@@ -1,5 +1,7 @@
 package com.lukegjpotter.bikeracingireland.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,7 +13,26 @@ public class BikeRace {
     private String eventName, promotingClub, organiser, registrationLink, organiserPhoneNumber, organiserEmail,
             location, province;
     private List<StageDetail> stageDetails;
-    private boolean isAPlus, isA1, isA2, isA3, isA4, isVets, isWoman, isJunior, isYouth, isParacycling;
+    @SerializedName("aplus")
+    private boolean isAPlus;
+    @SerializedName("a1")
+    private boolean isA1;
+    @SerializedName("a2")
+    private boolean isA2;
+    @SerializedName("a3")
+    private boolean isA3;
+    @SerializedName("a4")
+    private boolean isA4;
+    @SerializedName("vets")
+    private boolean isVets;
+    @SerializedName("woman")
+    private boolean isWoman;
+    @SerializedName("junior")
+    private boolean isJunior;
+    @SerializedName("youth")
+    private boolean isYouth;
+    @SerializedName("paracycling")
+    private boolean isParacycling;
 
     /**
      * Empty Constructor for easy Event Building.
@@ -37,8 +58,7 @@ public class BikeRace {
         setWoman(false);
         setJunior(false);
         setYouth(false);
-        setParacycling(false);
-        stageDetails = new ArrayList<>();
+        setStageDetails(new ArrayList<StageDetail>());
     }
 
     public long getId() {

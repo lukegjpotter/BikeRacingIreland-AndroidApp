@@ -8,9 +8,9 @@ import org.junit.Test;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class JsonParsingServiceTest {
 
@@ -18,7 +18,7 @@ public class JsonParsingServiceTest {
     JsonParsingService jsonParsingService = new JsonParsingService();
 
     @Test
-    public void parseInputStreamReader() {
+    public void parseInputStreamReader_SingleRace() {
 
         InputStreamReader inputStreamReader = null;
 
@@ -28,7 +28,33 @@ public class JsonParsingServiceTest {
             e.printStackTrace();
         }
 
-        List<BikeRace> bikeRaces = jsonParsingService.parseInputStreamReader(inputStreamReader);
-        assertEquals(bikeRaces.get(0), tr.getSingleRace());
+        BikeRace actualBikeRace = jsonParsingService.parseInputStreamReader(inputStreamReader).get(0);
+        BikeRace expectedBikeRace = tr.getSingleRace();
+        compareBikeRaces(actualBikeRace, expectedBikeRace);
+    }
+
+
+    private void compareBikeRaces(BikeRace actual, BikeRace expected) {
+        assertEquals("StartDate", actual.getStartDate(), expected.getStartDate());
+        assertEquals("EventName", actual.getEventName(), expected.getEventName());
+        assertEquals("PromotingClub", actual.getPromotingClub(), expected.getPromotingClub());
+        assertEquals("Organiser", actual.getOrganiser(), expected.getOrganiser());
+        assertEquals("RegistrationLink", actual.getRegistrationLink(), expected.getRegistrationLink());
+        assertEquals("BookingsOpenDate", actual.getBookingsOpenDate(), expected.getBookingsOpenDate());
+        assertEquals("BookingsCloseDate", actual.getBookingsCloseDate(), expected.getBookingsCloseDate());
+        assertEquals("OrganiserPhoneNumber", actual.getOrganiserPhoneNumber(), expected.getOrganiserPhoneNumber());
+        assertEquals("OrganiserEmail", actual.getOrganiserEmail(), expected.getOrganiserEmail());
+        assertEquals("Location", actual.getLocation(), expected.getLocation());
+        assertEquals("Province", actual.getProvince(), expected.getProvince());
+        assertTrue("A+ Act: " + actual.isAPlus() + ". Exp: " + expected.isAPlus() + ".", actual.isAPlus() == expected.isAPlus());
+        assertTrue("A1", actual.isA1() == expected.isA1());
+        assertTrue("A2", actual.isA2() == expected.isA2());
+        assertTrue("A3", actual.isA3() == expected.isA3());
+        assertTrue("A4", actual.isA4() == expected.isA4());
+        assertTrue("Women", actual.isWoman() == expected.isWoman());
+        assertTrue("Vets", actual.isVets() == expected.isVets());
+        assertTrue("Junior", actual.isJunior() == expected.isJunior());
+        assertTrue("Youth", actual.isYouth() == expected.isYouth());
+        assertTrue("Paracycling", actual.isParacycling() == expected.isParacycling());
     }
 }
