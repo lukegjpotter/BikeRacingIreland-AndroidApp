@@ -79,5 +79,7 @@ public class JsonParsingServiceTest {
         assertTrue("Junior", actual.isJunior() == expected.isJunior());
         assertTrue("Youth", actual.isYouth() == expected.isYouth());
         assertTrue("Paracycling", actual.isParacycling() == expected.isParacycling());
+        
+        // TODO Put in check for StageDetails - Size and Content of the Lists
     }
 }
