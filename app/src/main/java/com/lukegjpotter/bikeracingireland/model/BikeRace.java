@@ -38,6 +38,7 @@ public class BikeRace {
      * Empty Constructor for easy Event Building.
      */
     public BikeRace() {
+        setId(0L);
         setStartDate(new Date(0L));
         setBookingsOpenDate(new Date(0L));
         setBookingsCloseDate(new Date(0L));

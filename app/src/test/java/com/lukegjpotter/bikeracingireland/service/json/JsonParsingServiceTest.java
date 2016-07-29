@@ -53,11 +53,13 @@ public class JsonParsingServiceTest {
         for (int i = 0; i < actualBikeRaces.size(); i++) {
             System.out.print("Comparing BikeRaces in List Position " + i);
             compareBikeRaces(actualBikeRaces.get(i), expectedBikeRaces.get(i));
+            System.out.println(" ... OK");
         }
     }
 
 
     private void compareBikeRaces(BikeRace actual, BikeRace expected) {
+        assertEquals("ID", actual.getId(), expected.getId());
         assertEquals("StartDate", actual.getStartDate(), expected.getStartDate());
         assertEquals("EventName", actual.getEventName(), expected.getEventName());
         assertEquals("PromotingClub", actual.getPromotingClub(), expected.getPromotingClub());
