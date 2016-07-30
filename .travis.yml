@@ -27,8 +27,8 @@ android:
     - sys-img-armeabi-v7a-android-23
     # - sys-img-x86-android-17
 
-#script:
-#   - ./gradlew build connectedCheck
+script:
+  - gradle build connectedCheck
 
 
 after_success:
