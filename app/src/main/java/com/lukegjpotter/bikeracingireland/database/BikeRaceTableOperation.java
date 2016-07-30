@@ -67,7 +67,7 @@ class BikeRaceTableOperation implements TableOperation<BikeRace> {
     }
 
     @Override
-    public ContentValues getInsertContentValues(BikeRace bikeRace, Long bikeRaceId) {
+    public ContentValues getContentValues(BikeRace bikeRace, Long bikeRaceId) {
 
         ContentValues cv = new ContentValues();
         cv.put(PK_COLUMN, bikeRace.getId());
@@ -94,5 +94,15 @@ class BikeRaceTableOperation implements TableOperation<BikeRace> {
         cv.put(isParacycling, Utils.convertBooleanToInteger(bikeRace.isParacycling()));
 
         return cv;
+    }
+
+    @Override
+    public String getWhereClause() {
+        return PK_COLUMN + "=?";
+    }
+
+    @Override
+    public String[] getWhereArgs(long bikeRaceId) {
+        return new String[]{String.valueOf(bikeRaceId)};
     }
 }

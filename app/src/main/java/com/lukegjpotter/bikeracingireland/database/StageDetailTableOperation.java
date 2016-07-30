@@ -51,7 +51,7 @@ class StageDetailTableOperation implements TableOperation<StageDetail> {
     }
 
     @Override
-    public ContentValues getInsertContentValues(StageDetail stageDetail, Long bikeRaceId) {
+    public ContentValues getContentValues(StageDetail stageDetail, Long bikeRaceId) {
 
         ContentValues cv = new ContentValues();
         cv.put(pk_id, stageDetail.getId());
@@ -69,5 +69,15 @@ class StageDetailTableOperation implements TableOperation<StageDetail> {
         cv.put(miles, stageDetail.getMiles());
 
         return cv;
+    }
+
+    @Override
+    public String getWhereClause() {
+        return pk_id + "=?";
+    }
+
+    @Override
+    public String[] getWhereArgs(long stageDetailId) {
+        return new String[]{String.valueOf(stageDetailId)};
     }
 }

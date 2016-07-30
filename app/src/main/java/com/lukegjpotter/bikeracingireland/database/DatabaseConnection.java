@@ -68,13 +68,33 @@ public class DatabaseConnection extends SQLiteOpenHelper {
 
         // Proceed with the insert.
         SQLiteDatabase database = getWritableDatabase();
-        database.insert(BikeRaceTableOperation.TABLE_NAME, null, bikeRaceTable.getInsertContentValues(bikeRace, null));
+        database.insert(BikeRaceTableOperation.TABLE_NAME, null, bikeRaceTable.getContentValues(bikeRace, null));
+
         for (StageDetail stageDetail : bikeRace.getStageDetails()) {
-            database.insert(StageDetailTableOperation.TABLE_NAME, null, stageDetailTable.getInsertContentValues(stageDetail, bikeRace.getId()));
+            database.insert(StageDetailTableOperation.TABLE_NAME, null, stageDetailTable.getContentValues(stageDetail, bikeRace.getId()));
         }
+
         database.close();
     }
     
-    // TODO: Add method to allow Update of BikeRace objects.
     // TODO: Add methods to allow Retrieval of BikeRace object. The selection criterial might need to be based on the date of the race.
+
+    public synchronized void updateBikeRace(BikeRace updatedBikeRace) {
+
+        // Create the BikeRace if it doesn't exist, then exit, as there's nothing else to update.
+        if (!DatabaseConnectionUtils.isBikeRaceInDatabase(getReadableDatabase(), updatedBikeRace.getId())) {
+            insertBikeRace(updatedBikeRace);
+            return;
+        }
+
+        // Proceed with the update.
+        SQLiteDatabase database = getWritableDatabase();
+        database.update(BikeRaceTableOperation.TABLE_NAME, bikeRaceTable.getContentValues(updatedBikeRace, null), bikeRaceTable.getWhereClause(), bikeRaceTable.getWhereArgs(updatedBikeRace.getId()));
+
+        for (StageDetail stageDetail : updatedBikeRace.getStageDetails()) {
+            database.update(StageDetailTableOperation.TABLE_NAME, stageDetailTable.getContentValues(stageDetail, updatedBikeRace.getId()), stageDetailTable.getWhereClause(), stageDetailTable.getWhereArgs(stageDetail.getId()));
+        }
+
+        database.close();
+    }
 }

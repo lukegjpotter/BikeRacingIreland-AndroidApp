@@ -8,5 +8,9 @@ interface TableOperation<T> {
 
     String getDropSql();
 
-    ContentValues getInsertContentValues(T t, Long bikeRaceId);
+    ContentValues getContentValues(T t, Long bikeRaceId);
+
+    String getWhereClause();
+
+    String[] getWhereArgs(long bikeRaceId);
 }

@@ -5,13 +5,15 @@ import android.database.sqlite.SQLiteDatabase;
 
 class DatabaseConnectionUtils {
 
-    public static boolean isBikeRaceInDatabase(SQLiteDatabase database, long id) {
+    public static boolean isBikeRaceInDatabase(SQLiteDatabase database, long bikeRaceId) {
 
-        String selection = BikeRaceTableOperation.PK_COLUMN + "=?";
-        String[] selectionArgs = new String[]{String.valueOf(id)};
+        BikeRaceTableOperation bikeRaceTable = new BikeRaceTableOperation();
+
+        String whereClause = bikeRaceTable.getWhereClause();
+        String[] whereArgs = bikeRaceTable.getWhereArgs(bikeRaceId);
         String limit = String.valueOf(1);
 
-        Cursor cursor = database.query(BikeRaceTableOperation.TABLE_NAME, null, selection, selectionArgs, null, null, null, limit);
+        Cursor cursor = database.query(BikeRaceTableOperation.TABLE_NAME, null, whereClause, whereArgs, null, null, null, limit);
         boolean isBikeRaceInDatabase = cursor.moveToFirst();
 
         database.close();
