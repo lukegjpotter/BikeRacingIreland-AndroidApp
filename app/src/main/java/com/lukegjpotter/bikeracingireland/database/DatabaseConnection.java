@@ -1,9 +1,11 @@
 package com.lukegjpotter.bikeracingireland.database;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.lukegjpotter.bikeracingireland.enums.RaceType;
 import com.lukegjpotter.bikeracingireland.model.BikeRace;
 import com.lukegjpotter.bikeracingireland.model.StageDetail;
 
@@ -81,7 +83,7 @@ public class DatabaseConnection extends SQLiteOpenHelper {
                 database.insert(StageDetailTableOperation.TABLE_NAME, null, stageDetailTable.getContentValues(stageDetail, bikeRace.getId()));
             } else {
                 // Update the existing StageDetail.
-                database.update(StageDetailTableOperation.TABLE_NAME, stageDetailTable.getContentValues(stageDetail, bikeRace.getId()), stageDetailTable.getWhereClause(), stageDetailTable.getWhereArgs(stageDetail.getId()));
+                database.update(StageDetailTableOperation.TABLE_NAME, stageDetailTable.getContentValues(stageDetail, bikeRace.getId()), stageDetailTable.getWhereClauseForPk(), stageDetailTable.getWhereArgsForPk(stageDetail.getId()));
             }
         }
 
@@ -89,7 +91,6 @@ public class DatabaseConnection extends SQLiteOpenHelper {
     }
 
     // ---------- Retrieve -------- //
-
     /**
      * Get the {@code BikeRace}s with the {@code monthNumber} specified.
      * Month Number is starting from Zero. 0 is January, 11 is December, everything is inbetween.
@@ -109,9 +110,30 @@ public class DatabaseConnection extends SQLiteOpenHelper {
      * @param raceType The Race Type, e.g. A+, A1, ..., Women, etc.
      * @return The List of the {@code BikeRace}s with the {@code raceType}.
      */
-    public synchronized List<BikeRace> retrieveBikeRacesWithRaceType(String raceType) {
-        // TODO Implement this.
-        return new ArrayList<>();
+    public synchronized List<BikeRace> retrieveBikeRacesWithRaceType(RaceType raceType) {
+
+        List<BikeRace> bikeRacesWithRaceType = new ArrayList<>();
+
+        String whereClause = bikeRaceTable.getWhereClauseForRaceType(raceType.toString());
+        String[] whereArgs = bikeRaceTable.getWhereArgsForRaceTypeTrue();
+
+        SQLiteDatabase database = getReadableDatabase();
+        Cursor cursor = database.query(BikeRaceTableOperation.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            // Get the BikeRaces from the BikeRaceTable.
+            bikeRacesWithRaceType = bikeRaceTable.populateListFromCursor(cursor);
+
+            // Get the BikeRaces's StageDetails.
+            for (BikeRace bikeRace : bikeRacesWithRaceType) {
+                bikeRace.setStageDetails(retrieveStageDetailsForBikeRaceId(bikeRace.getId(), database, cursor));
+            }
+        }
+
+        cursor.close();
+        database.close();
+
+        return bikeRacesWithRaceType;
     }
 
     /**
@@ -144,12 +166,12 @@ public class DatabaseConnection extends SQLiteOpenHelper {
 
         // Proceed with the update.
         SQLiteDatabase database = getWritableDatabase();
-        database.update(BikeRaceTableOperation.TABLE_NAME, bikeRaceTable.getContentValues(updatedBikeRace, null), bikeRaceTable.getWhereClause(), bikeRaceTable.getWhereArgs(updatedBikeRace.getId()));
+        database.update(BikeRaceTableOperation.TABLE_NAME, bikeRaceTable.getContentValues(updatedBikeRace, null), bikeRaceTable.getWhereClauseForPk(), bikeRaceTable.getWhereArgsForPk(updatedBikeRace.getId()));
 
         for (StageDetail stageDetail : updatedBikeRace.getStageDetails()) {
             if (DatabaseConnectionUtils.isStageDetailInDatabase(getReadableDatabase(), stageDetail.getId())) {
                 // Update the existing StageDetail.
-                database.update(StageDetailTableOperation.TABLE_NAME, stageDetailTable.getContentValues(stageDetail, updatedBikeRace.getId()), stageDetailTable.getWhereClause(), stageDetailTable.getWhereArgs(stageDetail.getId()));
+                database.update(StageDetailTableOperation.TABLE_NAME, stageDetailTable.getContentValues(stageDetail, updatedBikeRace.getId()), stageDetailTable.getWhereClauseForPk(), stageDetailTable.getWhereArgsForPk(stageDetail.getId()));
             } else {
                 // Create the StageDetail.
                 database.insert(StageDetailTableOperation.TABLE_NAME, null, stageDetailTable.getContentValues(stageDetail, updatedBikeRace.getId()));
@@ -160,7 +182,23 @@ public class DatabaseConnection extends SQLiteOpenHelper {
     }
 
     // ---------- Delete ---------- //
-    public synchronized void deleteBikeRace(BikeRace bikeRaceToDelte) {
+    public synchronized void deleteBikeRace(BikeRace bikeRaceToDelete) {
         // TODO Implement this.
+    }
+
+    // -------------------------- Private Methods -------------------------- //
+    private List<StageDetail> retrieveStageDetailsForBikeRaceId(long bikeRaceId, SQLiteDatabase database, Cursor cursor) {
+
+        List<StageDetail> stageDetails = new ArrayList<>();
+        String[] whereArgs = new String[]{String.valueOf(bikeRaceId)};
+
+        // HACK: Not using a LocalVariable here as it'll ruin the cursor.close() in the calling method.
+        cursor = database.query(StageDetailTableOperation.TABLE_NAME, null, stageDetailTable.getWhereClauseForFk(), whereArgs, null, null, null);
+
+        if (cursor.moveToNext()) {
+            stageDetails = stageDetailTable.populateListFromCursor(cursor);
+        }
+
+        return stageDetails;
     }
 }

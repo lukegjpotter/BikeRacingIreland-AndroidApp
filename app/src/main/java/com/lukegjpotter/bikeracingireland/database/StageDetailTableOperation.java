@@ -1,9 +1,13 @@
 package com.lukegjpotter.bikeracingireland.database;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 
 import com.lukegjpotter.bikeracingireland.model.StageDetail;
 import com.lukegjpotter.bikeracingireland.utils.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 class StageDetailTableOperation implements TableOperation<StageDetail> {
 
@@ -72,12 +76,43 @@ class StageDetailTableOperation implements TableOperation<StageDetail> {
     }
 
     @Override
-    public String getWhereClause() {
+    public String getWhereClauseForPk() {
         return pk_id + "=?";
     }
 
     @Override
-    public String[] getWhereArgs(long stageDetailId) {
+    public String[] getWhereArgsForPk(long stageDetailId) {
         return new String[]{String.valueOf(stageDetailId)};
+    }
+
+    @Override
+    public List<StageDetail> populateListFromCursor(Cursor cursor) {
+
+        List<StageDetail> stageDetails = new ArrayList<>();
+        cursor.moveToFirst();
+
+        do {
+            StageDetail stageDetail = new StageDetail();
+
+            stageDetail.setDate(Utils.convertStringToDate(cursor.getString(cursor.getColumnIndex(date))));
+            stageDetail.setLocation(cursor.getString(cursor.getColumnIndex(location)));
+            stageDetail.setRaceNumber(cursor.getInt(cursor.getColumnIndex(raceNumber)));
+            stageDetail.setStageNumber(cursor.getInt(cursor.getColumnIndex(stageNumber)));
+            stageDetail.setRaceType(cursor.getString(cursor.getColumnIndex(raceType)));
+            stageDetail.setKilometers(cursor.getDouble(cursor.getColumnIndex(kilometers)));
+            stageDetail.setMiles(cursor.getDouble(cursor.getColumnIndex(miles)));
+            stageDetail.setCategory(cursor.getString(cursor.getColumnIndex(category)));
+            stageDetail.setSignOnTime(cursor.getString(cursor.getColumnIndex(signOnTime)));
+            stageDetail.setStartTime(cursor.getString(cursor.getColumnIndex(startTime)));
+            stageDetail.setRouteLinkUrl(cursor.getString(cursor.getColumnIndex(routeLinkUrl)));
+
+            stageDetails.add(stageDetail);
+        } while (cursor.moveToNext());
+
+        return stageDetails;
+    }
+
+    public String getWhereClauseForFk() {
+        return fk_bikeRaceId + "=?";
     }
 }

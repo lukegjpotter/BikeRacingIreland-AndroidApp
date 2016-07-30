@@ -9,8 +9,8 @@ class DatabaseConnectionUtils {
 
         BikeRaceTableOperation bikeRaceTable = new BikeRaceTableOperation();
 
-        String whereClause = bikeRaceTable.getWhereClause();
-        String[] whereArgs = bikeRaceTable.getWhereArgs(bikeRaceId);
+        String whereClause = bikeRaceTable.getWhereClauseForPk();
+        String[] whereArgs = bikeRaceTable.getWhereArgsForPk(bikeRaceId);
         String limit = String.valueOf(1);
 
         Cursor cursor = database.query(BikeRaceTableOperation.TABLE_NAME, null, whereClause, whereArgs, null, null, null, limit);
@@ -26,8 +26,8 @@ class DatabaseConnectionUtils {
 
         StageDetailTableOperation stageDetailTable = new StageDetailTableOperation();
 
-        String whereClause = stageDetailTable.getWhereClause();
-        String[] whereArgs = stageDetailTable.getWhereArgs(stageDetailId);
+        String whereClause = stageDetailTable.getWhereClauseForPk();
+        String[] whereArgs = stageDetailTable.getWhereArgsForPk(stageDetailId);
         String limit = String.valueOf(1);
 
         Cursor cursor = database.query(StageDetailTableOperation.TABLE_NAME, null, whereClause, whereArgs, null, null, null, limit);

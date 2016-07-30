@@ -1,9 +1,13 @@
 package com.lukegjpotter.bikeracingireland.database;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 
 import com.lukegjpotter.bikeracingireland.model.BikeRace;
 import com.lukegjpotter.bikeracingireland.utils.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 class BikeRaceTableOperation implements TableOperation<BikeRace> {
 
@@ -97,12 +101,59 @@ class BikeRaceTableOperation implements TableOperation<BikeRace> {
     }
 
     @Override
-    public String getWhereClause() {
+    public String getWhereClauseForPk() {
         return PK_COLUMN + "=?";
     }
 
     @Override
-    public String[] getWhereArgs(long bikeRaceId) {
+    public String[] getWhereArgsForPk(long bikeRaceId) {
         return new String[]{String.valueOf(bikeRaceId)};
+    }
+
+    @Override
+    public List<BikeRace> populateListFromCursor(Cursor cursor) {
+
+        List<BikeRace> bikeRaces = new ArrayList<>();
+        cursor.moveToFirst();
+
+        do {
+
+            BikeRace bikeRace = new BikeRace();
+
+            bikeRace.setId(cursor.getLong(cursor.getColumnIndex(PK_COLUMN)));
+            bikeRace.setStartDate(Utils.convertStringToDate(cursor.getString(cursor.getColumnIndex(startDate))));
+            bikeRace.setBookingsOpenDate(Utils.convertStringToDate(cursor.getString(cursor.getColumnIndex(bookingsOpenDate))));
+            bikeRace.setBookingsCloseDate(Utils.convertStringToDate(cursor.getString(cursor.getColumnIndex(bookingsCloseDate))));
+            bikeRace.setEventName(cursor.getString(cursor.getColumnIndex(eventName)));
+            bikeRace.setPromotingClub(cursor.getString(cursor.getColumnIndex(promotingClub)));
+            bikeRace.setOrganiser(cursor.getString(cursor.getColumnIndex(organiser)));
+            bikeRace.setRegistrationLink(cursor.getString(cursor.getColumnIndex(registrationLink)));
+            bikeRace.setOrganiserPhoneNumber(cursor.getString(cursor.getColumnIndex(organiserPhoneNumber)));
+            bikeRace.setOrganiserEmail(cursor.getString(cursor.getColumnIndex(organiserEmail)));
+            bikeRace.setLocation(cursor.getString(cursor.getColumnIndex(location)));
+            bikeRace.setProvince(cursor.getString(cursor.getColumnIndex(province)));
+            bikeRace.setAPlus(Utils.convertIntegerToBoolean(cursor.getInt(cursor.getColumnIndex(isAPlus))));
+            bikeRace.setA1(Utils.convertIntegerToBoolean(cursor.getInt(cursor.getColumnIndex(isA1))));
+            bikeRace.setA2(Utils.convertIntegerToBoolean(cursor.getInt(cursor.getColumnIndex(isA2))));
+            bikeRace.setA3(Utils.convertIntegerToBoolean(cursor.getInt(cursor.getColumnIndex(isA3))));
+            bikeRace.setA4(Utils.convertIntegerToBoolean(cursor.getInt(cursor.getColumnIndex(isA4))));
+            bikeRace.setVets(Utils.convertIntegerToBoolean(cursor.getInt(cursor.getColumnIndex(isVets))));
+            bikeRace.setWoman(Utils.convertIntegerToBoolean(cursor.getInt(cursor.getColumnIndex(isWoman))));
+            bikeRace.setJunior(Utils.convertIntegerToBoolean(cursor.getInt(cursor.getColumnIndex(isJunior))));
+            bikeRace.setYouth(Utils.convertIntegerToBoolean(cursor.getInt(cursor.getColumnIndex(isYouth))));
+            bikeRace.setParacycling(Utils.convertIntegerToBoolean(cursor.getInt(cursor.getColumnIndex(isParacycling))));
+
+            bikeRaces.add(bikeRace);
+        } while (cursor.moveToNext());
+
+        return bikeRaces;
+    }
+
+    public String getWhereClauseForRaceType(String raceType) {
+        return raceType + "=?";
+    }
+
+    public String[] getWhereArgsForRaceTypeTrue() {
+        return new String[]{String.valueOf(1)};
     }
 }

@@ -59,6 +59,7 @@ public class BikeRace {
         setWoman(false);
         setJunior(false);
         setYouth(false);
+        setParacycling(false);
         setStageDetails(new ArrayList<StageDetail>());
     }
 
