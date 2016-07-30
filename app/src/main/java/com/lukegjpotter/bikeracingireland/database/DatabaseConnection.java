@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.lukegjpotter.bikeracingireland.model.BikeRace;
 import com.lukegjpotter.bikeracingireland.model.StageDetail;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DatabaseConnection extends SQLiteOpenHelper {
 
     // Database Information.
@@ -60,6 +63,8 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         }
     }
 
+    // --------------------------- CRUD Methods --------------------------- //
+    // ---------- Create ---------- //
     public synchronized void insertBikeRace(BikeRace bikeRace) {
 
         // Abandon if this BikeRace is a duplicate.
@@ -82,9 +87,53 @@ public class DatabaseConnection extends SQLiteOpenHelper {
 
         database.close();
     }
-    
-    // TODO: Add methods to allow Retrieval of BikeRace object. The selection criterial might need to be based on the date of the race.
 
+    // ---------- Retrieve -------- //
+
+    /**
+     * Get the {@code BikeRace}s with the {@code monthNumber} specified.
+     * Month Number is starting from Zero. 0 is January, 11 is December, everything is inbetween.
+     *
+     * @param monthNumber The number of the Month to search for, e.g. 0 is Jan, 11 is Dec
+     * @return The List of the {@code BikeRace}s with the {@code monthNumber}.
+     */
+    public synchronized List<BikeRace> retrieveBikeRacesInMonth(int monthNumber) {
+        // TODO Implement this.
+        return new ArrayList<>();
+    }
+
+    /**
+     * Get the {@code BikeRace}s with the {@code raceType} specified.
+     * Race Types are A+, A1, A2, ..., Women, Vets, Youth, ParaCycling.
+     *
+     * @param raceType The Race Type, e.g. A+, A1, ..., Women, etc.
+     * @return The List of the {@code BikeRace}s with the {@code raceType}.
+     */
+    public synchronized List<BikeRace> retrieveBikeRacesWithRaceType(String raceType) {
+        // TODO Implement this.
+        return new ArrayList<>();
+    }
+
+    /**
+     * Get the {@code BikeRace}s with the {@code category} specified.
+     * Categories are in the {@code StageDetail} model.
+     * Categories can be Time Trial, Road, Criterium, etc.
+     * <p/>
+     * To get them all connect to the {@code cyclingirelandevents} database.
+     * <pre>
+     *     psql cyclingirelandevents postgres
+     *     select distinct category from stage_detail;
+     * </pre>
+     *
+     * @param category The Category, e.g. Criterium, Time Trial, Road.
+     * @return The List of the {@code BikeRace}s with the {@code category}.
+     */
+    public synchronized List<BikeRace> retrieveBikeRacesInCategory(String category) {
+        // TODO Implement this.
+        return new ArrayList<>();
+    }
+
+    // ---------- Update ---------- //
     public synchronized void updateBikeRace(BikeRace updatedBikeRace) {
 
         // Create the BikeRace if it doesn't exist, then exit, as there's nothing else to update.
@@ -108,5 +157,10 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         }
 
         database.close();
+    }
+
+    // ---------- Delete ---------- //
+    public synchronized void deleteBikeRace(BikeRace bikeRaceToDelte) {
+        // TODO Implement this.
     }
 }
