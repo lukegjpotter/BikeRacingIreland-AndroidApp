@@ -28,7 +28,7 @@ android:
     # - sys-img-x86-android-17
 
 script:
-  - gradle build connectedCheck
+  - ./gradlew build connectedCheck
 
 
 after_success:
