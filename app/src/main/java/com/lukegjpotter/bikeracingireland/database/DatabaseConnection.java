@@ -71,7 +71,13 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         database.insert(BikeRaceTableOperation.TABLE_NAME, null, bikeRaceTable.getContentValues(bikeRace, null));
 
         for (StageDetail stageDetail : bikeRace.getStageDetails()) {
-            database.insert(StageDetailTableOperation.TABLE_NAME, null, stageDetailTable.getContentValues(stageDetail, bikeRace.getId()));
+            if (!DatabaseConnectionUtils.isStageDetailInDatabase(getReadableDatabase(), stageDetail.getId())) {
+                // Create the new StageDetail.
+                database.insert(StageDetailTableOperation.TABLE_NAME, null, stageDetailTable.getContentValues(stageDetail, bikeRace.getId()));
+            } else {
+                // Update the existing StageDetail.
+                database.update(StageDetailTableOperation.TABLE_NAME, stageDetailTable.getContentValues(stageDetail, bikeRace.getId()), stageDetailTable.getWhereClause(), stageDetailTable.getWhereArgs(stageDetail.getId()));
+            }
         }
 
         database.close();
@@ -92,7 +98,13 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         database.update(BikeRaceTableOperation.TABLE_NAME, bikeRaceTable.getContentValues(updatedBikeRace, null), bikeRaceTable.getWhereClause(), bikeRaceTable.getWhereArgs(updatedBikeRace.getId()));
 
         for (StageDetail stageDetail : updatedBikeRace.getStageDetails()) {
-            database.update(StageDetailTableOperation.TABLE_NAME, stageDetailTable.getContentValues(stageDetail, updatedBikeRace.getId()), stageDetailTable.getWhereClause(), stageDetailTable.getWhereArgs(stageDetail.getId()));
+            if (DatabaseConnectionUtils.isStageDetailInDatabase(getReadableDatabase(), stageDetail.getId())) {
+                // Update the existing StageDetail.
+                database.update(StageDetailTableOperation.TABLE_NAME, stageDetailTable.getContentValues(stageDetail, updatedBikeRace.getId()), stageDetailTable.getWhereClause(), stageDetailTable.getWhereArgs(stageDetail.getId()));
+            } else {
+                // Create the StageDetail.
+                database.insert(StageDetailTableOperation.TABLE_NAME, null, stageDetailTable.getContentValues(stageDetail, updatedBikeRace.getId()));
+            }
         }
 
         database.close();

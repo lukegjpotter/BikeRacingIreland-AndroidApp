@@ -21,4 +21,21 @@ class DatabaseConnectionUtils {
 
         return isBikeRaceInDatabase;
     }
+
+    public static boolean isStageDetailInDatabase(SQLiteDatabase database, long stageDetailId) {
+
+        StageDetailTableOperation stageDetailTable = new StageDetailTableOperation();
+
+        String whereClause = stageDetailTable.getWhereClause();
+        String[] whereArgs = stageDetailTable.getWhereArgs(stageDetailId);
+        String limit = String.valueOf(1);
+
+        Cursor cursor = database.query(StageDetailTableOperation.TABLE_NAME, null, whereClause, whereArgs, null, null, null, limit);
+        boolean isStageDetailInDatabase = cursor.moveToFirst();
+
+        database.close();
+        cursor.close();
+
+        return isStageDetailInDatabase;
+    }
 }
