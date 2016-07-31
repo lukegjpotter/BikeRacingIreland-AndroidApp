@@ -41,6 +41,5 @@ public class Utils {
     public static boolean convertIntegerToBoolean(int anInt) {
 
         return anInt == 1;
-
     }
 }
