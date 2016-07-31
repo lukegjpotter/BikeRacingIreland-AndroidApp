@@ -1,31 +1,27 @@
 package com.lukegjpotter.bikeracingireland.utils;
 
-import android.annotation.SuppressLint;
-import android.content.res.Resources;
-
-import com.lukegjpotter.bikeracingireland.R;
+import com.lukegjpotter.bikeracingireland.constant.Constants;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class Utils {
 
-    @SuppressLint("SimpleDateFormat")
     public static String convertDateToString(Date date) {
 
-        String dateFormat = Resources.getSystem().getString(R.string.date_format);
-
-        return new SimpleDateFormat(dateFormat).format(date);
+        try {
+            return new SimpleDateFormat(Constants.DATE_FORMAT, Locale.UK).format(date);
+        } catch (NullPointerException e) {
+            return "";
+        }
     }
 
-    @SuppressLint("SimpleDateFormat")
     public static Date convertStringToDate(String dateString) {
 
-        String dateFormat = Resources.getSystem().getString(R.string.date_format);
-
         try {
-            return new SimpleDateFormat(dateFormat).parse(dateString);
+            return new SimpleDateFormat(Constants.DATE_FORMAT, Locale.UK).parse(dateString);
         } catch (ParseException e) {
             return null;
         }
