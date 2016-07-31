@@ -1,6 +1,7 @@
 package com.lukegjpotter.bikeracingireland.service.json;
 
 import com.lukegjpotter.bikeracingireland.model.BikeRace;
+import com.lukegjpotter.bikeracingireland.model.StageDetail;
 import com.lukegjpotter.bikeracingireland.testresources.TestResources;
 
 import org.junit.Test;
@@ -59,6 +60,8 @@ public class JsonParsingServiceTest {
 
 
     private void compareBikeRaces(BikeRace actual, BikeRace expected) {
+
+        // Check BikeRace POJO Specific Fields.
         assertEquals("ID", actual.getId(), expected.getId());
         assertEquals("StartDate", actual.getStartDate(), expected.getStartDate());
         assertEquals("EventName", actual.getEventName(), expected.getEventName());
@@ -81,7 +84,26 @@ public class JsonParsingServiceTest {
         assertTrue("Junior", actual.isJunior() == expected.isJunior());
         assertTrue("Youth", actual.isYouth() == expected.isYouth());
         assertTrue("Paracycling", actual.isParacycling() == expected.isParacycling());
-        
-        // TODO Put in check for StageDetails - Size and Content of the Lists
+
+        // Check StageDetails of BikeRace.
+        assertTrue("StageDetails Size", actual.getStageDetails().size() == expected.getStageDetails().size());
+
+        for (int i = 0; i < actual.getStageDetails().size(); i++) {
+            StageDetail actualStageDetail = actual.getStageDetails().get(i);
+            StageDetail expectedStageDetail = expected.getStageDetails().get(i);
+
+            assertEquals("Date", actualStageDetail.getDate(), expectedStageDetail.getDate());
+            assertEquals("Location", actualStageDetail.getLocation(), expectedStageDetail.getLocation());
+            assertEquals("RaceNumber", actualStageDetail.getRaceNumber(), expectedStageDetail.getRaceNumber());
+            assertEquals("StageNumber", actualStageDetail.getStageNumber(), expectedStageDetail.getStageNumber());
+            assertEquals("RaceType", actualStageDetail.getRaceType(), expectedStageDetail.getRaceType());
+            assertEquals("Category", actualStageDetail.getCategory(), expectedStageDetail.getCategory());
+            assertEquals("SignOnTime", actualStageDetail.getSignOnTime(), expectedStageDetail.getSignOnTime());
+            assertEquals("StartTime", actualStageDetail.getStartTime(), expectedStageDetail.getStartTime());
+            assertEquals("RouteLinkUrl", actualStageDetail.getRouteLinkUrl(), expectedStageDetail.getRouteLinkUrl());
+            assertEquals("Kilometers", actualStageDetail.getKilometers(), expectedStageDetail.getKilometers());
+            assertEquals("Miles", actualStageDetail.getMiles(), expectedStageDetail.getMiles());
+        }
+
     }
 }
