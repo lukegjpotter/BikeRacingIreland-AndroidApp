@@ -3,7 +3,7 @@ package com.lukegjpotter.bikeracingireland.enums;
 public enum RaceType {
 
     // Race Types
-    APLUS("A+", "APlus"),
+    APLUS("A+", "isAPlus"),
     A1("A1"),
     A2("A2"),
     A3("A3"),
