@@ -3,9 +3,6 @@
 An Android app that will display the Bicycle Races in Ireland that are
 on the CyclingIreland Calendar.
 
-[![Build Status](https://travis-ci.org/lukegjpotter/BikeRacingIreland-AndroidApp.svg?branch=master)](https://travis-ci.org/lukegjpotter/BikeRacingIreland-AndroidApp)
-[![Coverage Status](https://coveralls.io/repos/github/lukegjpotter/BikeRacingIreland-AndroidApp/badge.svg?branch=master)](https://coveralls.io/github/lukegjpotter/BikeRacingIreland-AndroidApp?branch=master)
-
 ## Initial Setup
 
 1. Follow the "Initial Database Setup" and "Build, Run and Test" steps
