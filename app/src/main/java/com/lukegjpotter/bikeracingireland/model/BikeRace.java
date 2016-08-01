@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+// TODO Add a monthNumber field and the associated Database storage and GSON parsing functionality.
 public class BikeRace {
 
     private long id;

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-class JsonParsingService {
+public class JsonParsingService {
 
     public List<BikeRace> parseInputStreamReader(InputStreamReader in) {
 

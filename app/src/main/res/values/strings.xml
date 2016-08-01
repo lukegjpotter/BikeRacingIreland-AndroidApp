@@ -2,5 +2,5 @@
     <string name="app_name">Bike Racing Ireland</string>
     <string name="title_bikerace_detail">BikeRace Detail</string>
     <string name="date_format">yyyyMMdd</string>
-    <string name="request_url">http://localhost:8080/roadraces/between/%1$s/and/%2$s</string>
+    <string name="request_url_month_number">http://localhost:8080/roadraces/month/%1$s</string>
 </resources>
