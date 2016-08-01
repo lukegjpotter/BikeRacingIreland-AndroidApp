@@ -25,7 +25,9 @@ public class BikeRaceListViewDataService {
 
         if (bikeRacesInMonth.isEmpty()) {
             // There's no local data, so get it from the RemoteService, and store it locally
+            // TODO Use a Threading type here that will not depend on the Activity calling it.
             bikeRacesInMonth = remoteDatabaseConnection.retrieveBikeRacesInMonth(monthNumber);
+            // TODO Kick off a thread to do this non-UI work.
             ((LocalDatabaseConnection) localDatabaseConnection).insertBikeRaceList(bikeRacesInMonth);
         }
 
