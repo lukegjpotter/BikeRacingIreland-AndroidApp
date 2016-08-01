@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.github.kt3k.coveralls'
 
 android {
     compileSdkVersion 24
@@ -11,13 +10,8 @@ android {
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
-        debug {
-            testCoverageEnabled true
-        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -29,30 +23,18 @@ android {
 }
 
 dependencies {
+    // Compile the Java code
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    // Android JUnit Runner -> From https://google.github.io/android-testing-support-library/downloads/index.html
-    //androidTestCompile 'com.android.support.test:runner:0.5'
-    // JUnit4 Rules
-    //androidTestCompile 'com.android.support.test:rules:0.5'
-    // Espresso core
-    //androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
-    // Espresso-contrib for DatePicker, RecyclerView, Drawer actions, Accessibility checks, CountingIdlingResource
-    //androidTestCompile 'com.android.support.test.espresso:espresso-contrib:2.2.2'
-
+    // Compile the Instrumentation Tests
+    // androidTestCompile ''
+    // Compile the standard jUnit tests
     testCompile 'junit:junit:4.12'
+    // Android SDK Libs
     compile 'com.android.support:appcompat-v7:24.1.1'
     compile 'com.android.support:support-v4:24.1.1'
     compile 'com.android.support:recyclerview-v7:24.1.1'
     compile 'com.android.support:cardview-v7:24.1.1'
     compile 'com.android.support:design:24.1.1'
+    // Non-Android SDK Libs
     compile 'com.google.code.gson:gson:2.7'
-}
-
-coveralls {
-    jacocoReportPath = "${buildDir}/reports/coverage/debug/report.xml"
-}
-
-tasks.coveralls {
-    dependsOn 'connectedAndroidTest'
-    onlyIf { System.env.'CI' }
 }
