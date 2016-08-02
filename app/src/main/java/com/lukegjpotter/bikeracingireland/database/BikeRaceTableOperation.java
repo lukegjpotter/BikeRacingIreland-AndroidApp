@@ -16,6 +16,7 @@ class BikeRaceTableOperation implements TableOperation<BikeRace> {
     // Column Names.
     static final String PK_COLUMN = "id";
     private String startDate = "startDate";
+    private String monthNumber = "monthNumber";
     private String bookingsOpenDate = "bookingsOpenDate";
     private String bookingsCloseDate = "bookingsCloseDate";
     private String eventName = "eventName";
@@ -42,6 +43,7 @@ class BikeRaceTableOperation implements TableOperation<BikeRace> {
         return "CREATE TABLE " + TABLE_NAME + " ("
                 + PK_COLUMN + " INTEGER PRIMARY KEY, "
                 + startDate + " TEXT, "
+                + monthNumber + " INTEGER, "
                 + bookingsOpenDate + " TEXT, "
                 + bookingsCloseDate + " TEXT, "
                 + eventName + " TEXT, "
@@ -76,6 +78,7 @@ class BikeRaceTableOperation implements TableOperation<BikeRace> {
         ContentValues cv = new ContentValues();
         cv.put(PK_COLUMN, bikeRace.getId());
         cv.put(startDate, Utils.convertDateToString(bikeRace.getStartDate()));
+        // TODO MonthNumber: Populate Month Number in Content Values
         cv.put(bookingsOpenDate, Utils.convertDateToString(bikeRace.getBookingsOpenDate()));
         cv.put(bookingsCloseDate, Utils.convertDateToString(bikeRace.getBookingsCloseDate()));
         cv.put(eventName, bikeRace.getEventName());
@@ -101,20 +104,11 @@ class BikeRaceTableOperation implements TableOperation<BikeRace> {
     }
 
     @Override
-    public String getWhereClauseForPk() {
-        return PK_COLUMN + "=?";
-    }
-
-    @Override
-    public String[] getWhereArgsForPk(long bikeRaceId) {
-        return new String[]{String.valueOf(bikeRaceId)};
-    }
-
-    @Override
     public List<BikeRace> populateListFromCursor(Cursor cursor) {
 
         List<BikeRace> bikeRaces = new ArrayList<>();
-        cursor.moveToFirst();
+
+        if (!cursor.moveToFirst()) return bikeRaces;
 
         do {
 
@@ -122,6 +116,7 @@ class BikeRaceTableOperation implements TableOperation<BikeRace> {
 
             bikeRace.setId(cursor.getLong(cursor.getColumnIndex(PK_COLUMN)));
             bikeRace.setStartDate(Utils.convertStringToDate(cursor.getString(cursor.getColumnIndex(startDate))));
+            // TODO MonthNumber: Populate monthNumber from Cursor
             bikeRace.setBookingsOpenDate(Utils.convertStringToDate(cursor.getString(cursor.getColumnIndex(bookingsOpenDate))));
             bikeRace.setBookingsCloseDate(Utils.convertStringToDate(cursor.getString(cursor.getColumnIndex(bookingsCloseDate))));
             bikeRace.setEventName(cursor.getString(cursor.getColumnIndex(eventName)));
@@ -149,11 +144,29 @@ class BikeRaceTableOperation implements TableOperation<BikeRace> {
         return bikeRaces;
     }
 
+    @Override
+    public String getWhereClauseForPk() {
+        return PK_COLUMN + "=?";
+    }
+
+    @Override
+    public String[] getWhereArgsForPk(long bikeRaceId) {
+        return new String[]{String.valueOf(bikeRaceId)};
+    }
+
     public String getWhereClauseForRaceType(String raceType) {
         return raceType + "=?";
     }
 
     public String[] getWhereArgsForRaceTypeTrue() {
         return new String[]{String.valueOf(1)};
+    }
+
+    public String getWhereClauseForMonthNumber() {
+        return monthNumber + "=?";
+    }
+
+    public String[] getWhereArgsForMonthNumber(int monthNumber) {
+        return new String[]{String.valueOf(monthNumber)};
     }
 }

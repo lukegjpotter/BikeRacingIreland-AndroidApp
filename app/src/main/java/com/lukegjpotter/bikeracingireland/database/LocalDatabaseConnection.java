@@ -98,7 +98,6 @@ public class LocalDatabaseConnection extends SQLiteOpenHelper implements Databas
     }
 
     // ---------- Retrieve -------- //
-
     /**
      * Get the {@code BikeRace}s with the {@code monthNumber} specified.
      * Month Number is starting from Zero. 0 is January, 11 is December, everything is inbetween.
@@ -108,8 +107,11 @@ public class LocalDatabaseConnection extends SQLiteOpenHelper implements Databas
      */
     @Override
     public synchronized List<BikeRace> retrieveBikeRacesInMonth(int monthNumber) {
-        // TODO Implement this.
-        return new ArrayList<>();
+
+        String whereClause = bikeRaceTable.getWhereClauseForMonthNumber();
+        String[] whereArgs = bikeRaceTable.getWhereArgsForMonthNumber(monthNumber);
+
+        return queryBikeRaceTable(whereClause, whereArgs);
     }
 
     /**
@@ -121,28 +123,10 @@ public class LocalDatabaseConnection extends SQLiteOpenHelper implements Databas
      */
     public synchronized List<BikeRace> retrieveBikeRacesWithRaceType(RaceType raceType) {
 
-        List<BikeRace> bikeRacesWithRaceType = new ArrayList<>();
-
         String whereClause = bikeRaceTable.getWhereClauseForRaceType(raceType.toString());
         String[] whereArgs = bikeRaceTable.getWhereArgsForRaceTypeTrue();
 
-        SQLiteDatabase database = getReadableDatabase();
-        Cursor cursor = database.query(BikeRaceTableOperation.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
-
-        if (cursor.moveToFirst()) {
-            // Get the BikeRaces from the BikeRaceTable.
-            bikeRacesWithRaceType = bikeRaceTable.populateListFromCursor(cursor);
-
-            // Get the BikeRaces's StageDetails.
-            for (BikeRace bikeRace : bikeRacesWithRaceType) {
-                bikeRace.setStageDetails(retrieveStageDetailsForBikeRaceId(bikeRace.getId(), database, cursor));
-            }
-        }
-
-        cursor.close();
-        database.close();
-
-        return bikeRacesWithRaceType;
+        return queryBikeRaceTable(whereClause, whereArgs);
     }
 
     /**
@@ -196,7 +180,31 @@ public class LocalDatabaseConnection extends SQLiteOpenHelper implements Databas
     }
 
     // -------------------------- Private Methods -------------------------- //
-    private List<StageDetail> retrieveStageDetailsForBikeRaceId(long bikeRaceId, SQLiteDatabase database, Cursor cursor) {
+    private List<BikeRace> queryBikeRaceTable(String whereClause, String[] whereArgs) {
+
+        List<BikeRace> bikeRaces = new ArrayList<>();
+        SQLiteDatabase database = getReadableDatabase();
+
+        Cursor cursor = database.query(BikeRaceTableOperation.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            // Get the BikeRace from the BikeRaceTable
+            bikeRaces = bikeRaceTable.populateListFromCursor(cursor);
+
+            // Get the BikeRace's StageDetails.
+            for (BikeRace bikeRace : bikeRaces) {
+                bikeRace.setStageDetails(queryStageDetailsTableForBikeRaceId(bikeRace.getId(), database, cursor));
+            }
+        }
+
+        // Close the connections.
+        database.close();
+        cursor.close();
+
+        return bikeRaces;
+    }
+
+    private List<StageDetail> queryStageDetailsTableForBikeRaceId(long bikeRaceId, SQLiteDatabase database, Cursor cursor) {
 
         List<StageDetail> stageDetails = new ArrayList<>();
         String[] whereArgs = new String[]{String.valueOf(bikeRaceId)};
@@ -204,7 +212,7 @@ public class LocalDatabaseConnection extends SQLiteOpenHelper implements Databas
         // HACK: Not using a LocalVariable here as it'll ruin the cursor.close() in the calling method.
         cursor = database.query(StageDetailTableOperation.TABLE_NAME, null, stageDetailTable.getWhereClauseForFk(), whereArgs, null, null, null);
 
-        if (cursor.moveToNext()) {
+        if (cursor.moveToFirst()) {
             stageDetails = stageDetailTable.populateListFromCursor(cursor);
         }
 

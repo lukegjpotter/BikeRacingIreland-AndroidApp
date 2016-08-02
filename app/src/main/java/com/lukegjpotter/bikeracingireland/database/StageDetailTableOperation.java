@@ -89,7 +89,8 @@ class StageDetailTableOperation implements TableOperation<StageDetail> {
     public List<StageDetail> populateListFromCursor(Cursor cursor) {
 
         List<StageDetail> stageDetails = new ArrayList<>();
-        cursor.moveToFirst();
+
+        if (!cursor.moveToFirst()) return stageDetails;
 
         do {
             StageDetail stageDetail = new StageDetail();
