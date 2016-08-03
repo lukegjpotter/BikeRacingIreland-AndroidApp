@@ -206,16 +206,9 @@ public class LocalDatabaseConnection extends SQLiteOpenHelper implements Databas
 
     private List<StageDetail> queryStageDetailsTableForBikeRaceId(long bikeRaceId, SQLiteDatabase database, Cursor cursor) {
 
-        List<StageDetail> stageDetails = new ArrayList<>();
-        String[] whereArgs = new String[]{String.valueOf(bikeRaceId)};
-
         // HACK: Not using a LocalVariable here as it'll ruin the cursor.close() in the calling method.
-        cursor = database.query(StageDetailTableOperation.TABLE_NAME, null, stageDetailTable.getWhereClauseForFk(), whereArgs, null, null, null);
+        cursor = database.query(StageDetailTableOperation.TABLE_NAME, null, stageDetailTable.getWhereClauseForFk(), stageDetailTable.getWhereArgsForFk(bikeRaceId), null, null, null);
 
-        if (cursor.moveToFirst()) {
-            stageDetails = stageDetailTable.populateListFromCursor(cursor);
-        }
-
-        return stageDetails;
+        return stageDetailTable.populateListFromCursor(cursor);
     }
 }

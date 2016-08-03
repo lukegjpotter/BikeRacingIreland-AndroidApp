@@ -78,7 +78,7 @@ class BikeRaceTableOperation implements TableOperation<BikeRace> {
         ContentValues cv = new ContentValues();
         cv.put(PK_COLUMN, bikeRace.getId());
         cv.put(startDate, Utils.convertDateToString(bikeRace.getStartDate()));
-        // TODO MonthNumber: Populate Month Number in Content Values
+        cv.put(monthNumber, bikeRace.getMonthNumber());
         cv.put(bookingsOpenDate, Utils.convertDateToString(bikeRace.getBookingsOpenDate()));
         cv.put(bookingsCloseDate, Utils.convertDateToString(bikeRace.getBookingsCloseDate()));
         cv.put(eventName, bikeRace.getEventName());
@@ -116,7 +116,7 @@ class BikeRaceTableOperation implements TableOperation<BikeRace> {
 
             bikeRace.setId(cursor.getLong(cursor.getColumnIndex(PK_COLUMN)));
             bikeRace.setStartDate(Utils.convertStringToDate(cursor.getString(cursor.getColumnIndex(startDate))));
-            // TODO MonthNumber: Populate monthNumber from Cursor
+            bikeRace.setMonthNumber(cursor.getInt(cursor.getColumnIndex(monthNumber)));
             bikeRace.setBookingsOpenDate(Utils.convertStringToDate(cursor.getString(cursor.getColumnIndex(bookingsOpenDate))));
             bikeRace.setBookingsCloseDate(Utils.convertStringToDate(cursor.getString(cursor.getColumnIndex(bookingsCloseDate))));
             bikeRace.setEventName(cursor.getString(cursor.getColumnIndex(eventName)));

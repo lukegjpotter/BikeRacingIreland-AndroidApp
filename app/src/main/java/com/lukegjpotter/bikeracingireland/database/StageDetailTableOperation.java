@@ -116,4 +116,8 @@ class StageDetailTableOperation implements TableOperation<StageDetail> {
     public String getWhereClauseForFk() {
         return fk_bikeRaceId + "=?";
     }
+
+    public String[] getWhereArgsForFk(long bikeRaceId) {
+        return new String[]{String.valueOf(bikeRaceId)};
+    }
 }

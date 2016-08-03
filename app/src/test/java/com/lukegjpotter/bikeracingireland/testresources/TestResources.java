@@ -21,6 +21,7 @@ public class TestResources {
         BikeRace bikeRace = new BikeRace();
         bikeRace.setId(130L);
         bikeRace.setStartDate(TestUtils.convertStringToDate("20160605"));
+        bikeRace.setMonthNumber(6);
         bikeRace.setBookingsOpenDate(TestUtils.convertStringToDate("20160605"));
         bikeRace.setBookingsCloseDate(TestUtils.convertStringToDate("20160605"));
         bikeRace.setEventName("Finn Wheeler's Time Trial");
@@ -75,6 +76,7 @@ public class TestResources {
         BikeRace bikeRace = new BikeRace();
         bikeRace.setId(131L);
         bikeRace.setStartDate(TestUtils.convertStringToDate("20160606"));
+        bikeRace.setMonthNumber(6);
         bikeRace.setBookingsOpenDate(TestUtils.convertStringToDate("20160606"));
         bikeRace.setBookingsCloseDate(TestUtils.convertStringToDate("20160608"));
         bikeRace.setEventName("Temple");

@@ -64,6 +64,7 @@ public class JsonParsingServiceTest {
         // Check BikeRace POJO Specific Fields.
         assertEquals("ID", actual.getId(), expected.getId());
         assertEquals("StartDate", actual.getStartDate(), expected.getStartDate());
+        assertTrue("MonthNumber", actual.getMonthNumber() == expected.getMonthNumber());
         assertEquals("EventName", actual.getEventName(), expected.getEventName());
         assertEquals("PromotingClub", actual.getPromotingClub(), expected.getPromotingClub());
         assertEquals("Organiser", actual.getOrganiser(), expected.getOrganiser());

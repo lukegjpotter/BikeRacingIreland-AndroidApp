@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-// TODO Add a monthNumber field and the associated Database storage and GSON parsing functionality.
 public class BikeRace {
 
     private long id;
     private Date startDate, bookingsOpenDate, bookingsCloseDate;
     private String eventName, promotingClub, organiser, registrationLink, organiserPhoneNumber, organiserEmail,
             location, province;
+    private int monthNumber;
     private List<StageDetail> stageDetails;
     @SerializedName("aplus")
     private boolean isAPlus;
@@ -41,6 +41,7 @@ public class BikeRace {
     public BikeRace() {
         setId(0L);
         setStartDate(new Date(0L));
+        setMonthNumber(-1);
         setBookingsOpenDate(new Date(0L));
         setBookingsCloseDate(new Date(0L));
         setEventName("");
@@ -160,6 +161,14 @@ public class BikeRace {
         this.province = province;
     }
 
+    public int getMonthNumber() {
+        return monthNumber;
+    }
+
+    public void setMonthNumber(int monthNumber) {
+        this.monthNumber = monthNumber;
+    }
+
     public List<StageDetail> getStageDetails() {
         return stageDetails;
     }
@@ -255,6 +264,7 @@ public class BikeRace {
             BikeRace other = (BikeRace) obj;
 
             return this.getStartDate().equals(other.getStartDate())
+                    && this.getMonthNumber() == other.getMonthNumber()
                     && this.getEventName().equals(other.getEventName())
                     && this.getPromotingClub().equals(other.getPromotingClub())
                     && this.getOrganiser().equals(other.getOrganiser())
