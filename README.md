@@ -16,19 +16,19 @@ in the [CyclingIrelandEventsRestService project's README file](https://github.co
 
 ## Version Alpha Features - In Development
 
-* [ ] Read `BikeRace` objects from `CyclingIrelandEventsRestService`.
-* [ ] Store `BikeRace` objects in a local database.
+* [x] Read `BikeRace` objects from `CyclingIrelandEventsRestService`.
+* [x] Store `BikeRace` objects in a local database.
+* [x] When reading the REST Service, only read races to the end of the
+      month.
 * [ ] Present `BikeRace` objects in a ListView for the Master Fragment.
 * [ ] Present `BikeRace` objects in the Details Fragment.
-* [ ] Add a Profile Filter to the ActionBar to filter on the Category of
-      the racer. 
+* [ ] When the end of the ListView is reached, download the next month's
+      races.
 
 ## Version 1.0 Features
 
-* [ ] When reading the REST Service, only read races to the end of the
-      month.
-* [ ] When the end of the ListView is reached, download the next month's
-      races.
+* [ ] Add a Profile Filter to the ActionBar to filter on the Category of
+      the racer. 
 * [ ] Use the Strava API and Google Maps Lite Mode to display the
       routes, in CardView style.
 
