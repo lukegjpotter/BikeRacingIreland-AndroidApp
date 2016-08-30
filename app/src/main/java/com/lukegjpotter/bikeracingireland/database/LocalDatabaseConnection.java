@@ -148,6 +148,20 @@ public class LocalDatabaseConnection extends SQLiteOpenHelper implements Databas
         return new ArrayList<>();
     }
 
+    /**
+     * Get the {@code BikeRace} with the ID number of {@code bikeRaceId}.
+     *
+     * @param bikeRaceId The ID number of the {@code BikeRace}.
+     * @return The {@code BikeRace} for with the specified ID.
+     */
+    public BikeRace retrieveBikeRaceWithId(long bikeRaceId) {
+
+        String whereClause = bikeRaceTable.getWhereClauseForPk();
+        String[] whereArgs = bikeRaceTable.getWhereArgsForPk(bikeRaceId);
+
+        return queryBikeRaceTable(whereClause, whereArgs).get(0);
+    }
+
     // ---------- Update ---------- //
     public synchronized void updateBikeRace(BikeRace updatedBikeRace) {
 

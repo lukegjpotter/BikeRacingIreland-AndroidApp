@@ -33,4 +33,8 @@ public class BikeRaceListViewDataService {
 
         return bikeRacesInMonth;
     }
+
+    public BikeRace fetchBikeRaceByPk(long databasePk) {
+        return ((LocalDatabaseConnection) localDatabaseConnection).retrieveBikeRaceWithId(databasePk);
+    }
 }
