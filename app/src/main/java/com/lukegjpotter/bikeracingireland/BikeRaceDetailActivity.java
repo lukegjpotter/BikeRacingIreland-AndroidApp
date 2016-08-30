@@ -40,10 +40,11 @@ public class BikeRaceDetailActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(BikeRaceDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(BikeRaceDetailFragment.ARG_ITEM_ID));
+            arguments.putString(BikeRaceDetailFragment.ARG_ITEM_ID, getIntent().getStringExtra(BikeRaceDetailFragment.ARG_ITEM_ID));
+
             BikeRaceDetailFragment fragment = new BikeRaceDetailFragment();
             fragment.setArguments(arguments);
+
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.bikerace_detail_container, fragment)
                     .commit();

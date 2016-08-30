@@ -1,5 +1,7 @@
 package com.lukegjpotter.bikeracingireland.utils;
 
+import android.content.Context;
+
 import com.lukegjpotter.bikeracingireland.constant.Constants;
 
 import java.text.ParseException;
@@ -8,6 +10,8 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Utils {
+
+    private static Context APPLICATION_CONTEXT;
 
     public static String convertDateToString(Date date) {
 
@@ -37,5 +41,13 @@ public class Utils {
     public static boolean convertIntegerToBoolean(int anInt) {
 
         return anInt == 1;
+    }
+
+    public static Context getApplicationContext() {
+        return APPLICATION_CONTEXT;
+    }
+
+    public static void setApplicationContext(Context applicationContext) {
+        APPLICATION_CONTEXT = applicationContext;
     }
 }

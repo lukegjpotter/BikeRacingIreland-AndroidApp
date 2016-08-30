@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.lukegjpotter.bikeracingireland.model.BikeRace;
 import com.lukegjpotter.bikeracingireland.service.BikeRaceListViewDataService;
+import com.lukegjpotter.bikeracingireland.utils.Utils;
 import com.lukegjpotter.bikeracingireland.viewadapter.BikeRaceListRecyclerViewAdapter;
 
 import java.util.List;
@@ -34,7 +35,9 @@ public class BikeRaceListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-        mDataService = new BikeRaceListViewDataService(getApplicationContext());
+        Utils.setApplicationContext(getApplicationContext());
+
+        mDataService = new BikeRaceListViewDataService(Utils.getApplicationContext());
         View recyclerView = findViewById(R.id.bikerace_list);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
