@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.lukegjpotter.bikeracingireland.BikeRaceDetailActivity;
 import com.lukegjpotter.bikeracingireland.BikeRaceDetailFragment;
+import com.lukegjpotter.bikeracingireland.R;
 
 /**
  * The {@code OnClickListener} for the {@code BikeRaceListRecyclerViewAdapter}'s CardView.
