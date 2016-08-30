@@ -31,6 +31,8 @@ public class BikeRaceListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bikerace_list);
 
+        // TODO Load Initial Data Into Database for Testing.
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
