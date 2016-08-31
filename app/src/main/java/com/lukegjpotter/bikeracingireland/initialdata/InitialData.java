@@ -21,17 +21,15 @@ public class InitialData {
     }
 
     /**
-     * A threaded method that will return two {@code BikeRace} objects for the current Month.
-     *
-     * @return A {@code List} of {@code BikeRace} objects.
+     * A threaded method that will insert two {@code BikeRace} objects for the current Month into the Database.
      */
-    public List<BikeRace> insertInitialData() {
-        final List<BikeRace> bikeRaces = new ArrayList<>();
-
+    public void insertInitialData() {
+        
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-
+                
+                final List<BikeRace> bikeRaces = new ArrayList<>();
                 bikeRaces.add(getFinnWheelersTTRace());
                 bikeRaces.add(getMarylandWheelersRace());
 
@@ -46,8 +44,6 @@ public class InitialData {
             }
         });
         thread.start();
-
-        return bikeRaces;
     }
 
     private BikeRace getFinnWheelersTTRace() {
