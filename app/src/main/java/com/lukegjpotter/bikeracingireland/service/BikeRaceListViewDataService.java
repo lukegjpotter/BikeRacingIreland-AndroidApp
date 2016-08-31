@@ -37,4 +37,8 @@ public class BikeRaceListViewDataService {
     public BikeRace fetchBikeRaceByPk(long databasePk) {
         return ((LocalDatabaseConnection) localDatabaseConnection).retrieveBikeRaceWithId(databasePk);
     }
+
+    public void insertBikeRaces(List<BikeRace> bikeRaces) {
+        ((LocalDatabaseConnection) localDatabaseConnection).insertBikeRaceList(bikeRaces);
+    }
 }

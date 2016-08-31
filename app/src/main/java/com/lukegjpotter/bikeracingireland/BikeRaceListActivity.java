@@ -5,8 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
+import com.lukegjpotter.bikeracingireland.initialdata.InitialData;
 import com.lukegjpotter.bikeracingireland.model.BikeRace;
 import com.lukegjpotter.bikeracingireland.service.BikeRaceListViewDataService;
 import com.lukegjpotter.bikeracingireland.utils.Utils;
@@ -31,18 +31,20 @@ public class BikeRaceListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bikerace_list);
 
-        // TODO Load Initial Data Into Database for Testing.
+        // Set up the Application Context and the DataService.
+        Utils.setApplicationContext(getApplicationContext());
+        mDataService = new BikeRaceListViewDataService(Utils.getApplicationContext());
+
+        // Insert Initial Data for testing the app.
+        new InitialData(mDataService).insertInitialData();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-        Utils.setApplicationContext(getApplicationContext());
-
-        mDataService = new BikeRaceListViewDataService(Utils.getApplicationContext());
-        View recyclerView = findViewById(R.id.bikerace_list);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.bikerace_list);
         assert recyclerView != null;
-        setupRecyclerView((RecyclerView) recyclerView);
+        setupRecyclerView(recyclerView);
 
         if (findViewById(R.id.bikerace_detail_container) != null) {
             /* The detail container view will be present only in the large-screen layouts
