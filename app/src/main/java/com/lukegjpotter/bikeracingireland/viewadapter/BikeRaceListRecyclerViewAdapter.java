@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.lukegjpotter.bikeracingireland.R;
 import com.lukegjpotter.bikeracingireland.listeners.BikeRaceListCardOnClickListener;
 import com.lukegjpotter.bikeracingireland.model.BikeRace;
+import com.lukegjpotter.bikeracingireland.utils.Utils;
 import com.lukegjpotter.bikeracingireland.viewholder.BikeRaceListCardViewHolder;
 
 import java.util.List;
@@ -36,11 +37,16 @@ public class BikeRaceListRecyclerViewAdapter extends RecyclerView.Adapter<BikeRa
 
     @Override
     public void onBindViewHolder(BikeRaceListCardViewHolder holder, int position) {
-        // Populate the View Holder...
         holder.mBikeRaceDatabasePk = mBikeRaces.get(position).getId();
-
         BikeRaceListCardOnClickListener cardOnClickListener = new BikeRaceListCardOnClickListener(mIsTwoPaneLayout, mFragmentManager, holder.mBikeRaceDatabasePk);
         holder.mCardView.setOnClickListener(cardOnClickListener);
+
+        /*holder.mRouteMap;*/ // TODO: Use the Strava API to Populate the MapView
+
+        holder.mEventName.setText(mBikeRaces.get(position).getEventName());
+        holder.mPromotingClub.setText(mBikeRaces.get(position).getPromotingClub());
+        holder.mLocation.setText(mBikeRaces.get(position).getLocation());
+        holder.mStartDate.setText(Utils.convertDateToString(mBikeRaces.get(position).getStartDate()));
     }
 
     @Override
