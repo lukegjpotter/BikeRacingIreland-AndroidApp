@@ -1,13 +1,14 @@
 package com.lukegjpotter.bikeracingireland;
 
 import android.app.Activity;
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.lukegjpotter.bikeracingireland.model.BikeRace;
 import com.lukegjpotter.bikeracingireland.service.BikeRaceListViewDataService;
@@ -40,24 +41,22 @@ public class BikeRaceDetailFragment extends Fragment {
             // TODO In a real-world scenario, use a Loader to load content from a content provider.
             BikeRaceListViewDataService dataService = new BikeRaceListViewDataService(Utils.getApplicationContext());
             mBikeRace = dataService.fetchBikeRaceByPk(databasePk);
-
-            Activity activity = this.getActivity();
-            CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
-            if (appBarLayout != null) {
-                appBarLayout.setTitle(mBikeRace.getEventName());
-            }
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.bikerace_detail, container, false);
 
-        // Show the dummy content as text in a TextView.
-        if (mBikeRace != null) {
-            ((TextView) rootView.findViewById(R.id.bikerace_detail)).setText(mBikeRace.toString());
+        ViewDataBinding binding = DataBindingUtil.inflate(inflater, R.layout.bikerace_detail, container, false);
+        binding.setVariable(com.lukegjpotter.bikeracingireland.BR.bikeRace, mBikeRace);
+
+        Activity activity = this.getActivity();
+        CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
+
+        if (appBarLayout != null) {
+            appBarLayout.setTitle(mBikeRace.getEventName());
         }
 
-        return rootView;
+        return binding.getRoot();
     }
 }
