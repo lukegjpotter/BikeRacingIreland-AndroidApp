@@ -29,8 +29,9 @@ public class BikeRaceListCardOnClickListener implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if (mIsTwoPaneLayout) {
+        if (mIsTwoPaneLayout) { // Tablet Layout
             Bundle arguments = new Bundle();
+            // TODO: When Testing on tablets, this might need to be a String for the Receiving Activity and Fragment.
             arguments.putLong(BikeRaceDetailFragment.ARG_ITEM_ID, mBikeRaceDatabasePk);
             BikeRaceDetailFragment fragment = new BikeRaceDetailFragment();
             fragment.setArguments(arguments);
@@ -39,10 +40,10 @@ public class BikeRaceListCardOnClickListener implements View.OnClickListener {
                     .beginTransaction()
                     .replace(R.id.bikerace_detail_container, fragment)
                     .commit();
-        } else {
+        } else { // Phone Layout
             Context context = view.getContext();
             Intent intent = new Intent(context, BikeRaceDetailActivity.class);
-            intent.putExtra(BikeRaceDetailFragment.ARG_ITEM_ID, mBikeRaceDatabasePk);
+            intent.putExtra(BikeRaceDetailFragment.ARG_ITEM_ID, Long.valueOf(mBikeRaceDatabasePk).toString());
 
             context.startActivity(intent);
         }

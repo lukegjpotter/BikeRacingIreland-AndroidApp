@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import com.lukegjpotter.bikeracingireland.initialdata.InitialData;
 import com.lukegjpotter.bikeracingireland.model.BikeRace;
 import com.lukegjpotter.bikeracingireland.service.BikeRaceListViewDataService;
+import com.lukegjpotter.bikeracingireland.utils.MonthManager;
 import com.lukegjpotter.bikeracingireland.utils.Utils;
 import com.lukegjpotter.bikeracingireland.viewadapter.BikeRaceListRecyclerViewAdapter;
 
@@ -57,7 +58,7 @@ public class BikeRaceListActivity extends AppCompatActivity {
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         // TODO Make the MonthNumber Dynamically changed based on current month and scrolling of the view.
-        int monthNumber = 8;
+        int monthNumber = MonthManager.currentMonthNumber();
         // TODO Make a Thread out of this call ...Somewhere.
         List<BikeRace> bikeRaces = mDataService.fetchBikeRacesInMonthNumber(monthNumber);
         recyclerView.setAdapter(new BikeRaceListRecyclerViewAdapter(mTwoPane, getSupportFragmentManager(), bikeRaces));

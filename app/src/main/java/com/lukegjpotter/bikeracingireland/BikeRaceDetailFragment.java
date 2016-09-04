@@ -37,7 +37,7 @@ public class BikeRaceDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments().containsKey(ARG_ITEM_ID)) {
-            long databasePk = getArguments().getLong(ARG_ITEM_ID);
+            long databasePk = Long.valueOf(getArguments().getString(ARG_ITEM_ID));
             // TODO In a real-world scenario, use a Loader to load content from a content provider.
             BikeRaceListViewDataService dataService = new BikeRaceListViewDataService(Utils.getApplicationContext());
             mBikeRace = dataService.fetchBikeRaceByPk(databasePk);

@@ -32,6 +32,7 @@ public class RemoteDatabaseConnection implements DatabaseConnection {
 
         HttpURLConnection connection = null;
         List<BikeRace> bikeRaces = null;
+        // TODO: Future problem. This string resource is not loading: android.content.res.Resources$NotFoundException
         String requestUrl = Resources.getSystem().getString(R.string.request_url_month_number, String.valueOf(monthNumber));
 
         try {

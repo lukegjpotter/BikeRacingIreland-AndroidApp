@@ -63,8 +63,7 @@ class BikeRaceTableOperation implements TableOperation<BikeRace> {
                 + isWoman + " INTEGER, "
                 + isJunior + " INTEGER, "
                 + isYouth + " INTEGER, "
-                + isParacycling + " INTEGER, "
-                + ");";
+                + isParacycling + " INTEGER);";
     }
 
     @Override
