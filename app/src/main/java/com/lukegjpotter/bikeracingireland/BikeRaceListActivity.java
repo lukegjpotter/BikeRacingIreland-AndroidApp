@@ -30,12 +30,12 @@ public class BikeRaceListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_bikerace_list);
 
         // Set up the Application Context and the DataService.
         Utils.setApplicationContext(getApplicationContext());
         mDataService = new BikeRaceListViewDataService(Utils.getApplicationContext());
-
         // Insert Initial Data for testing the app.
         new InitialData(mDataService).insertInitialData();
 

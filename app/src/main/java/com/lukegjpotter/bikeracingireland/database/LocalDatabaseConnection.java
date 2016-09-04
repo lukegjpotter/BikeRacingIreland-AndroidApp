@@ -67,14 +67,13 @@ public class LocalDatabaseConnection extends SQLiteOpenHelper implements Databas
 
     // --------------------------- CRUD Methods --------------------------- //
     // ---------- Create ---------- //
-    public synchronized void insertBikeRace(BikeRace bikeRace) {
+    public synchronized void insertBikeRace(BikeRace bikeRace, SQLiteDatabase database) {
 
         // Abandon if this BikeRace is a duplicate.
         if (DatabaseConnectionUtils.isBikeRaceInDatabase(getReadableDatabase(), bikeRace.getId()))
             return;
 
         // Proceed with the insert.
-        SQLiteDatabase database = getWritableDatabase();
         database.insert(BikeRaceTableOperation.TABLE_NAME, null, bikeRaceTable.getContentValues(bikeRace, null));
 
         for (StageDetail stageDetail : bikeRace.getStageDetails()) {
@@ -86,15 +85,16 @@ public class LocalDatabaseConnection extends SQLiteOpenHelper implements Databas
                 database.update(StageDetailTableOperation.TABLE_NAME, stageDetailTable.getContentValues(stageDetail, bikeRace.getId()), stageDetailTable.getWhereClauseForPk(), stageDetailTable.getWhereArgsForPk(stageDetail.getId()));
             }
         }
-
-        database.close();
     }
 
     public synchronized void insertBikeRaceList(List<BikeRace> bikeRaces) {
+        SQLiteDatabase database = getWritableDatabase();
 
         for (BikeRace bikeRaceToInsert : bikeRaces) {
-            insertBikeRace(bikeRaceToInsert);
+            insertBikeRace(bikeRaceToInsert, database);
         }
+
+        database.close();
     }
 
     // ---------- Retrieve -------- //
@@ -167,7 +167,7 @@ public class LocalDatabaseConnection extends SQLiteOpenHelper implements Databas
 
         // Create the BikeRace if it doesn't exist, then exit, as there's nothing else to update.
         if (!DatabaseConnectionUtils.isBikeRaceInDatabase(getReadableDatabase(), updatedBikeRace.getId())) {
-            insertBikeRace(updatedBikeRace);
+            insertBikeRace(updatedBikeRace, getWritableDatabase());
             return;
         }
 

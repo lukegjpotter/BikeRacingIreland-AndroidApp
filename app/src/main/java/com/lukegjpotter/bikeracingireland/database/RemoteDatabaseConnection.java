@@ -1,15 +1,15 @@
 package com.lukegjpotter.bikeracingireland.database;
 
-import android.content.res.Resources;
-
 import com.lukegjpotter.bikeracingireland.R;
 import com.lukegjpotter.bikeracingireland.model.BikeRace;
 import com.lukegjpotter.bikeracingireland.service.json.JsonParsingService;
+import com.lukegjpotter.bikeracingireland.utils.Utils;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RemoteDatabaseConnection implements DatabaseConnection {
@@ -28,30 +28,39 @@ public class RemoteDatabaseConnection implements DatabaseConnection {
      * @return The List of the {@code BikeRace}s with the {@code monthNumber}.
      */
     @Override
-    public List<BikeRace> retrieveBikeRacesInMonth(int monthNumber) {
+    public List<BikeRace> retrieveBikeRacesInMonth(final int monthNumber) {
 
-        HttpURLConnection connection = null;
-        List<BikeRace> bikeRaces = null;
-        // TODO: Future problem. This string resource is not loading: android.content.res.Resources$NotFoundException
-        String requestUrl = Resources.getSystem().getString(R.string.request_url_month_number, String.valueOf(monthNumber));
+        final List<BikeRace> bikeRaces = new ArrayList<>();
 
-        try {
-            // Make HTTP GET URL Call
-            connection = (HttpURLConnection) new URL(requestUrl).openConnection();
-            connection.connect();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HttpURLConnection connection = null;
 
-            // Assign the Response to a Stream Object
-            InputStreamReader inputStreamReader = new InputStreamReader(connection.getInputStream());
+                // TODO: Future problem. This string resource is not loading: android.content.res.Resources$NotFoundException
+                String requestUrl = Utils.getApplicationContext().getString(R.string.request_url_month_number, String.valueOf(monthNumber));
 
-            // Parse Stream in jsonParsingService
-            bikeRaces = jsonParsingService.parseInputStreamReader(inputStreamReader);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                connection.disconnect();
+                try {
+                    // Make HTTP GET URL Call
+                    connection = (HttpURLConnection) new URL(requestUrl).openConnection();
+                    connection.connect();
+
+                    // Assign the Response to a Stream Object
+                    InputStreamReader inputStreamReader = new InputStreamReader(connection.getInputStream());
+
+                    // Parse Stream in jsonParsingService
+                    bikeRaces.addAll(jsonParsingService.parseInputStreamReader(inputStreamReader));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (connection != null) {
+                        connection.disconnect();
+                    }
+                }
+
             }
-        }
+        }).start();
+
         return bikeRaces;
     }
 }

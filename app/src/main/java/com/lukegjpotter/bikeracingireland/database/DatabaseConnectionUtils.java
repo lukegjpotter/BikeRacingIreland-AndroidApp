@@ -16,7 +16,6 @@ class DatabaseConnectionUtils {
         Cursor cursor = database.query(BikeRaceTableOperation.TABLE_NAME, null, whereClause, whereArgs, null, null, null, limit);
         boolean isBikeRaceInDatabase = cursor.moveToFirst();
 
-        database.close();
         cursor.close();
 
         return isBikeRaceInDatabase;
@@ -33,7 +32,6 @@ class DatabaseConnectionUtils {
         Cursor cursor = database.query(StageDetailTableOperation.TABLE_NAME, null, whereClause, whereArgs, null, null, null, limit);
         boolean isStageDetailInDatabase = cursor.moveToFirst();
 
-        database.close();
         cursor.close();
 
         return isStageDetailInDatabase;

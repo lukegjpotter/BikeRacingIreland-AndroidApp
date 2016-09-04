@@ -3,10 +3,10 @@ package com.lukegjpotter.bikeracingireland.initialdata;
 import com.lukegjpotter.bikeracingireland.model.BikeRace;
 import com.lukegjpotter.bikeracingireland.model.StageDetail;
 import com.lukegjpotter.bikeracingireland.service.BikeRaceListViewDataService;
+import com.lukegjpotter.bikeracingireland.utils.MonthManager;
 import com.lukegjpotter.bikeracingireland.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -24,8 +24,8 @@ public class InitialData {
      * A threaded method that will insert two {@code BikeRace} objects for the current Month into the Database.
      */
     public void insertInitialData() {
-        
-        Thread thread = new Thread(new Runnable() {
+
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 
@@ -33,17 +33,10 @@ public class InitialData {
                 bikeRaces.add(getFinnWheelersTTRace());
                 bikeRaces.add(getMarylandWheelersRace());
 
-                // Set the MonthNumber for the List Elements.
-                int monthNumber = Calendar.getInstance().get(Calendar.MONTH) + 1;
-                for (BikeRace bikeRace : bikeRaces) {
-                    bikeRace.setMonthNumber(monthNumber);
-                }
-
                 // Insert the Bike Races into the Database
                 mDataService.insertBikeRaces(bikeRaces);
             }
-        });
-        thread.start();
+        }).start();
     }
 
     private BikeRace getFinnWheelersTTRace() {
@@ -51,7 +44,7 @@ public class InitialData {
         BikeRace bikeRace = new BikeRace();
         bikeRace.setId(130L);
         bikeRace.setStartDate(Utils.convertStringToDate("20160605"));
-        bikeRace.setMonthNumber(6);
+        bikeRace.setMonthNumber(MonthManager.currentMonthNumber());
         bikeRace.setBookingsOpenDate(Utils.convertStringToDate("20160605"));
         bikeRace.setBookingsCloseDate(Utils.convertStringToDate("20160605"));
         bikeRace.setEventName("Finn Wheeler's Time Trial");
@@ -97,7 +90,7 @@ public class InitialData {
         BikeRace bikeRace = new BikeRace();
         bikeRace.setId(131L);
         bikeRace.setStartDate(Utils.convertStringToDate("20160606"));
-        bikeRace.setMonthNumber(6);
+        bikeRace.setMonthNumber(MonthManager.currentMonthNumber());
         bikeRace.setBookingsOpenDate(Utils.convertStringToDate("20160606"));
         bikeRace.setBookingsCloseDate(Utils.convertStringToDate("20160608"));
         bikeRace.setEventName("Temple");

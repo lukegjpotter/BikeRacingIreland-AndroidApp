@@ -21,6 +21,10 @@ public class BikeRaceListViewDataService {
 
     public List<BikeRace> fetchBikeRacesInMonthNumber(int monthNumber) {
 
+        try { // TODO: This Sleep is just for testing
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+        }
         List<BikeRace> bikeRacesInMonth = localDatabaseConnection.retrieveBikeRacesInMonth(monthNumber);
 
         if (bikeRacesInMonth.isEmpty()) {
