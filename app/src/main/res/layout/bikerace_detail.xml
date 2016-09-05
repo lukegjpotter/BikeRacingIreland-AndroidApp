@@ -21,7 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_gravity="top"
-            android:background="@color/colorPrimary" />
+            android:background="@color/colorPrimary"
+            android:contentDescription="PlaceHolder for the Map" />
 
         <TextView
             android:id="@+id/event_name_detail"
@@ -76,32 +77,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:paddingTop="5dp">
 
-            <LinearLayout
+            <TextView
+                style="?android:attr/textAppearanceLarge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:text="@string/stages_races" />
 
-                <TextView
-                    style="?android:attr/textAppearanceLarge"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Stages/Races" />
+            <TextView
+                android:id="@+id/stage_details"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingRight="10dp"
+                android:text="Stage Details toString()" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/stage_details"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:paddingRight="10dp"
-                        android:text="Stage Details toString()" />
-
-                </LinearLayout>
-            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -110,74 +101,9 @@
             android:layout_height="wrap_content"
             android:paddingTop="5dp">
 
+
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="?android:attr/textAppearanceLarge"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Booking" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:paddingRight="10dp"
-                            android:text="Bookings Open:" />
-
-                        <TextView
-                            android:id="@+id/bookings_open_date_details"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:paddingRight="10dp"
-                            android:text="@{bikeRace.bookingsOpenDate, default=02_01_16}" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:paddingRight="10dp"
-                            android:text="Bookings Close:" />
-
-                        <TextView
-                            android:id="@+id/bookings_close_date_details"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:paddingRight="10dp"
-                            android:text="@{bikeRace.bookingsOpenDate, default=05_01_16}" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/register_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Register" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/contact_details"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="5dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
@@ -185,32 +111,88 @@
                     style="?android:attr/textAppearanceLarge"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Contact Organiser" />
+                    android:text="@string/booking" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/organiser_name_details"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:paddingRight="10dp"
-                        android:text="@{bikeRace.organiser, default=Organiser_Name}" />
+                        android:text="@string/bookings_open" />
 
                     <TextView
-                        android:id="@+id/organiser_phone_details"
+                        android:id="@+id/bookings_open_date_details"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:paddingRight="10dp"
-                        android:text="@{bikeRace.organiserPhoneNumber, default=Phone}" />
-
-                    <TextView
-                        android:id="@+id/organiser_email_details"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@{bikeRace.organiserEmail, default=E_Mail}" />
+                        android:text="@{bikeRace.bookingsOpenDate, default=02_01_16}" />
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingRight="10dp"
+                        android:text="@string/bookings_close" />
+
+                    <TextView
+                        android:id="@+id/bookings_close_date_details"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingRight="10dp"
+                        android:text="@{bikeRace.bookingsOpenDate, default=05_01_16}" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/register_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/register" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/contact_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="5dp">
+
+            <TextView
+                style="?android:attr/textAppearanceLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/contact_organiser" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/organiser_name_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingRight="10dp"
+                    android:text="@{bikeRace.organiser, default=Organiser_Name}" />
+
+                <TextView
+                    android:id="@+id/organiser_phone_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingRight="10dp"
+                    android:text="@{bikeRace.organiserPhoneNumber, default=Phone}" />
+
+                <TextView
+                    android:id="@+id/organiser_email_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@{bikeRace.organiserEmail, default=E_Mail}" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

@@ -3,4 +3,10 @@
     <string name="title_bikerace_detail">BikeRace Detail</string>
     <string name="date_format">yyyyMMdd</string>
     <string name="request_url_month_number">http://localhost:8080/roadraces/month/%1$s</string>
+    <string name="stages_races">Stages/Races</string>
+    <string name="booking">Booking</string>
+    <string name="bookings_open">Bookings Open:</string>
+    <string name="bookings_close">Bookings Close:</string>
+    <string name="register">Register</string>
+    <string name="contact_organiser">Contact Organiser</string>
 </resources>
