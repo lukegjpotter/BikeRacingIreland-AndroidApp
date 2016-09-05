@@ -41,14 +41,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingRight="10dp"
-                android:text="By Promoting Club"
+                android:text="@{`By ` + bikeRace.promotingClub, default=By_Promoting_Club}"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
                 android:id="@+id/start_date_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="On 10/01/16"
+                android:text="@{`On ` + bikeRace.startDate, default=On_10_01_16}"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </LinearLayout>
 
@@ -62,14 +62,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingRight="10dp"
-                android:text="In LukeVille"
+                android:text="@{`In ` + bikeRace.location, default=In_LukeVille}"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
                 android:id="@+id/province_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Leinster"
+                android:text="@{bikeRace.province, default=Leinster}"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </LinearLayout>
 
@@ -140,7 +140,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:paddingRight="10dp"
-                            android:text="02/01/16" />
+                            android:text="@{bikeRace.bookingsOpenDate, default=02_01_16}" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -158,7 +158,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:paddingRight="10dp"
-                            android:text="05/01/16" />
+                            android:text="@{bikeRace.bookingsOpenDate, default=05_01_16}" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -196,20 +196,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:paddingRight="10dp"
-                        android:text="Organiser's Name" />
+                        android:text="@{bikeRace.organiser, default=Organiser_Name}" />
 
                     <TextView
                         android:id="@+id/organiser_phone_details"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:paddingRight="10dp"
-                        android:text="Phone" />
+                        android:text="@{bikeRace.organiserPhoneNumber, default=Phone}" />
 
                     <TextView
                         android:id="@+id/organiser_email_details"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="E-Mail" />
+                        android:text="@{bikeRace.organiserEmail, default=E_Mail}" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
