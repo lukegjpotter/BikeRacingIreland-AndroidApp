@@ -51,7 +51,7 @@
                 android:id="@+id/start_date_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{`On ` + Utils.convertDateToString(bikeRace.startDate), default=On_10_01_16}"
+                android:text="@{`On ` + Utils.convertDateToUiString(bikeRace.startDate), default=On_10_01_16}"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </LinearLayout>
 
@@ -131,7 +131,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:paddingRight="10dp"
-                        android:text="@{Utils.convertDateToString(bikeRace.bookingsOpenDate), default=02_01_16}" />
+                        android:text="@{Utils.convertDateToUiString(bikeRace.bookingsOpenDate), default=02_01_16}" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -149,7 +149,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:paddingRight="10dp"
-                        android:text="@{Utils.convertDateToString(bikeRace.bookingsOpenDate), default=05_01_16}" />
+                        android:text="@{Utils.convertDateToUiString(bikeRace.bookingsOpenDate), default=05_01_16}" />
                 </LinearLayout>
             </LinearLayout>
 

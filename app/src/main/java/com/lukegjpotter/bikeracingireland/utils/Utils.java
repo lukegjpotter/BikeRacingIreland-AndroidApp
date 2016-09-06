@@ -22,6 +22,15 @@ public class Utils {
         }
     }
 
+    public static String convertDateToUiString(Date date) {
+
+        try {
+            return new SimpleDateFormat(Constants.UI_DATE_FORMAT, Locale.UK).format(date);
+        } catch (NullPointerException e) {
+            return "";
+        }
+    }
+
     public static Date convertStringToDate(String dateString) {
 
         try {
