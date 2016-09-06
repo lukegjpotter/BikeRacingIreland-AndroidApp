@@ -9,8 +9,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.lukegjpotter.bikeracingireland.model.BikeRace;
+import com.lukegjpotter.bikeracingireland.model.StageDetail;
 import com.lukegjpotter.bikeracingireland.service.BikeRaceListViewDataService;
 import com.lukegjpotter.bikeracingireland.utils.Utils;
 
@@ -26,8 +29,8 @@ public class BikeRaceDetailFragment extends Fragment {
     private BikeRace mBikeRace;
 
     /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
+     * Mandatory empty constructor for the fragment manager to instantiate the fragment (e.g. upon
+     * screen orientation changes).
      */
     public BikeRaceDetailFragment() {
     }
@@ -57,6 +60,30 @@ public class BikeRaceDetailFragment extends Fragment {
             appBarLayout.setTitle(mBikeRace.getEventName());
         }
 
+        setupStageDetailsLayout(binding);
+
         return binding.getRoot();
+    }
+
+    private void setupStageDetailsLayout(ViewDataBinding binding) {
+
+        LinearLayout stageDetailsLayout = (LinearLayout) binding.getRoot().findViewById(R.id.stage_details_layout);
+
+        // Do not display the views if there is nothing to show.
+        if (mBikeRace.getStageDetails().isEmpty()) {
+            stageDetailsLayout.removeAllViews();
+            return;
+        }
+
+        // Remove the placeholder text.
+        stageDetailsLayout.removeView(binding.getRoot().findViewById(R.id.stage_details_placeholder));
+
+        for (StageDetail stageDetail : mBikeRace.getStageDetails()) {
+            TextView stageDetailsTextView = new TextView(binding.getRoot().getContext());
+            stageDetailsTextView.setText(stageDetail.toString());
+            stageDetailsTextView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            stageDetailsLayout.addView(stageDetailsTextView);
+        }
     }
 }
