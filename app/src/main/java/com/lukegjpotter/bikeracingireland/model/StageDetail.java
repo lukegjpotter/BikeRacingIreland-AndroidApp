@@ -159,10 +159,14 @@ public class StageDetail {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("\n\tRace ").append(this.getRaceNumber()).append(": ");
-        sb.append("Stage ").append(this.getStageNumber()).append(": ");
+        sb.append("Race ").append(this.getRaceNumber()).append(": ");
+        sb.append("Stage ").append(this.getStageNumber()).append(": ").append("\n");
         sb.append(this.getCategory()).append(" - ");
-        sb.append(this.getKilometers()).append("km");
+        sb.append(this.getKilometers()).append("km").append("\n");
+        sb.append("Sign-on Time: ").append(this.getSignOnTime()).append("\n");
+        sb.append("Start Time: ").append(this.getSignOnTime()).append("\n");
+        sb.append("Sign-on Location: ").append(this.getLocation()).append("\n");
+        sb.append("Race Type: ").append(this.getRaceType());
         return sb.toString();
     }
 }
