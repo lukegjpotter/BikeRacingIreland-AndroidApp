@@ -67,7 +67,7 @@ public class LocalDatabaseConnection extends SQLiteOpenHelper implements Databas
 
     // --------------------------- CRUD Methods --------------------------- //
     // ---------- Create ---------- //
-    public synchronized void insertBikeRace(BikeRace bikeRace, SQLiteDatabase database) {
+    private synchronized void insertBikeRace(BikeRace bikeRace, SQLiteDatabase database) {
 
         // Abandon if this BikeRace is a duplicate.
         if (DatabaseConnectionUtils.isBikeRaceInDatabase(getReadableDatabase(), bikeRace.getId()))
