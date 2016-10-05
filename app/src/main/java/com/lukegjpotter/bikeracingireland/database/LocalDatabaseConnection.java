@@ -11,6 +11,7 @@ import com.lukegjpotter.bikeracingireland.model.StageDetail;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class LocalDatabaseConnection extends SQLiteOpenHelper implements DatabaseConnection {
 
@@ -144,6 +145,21 @@ public class LocalDatabaseConnection extends SQLiteOpenHelper implements Databas
      * @return The List of the {@code BikeRace}s with the {@code category}.
      */
     public synchronized List<BikeRace> retrieveBikeRacesInCategory(String category) {
+        // TODO Implement this.
+        return new ArrayList<>();
+    }
+
+    /**
+     * Mainly aimed at the ProfileFilter Feature, this will return the {@code BikeRace}s for the
+     * specified {@code RaceType}s, Categories and Months.
+     *
+     * @param raceTypes    A Set of the RaceTypes to search for.
+     * @param categories   A Set of the Categories to search for.
+     * @param searchMonths The Months to search, use {@code MonthManager.getMonthsInListView()}.
+     * @return The List of the {@code BikeRace}s for the specified {@code RaceType}s, Categories and
+     * Months.
+     */
+    public synchronized List<BikeRace> retrieveBikeRacesWithRaceTypeInCategoryForMonths(Set<RaceType> raceTypes, Set<String> categories, Set<Integer> searchMonths) {
         // TODO Implement this.
         return new ArrayList<>();
     }
