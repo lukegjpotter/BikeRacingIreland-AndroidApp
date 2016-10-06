@@ -101,7 +101,7 @@ public class LocalDatabaseConnection extends SQLiteOpenHelper implements Databas
     // ---------- Retrieve -------- //
     /**
      * Get the {@code BikeRace}s with the {@code monthNumber} specified.
-     * Month Number is starting from Zero. 0 is January, 11 is December, everything is inbetween.
+     * Month Number is starting from Zero. 0 is January, 11 is December, everything is in between.
      *
      * @param monthNumber The number of the Month to search for, e.g. 0 is Jan, 11 is Dec
      * @return The List of the {@code BikeRace}s with the {@code monthNumber}.
@@ -124,7 +124,7 @@ public class LocalDatabaseConnection extends SQLiteOpenHelper implements Databas
      */
     public synchronized List<BikeRace> retrieveBikeRacesWithRaceType(RaceType raceType) {
 
-        String whereClause = bikeRaceTable.getWhereClauseForRaceType(raceType.toString());
+        String whereClause = bikeRaceTable.getWhereClauseForRaceType(raceType.getDbText());
         String[] whereArgs = bikeRaceTable.getWhereArgsForRaceTypeTrue();
 
         return queryBikeRaceTable(whereClause, whereArgs);
@@ -154,14 +154,55 @@ public class LocalDatabaseConnection extends SQLiteOpenHelper implements Databas
      * specified {@code RaceType}s, Categories and Months.
      *
      * @param raceTypes    A Set of the RaceTypes to search for.
+     *                     Race Types are A+, A1, A2, ..., Women, Vets, Youth, ParaCycling.
      * @param categories   A Set of the Categories to search for.
+     *                     Categories can be Time Trial, Road, Criterium, etc.
      * @param searchMonths The Months to search, use {@code MonthManager.getMonthsInListView()}.
      * @return The List of the {@code BikeRace}s for the specified {@code RaceType}s, Categories and
      * Months.
      */
     public synchronized List<BikeRace> retrieveBikeRacesWithRaceTypeInCategoryForMonths(Set<RaceType> raceTypes, Set<String> categories, Set<Integer> searchMonths) {
-        // TODO Implement this.
-        return new ArrayList<>();
+        String andConstant = " AND ", orConstant = " OR ";
+
+        /*
+         * Example Query that needs to be formed:
+         * SELECT *
+         *   FROM BikeRaceTable
+         *  WHERE a1=1 OR a2=1
+         *    AND category='Time Trial' OR category='Road'
+         *    AND monthNumber IN {8, 9, 10}
+         */
+
+        // Build Where Clauses and Args for RaceTypes.
+        String whereClauseForRaceTypes = "";
+        List<String> whereArgsForRaceTypeList = new ArrayList<>();
+
+        for (RaceType raceType : raceTypes) {
+            whereClauseForRaceTypes += bikeRaceTable.getWhereClauseForRaceType(raceType.getDbText()) + orConstant;
+            whereArgsForRaceTypeList.add(bikeRaceTable.getWhereArgsForRaceTypeTrue()[0]);
+        }
+
+        // Build Where Clauses and Args for Categories.
+        String whereArgsForCategory = "";
+        List<String> whereArgsForCategoryList = new ArrayList<>();
+
+        for (String category : categories) {
+            whereArgsForCategory += bikeRaceTable.getWhereClauseForCategory() + orConstant;
+            whereArgsForCategoryList.add(bikeRaceTable.getWhereArgsForCategory(category));
+        }
+
+        // Build Where Clauses and Args for Search Months.
+        String whereClauseForSearchMonths = bikeRaceTable.getWhereClauseForSearchMonths();
+        List<String> whereArgsForSearchMonths = bikeRaceTable.getWhereArgsForSearchMonths(searchMonths);
+
+        // Query table.
+        String whereClause = whereClauseForRaceTypes + whereArgsForCategory;
+        List<String> whereArgsList = new ArrayList<>();
+        whereArgsList.addAll(whereArgsForRaceTypeList);
+        whereArgsList.addAll(whereArgsForCategoryList);
+        String[] whereArgs = (String[]) whereArgsList.toArray();
+
+        return queryBikeRaceTable(whereClause, whereArgs);
     }
 
     /**

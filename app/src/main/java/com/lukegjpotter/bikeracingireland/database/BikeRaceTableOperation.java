@@ -8,6 +8,7 @@ import com.lukegjpotter.bikeracingireland.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 class BikeRaceTableOperation implements TableOperation<BikeRace> {
 
@@ -167,5 +168,25 @@ class BikeRaceTableOperation implements TableOperation<BikeRace> {
 
     public String[] getWhereArgsForMonthNumber(int monthNumber) {
         return new String[]{String.valueOf(monthNumber)};
+    }
+
+    public String getWhereClauseForCategory() {
+        // TODO: Implement this.
+        return new String();
+    }
+
+    public String getWhereArgsForCategory(String category) {
+        // TODO: Implement this.
+        return new String();
+    }
+
+    public String getWhereClauseForSearchMonths() {
+        // TODO: Implement this.
+        return new String();
+    }
+
+    public List<String> getWhereArgsForSearchMonths(Set<Integer> searchMonths) {
+        // TODO: Implement this.
+        return new ArrayList<>();
     }
 }
