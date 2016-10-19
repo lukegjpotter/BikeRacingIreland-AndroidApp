@@ -165,12 +165,22 @@ public class LocalDatabaseConnection extends SQLiteOpenHelper implements Databas
         String andConstant = " AND ", orConstant = " OR ";
 
         /*
-         * Example Query that needs to be formed:
+         * Example SQLite Query that needs to be formed:
          * SELECT *
-         *   FROM BikeRaceTable
+         *   FROM road_race_event_database_record
          *  WHERE a1=1 OR a2=1
          *    AND category='Time Trial' OR category='Road'
-         *    AND monthNumber IN {8, 9, 10}
+         *    AND monthNumber IN {8, 9, 10};
+         */
+        /* PSQL Query:
+         * SELECT *
+         *   FROM road_race_event_database_record
+         *  WHERE (isa1=true OR isa2=true)
+         *    AND road_race_event_database_record.month_number IN (8, 9, 10)
+         *    AND id IN (
+         *         SELECT DISTINCT event_id
+         *           FROM stage_detail
+         *          WHERE category='Time Trial' OR category='Road');
          */
 
         // Build Where Clauses and Args for RaceTypes.
