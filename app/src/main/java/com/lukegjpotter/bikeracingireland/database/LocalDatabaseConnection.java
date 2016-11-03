@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.lukegjpotter.bikeracingireland.enums.RaceType;
 import com.lukegjpotter.bikeracingireland.model.BikeRace;
 import com.lukegjpotter.bikeracingireland.model.StageDetail;
+import com.lukegjpotter.bikeracingireland.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -167,10 +168,12 @@ public class LocalDatabaseConnection extends SQLiteOpenHelper implements Databas
         /*
          * Example SQLite Query that needs to be formed:
          * SELECT *
-         *   FROM road_race_event_database_record
+         *   FROM BikeRace
          *  WHERE a1=1 OR a2=1
-         *    AND category='Time Trial' OR category='Road'
          *    AND monthNumber IN {8, 9, 10};
+         *    AND id IN (SELECT DISTINCT pk_id
+         *                 FROM StageDetail
+         *                WHERE category='Time Trial' OR category='Road'
          */
         /* PSQL Query:
          * SELECT *
@@ -192,23 +195,29 @@ public class LocalDatabaseConnection extends SQLiteOpenHelper implements Databas
             whereArgsForRaceTypeList.add(bikeRaceTable.getWhereArgsForRaceTypeTrue()[0]);
         }
 
-        // Build Where Clauses and Args for Categories.
-        String whereArgsForCategory = "";
-        List<String> whereArgsForCategoryList = new ArrayList<>();
-
-        for (String category : categories) {
-            whereArgsForCategory += bikeRaceTable.getWhereClauseForCategory() + orConstant;
-            whereArgsForCategoryList.add(bikeRaceTable.getWhereArgsForCategory(category));
+        // Remove the trailing "OR", for the next part of the query.
+        if (whereClauseForRaceTypes.endsWith(orConstant)) {
+            whereClauseForRaceTypes = Utils.removeLastOccurrenceInString(whereClauseForRaceTypes, orConstant);
         }
 
         // Build Where Clauses and Args for Search Months.
         String whereClauseForSearchMonths = bikeRaceTable.getWhereClauseForSearchMonths();
         List<String> whereArgsForSearchMonths = bikeRaceTable.getWhereArgsForSearchMonths(searchMonths);
 
-        // Query table.
-        String whereClause = whereClauseForRaceTypes + whereArgsForCategory;
+        // Build Where Clauses and Args for Categories.
+        String whereArgsForCategory = "";
+        List<String> whereArgsForCategoryList = new ArrayList<>();
+
+        for (String category : categories) {
+            whereArgsForCategory += stageDetailTable.getWhereClauseForCategory() + orConstant;
+            whereArgsForCategoryList.add(stageDetailTable.getWhereArgsForCategory(category));
+        }
+
+        // Query table; the order of whereClause and whereArgs must be preserved.
+        String whereClause = whereClauseForRaceTypes + andConstant + whereClauseForSearchMonths + andConstant + whereArgsForCategory;
         List<String> whereArgsList = new ArrayList<>();
         whereArgsList.addAll(whereArgsForRaceTypeList);
+        whereArgsList.addAll(whereArgsForSearchMonths);
         whereArgsList.addAll(whereArgsForCategoryList);
         String[] whereArgs = (String[]) whereArgsList.toArray();
 

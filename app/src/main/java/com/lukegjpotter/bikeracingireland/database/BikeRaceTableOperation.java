@@ -170,16 +170,6 @@ class BikeRaceTableOperation implements TableOperation<BikeRace> {
         return new String[]{String.valueOf(monthNumber)};
     }
 
-    public String getWhereClauseForCategory() {
-        // TODO: Implement this.
-        return new String();
-    }
-
-    public String getWhereArgsForCategory(String category) {
-        // TODO: Implement this.
-        return new String();
-    }
-
     public String getWhereClauseForSearchMonths() {
         // TODO: Implement this.
         return new String();
