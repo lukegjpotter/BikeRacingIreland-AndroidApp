@@ -201,7 +201,7 @@ public class LocalDatabaseConnection extends SQLiteOpenHelper implements Databas
         }
 
         // Build Where Clauses and Args for Search Months.
-        String whereClauseForSearchMonths = bikeRaceTable.getWhereClauseForSearchMonths();
+        String whereClauseForSearchMonths = bikeRaceTable.getWhereClauseForSearchMonths(searchMonths.size());
         List<String> whereArgsForSearchMonths = bikeRaceTable.getWhereArgsForSearchMonths(searchMonths);
 
         // Build Where Clauses and Args for Categories.

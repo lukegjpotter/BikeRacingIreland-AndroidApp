@@ -2,11 +2,13 @@ package com.lukegjpotter.bikeracingireland.database;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.text.TextUtils;
 
 import com.lukegjpotter.bikeracingireland.model.BikeRace;
 import com.lukegjpotter.bikeracingireland.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -170,13 +172,19 @@ class BikeRaceTableOperation implements TableOperation<BikeRace> {
         return new String[]{String.valueOf(monthNumber)};
     }
 
-    public String getWhereClauseForSearchMonths() {
-        // TODO: Implement this.
-        return new String();
+    public String getWhereClauseForSearchMonths(int numberOfSearchMonths) {
+        String questionMarks = TextUtils.join(",", Collections.nCopies(numberOfSearchMonths, "?"));
+        return monthNumber + " IN (" + questionMarks + ")";
     }
 
     public List<String> getWhereArgsForSearchMonths(Set<Integer> searchMonths) {
-        // TODO: Implement this.
-        return new ArrayList<>();
+
+        List<String> searchMonthsList = new ArrayList<>();
+
+        for (Integer searchMonth : searchMonths) {
+            searchMonthsList.add(searchMonth.toString());
+        }
+
+        return searchMonthsList;
     }
 }
