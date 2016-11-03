@@ -59,4 +59,22 @@ public class Utils {
     public static void setApplicationContext(Context applicationContext) {
         APPLICATION_CONTEXT = applicationContext;
     }
+
+    /**
+     * Removes the last occurrence of {@code removeThis} in {@code baseString}.
+     *
+     * @param baseString
+     * @param removeThis
+     * @return
+     */
+    public static String removeLastOccurrenceInString(String baseString, String removeThis) {
+
+        int positionOfLastOccurrence = baseString.lastIndexOf(removeThis);
+
+        if (positionOfLastOccurrence > -1) {
+            baseString = baseString.substring(0, positionOfLastOccurrence);
+        }
+
+        return baseString;
+    }
 }

@@ -70,4 +70,14 @@ public class UtilsTest {
     public void convertIntegerToBoolean_False() {
         assertFalse(Utils.convertIntegerToBoolean(0));
     }
+
+    // --------------------- removeLastOccurrenceInString ------------------ //
+    @Test
+    public void removeLastOccurrenceInString_OR() {
+        String baseString = "isa1=1 OR isa2=1 OR ", replaceThis = " OR ",
+                expected = "isa1=1 OR isa2=1";
+        String actual = Utils.removeLastOccurrenceInString(baseString, replaceThis);
+
+        assertEquals(expected, actual);
+    }
 }
