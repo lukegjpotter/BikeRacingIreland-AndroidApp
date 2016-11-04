@@ -187,4 +187,9 @@ class BikeRaceTableOperation implements TableOperation<BikeRace> {
 
         return searchMonthsList;
     }
+
+    public String getWhereClauseForPkInRange(int numberOfPksInSearchRange) {
+        String questionMarks = TextUtils.join(",", Collections.nCopies(numberOfPksInSearchRange, "?"));
+        return PK_COLUMN + " IN (" + questionMarks + ")";
+    }
 }

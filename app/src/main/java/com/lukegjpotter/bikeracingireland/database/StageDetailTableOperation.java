@@ -12,10 +12,10 @@ import java.util.List;
 class StageDetailTableOperation implements TableOperation<StageDetail> {
 
     static final String TABLE_NAME = "StageDetail";
+    static final String FK_COLUMN_BIKERACEID = "fk_bikeRaceId"; // Foreign Key.
 
     // Column Names.
     private String pk_id = "pk_id";
-    private String fk_bikeRaceId = "fk_bikeRaceId"; // Foreign Key.
     private String date = "date";
     private String raceNumber = "raceNumber";
     private String stageNumber = "stageNumber";
@@ -32,7 +32,7 @@ class StageDetailTableOperation implements TableOperation<StageDetail> {
     public String getCreateSql() {
         return "CREATE TABLE " + TABLE_NAME + " ("
                 + pk_id + " INTEGER PRIMARY KEY, "
-                + fk_bikeRaceId + " INTEGER, "
+                + FK_COLUMN_BIKERACEID + " INTEGER, "
                 + date + " TEXT, "
                 + raceNumber + " INTEGER, "
                 + stageNumber + " INTEGER, "
@@ -44,7 +44,7 @@ class StageDetailTableOperation implements TableOperation<StageDetail> {
                 + routeLinkUrl + " TEXT, "
                 + kilometers + " REAL, "
                 + miles + " REAL, "
-                + " FOREIGN KEY (" + fk_bikeRaceId + ") REFERENCES "
+                + " FOREIGN KEY (" + FK_COLUMN_BIKERACEID + ") REFERENCES "
                 + BikeRaceTableOperation.TABLE_NAME + " (" + BikeRaceTableOperation.PK_COLUMN + ")"
                 + ");";
     }
@@ -59,7 +59,7 @@ class StageDetailTableOperation implements TableOperation<StageDetail> {
 
         ContentValues cv = new ContentValues();
         cv.put(pk_id, stageDetail.getId());
-        cv.put(fk_bikeRaceId, bikeRaceId);
+        cv.put(FK_COLUMN_BIKERACEID, bikeRaceId);
         cv.put(date, Utils.convertDateToString(stageDetail.getDate()));
         cv.put(raceNumber, stageDetail.getRaceNumber());
         cv.put(stageNumber, stageDetail.getStageNumber());
@@ -114,7 +114,7 @@ class StageDetailTableOperation implements TableOperation<StageDetail> {
     }
 
     public String getWhereClauseForFk() {
-        return fk_bikeRaceId + "=?";
+        return FK_COLUMN_BIKERACEID + "=?";
     }
 
     public String[] getWhereArgsForFk(long bikeRaceId) {
@@ -122,12 +122,14 @@ class StageDetailTableOperation implements TableOperation<StageDetail> {
     }
 
     public String getWhereClauseForCategory() {
-        // TODO: Implement this.
-        return new String();
+        return category + "=?";
     }
 
     public String getWhereArgsForCategory(String category) {
-        // TODO: Implement this.
-        return new String();
+        return category;
+    }
+
+    public String[] getColumnsForFk() {
+        return new String[]{FK_COLUMN_BIKERACEID};
     }
 }

@@ -205,16 +205,21 @@ public class LocalDatabaseConnection extends SQLiteOpenHelper implements Databas
         List<String> whereArgsForSearchMonths = bikeRaceTable.getWhereArgsForSearchMonths(searchMonths);
 
         // Build Where Clauses and Args for Categories.
-        String whereArgsForCategory = "";
-        List<String> whereArgsForCategoryList = new ArrayList<>();
+        String stageDetailsWhereClauseForCategory = "";
+        String[] stageDetailsWhereArgsForCategoryArray = new String[categories.size()];
+        int stageDetailsCategoryIndex = 0;
 
         for (String category : categories) {
-            whereArgsForCategory += stageDetailTable.getWhereClauseForCategory() + orConstant;
-            whereArgsForCategoryList.add(stageDetailTable.getWhereArgsForCategory(category));
+            stageDetailsWhereClauseForCategory += stageDetailTable.getWhereClauseForCategory() + orConstant;
+            stageDetailsWhereArgsForCategoryArray[stageDetailsCategoryIndex] = stageDetailTable.getWhereArgsForCategory(category);
+            stageDetailsCategoryIndex++;
         }
 
+        List<String> whereArgsForCategoryList = queryStageDetailsTableForBikeRaceIdsUsingCategory(stageDetailsWhereClauseForCategory, stageDetailsWhereArgsForCategoryArray);
+        String whereClauseForCategory = bikeRaceTable.getWhereClauseForPkInRange(whereArgsForCategoryList.size());
+
         // Query table; the order of whereClause and whereArgs must be preserved.
-        String whereClause = whereClauseForRaceTypes + andConstant + whereClauseForSearchMonths + andConstant + whereArgsForCategory;
+        String whereClause = whereClauseForRaceTypes + andConstant + whereClauseForSearchMonths + andConstant + whereClauseForCategory;
         List<String> whereArgsList = new ArrayList<>();
         whereArgsList.addAll(whereArgsForRaceTypeList);
         whereArgsList.addAll(whereArgsForSearchMonths);
@@ -283,7 +288,7 @@ public class LocalDatabaseConnection extends SQLiteOpenHelper implements Databas
 
             // Get the BikeRace's StageDetails.
             for (BikeRace bikeRace : bikeRaces) {
-                bikeRace.setStageDetails(queryStageDetailsTableForBikeRaceId(bikeRace.getId(), database, cursor));
+                bikeRace.setStageDetails(queryStageDetailsTableUsingBikeRaceId(bikeRace.getId(), database, cursor));
             }
         }
 
@@ -294,11 +299,30 @@ public class LocalDatabaseConnection extends SQLiteOpenHelper implements Databas
         return bikeRaces;
     }
 
-    private List<StageDetail> queryStageDetailsTableForBikeRaceId(long bikeRaceId, SQLiteDatabase database, Cursor cursor) {
+    private List<StageDetail> queryStageDetailsTableUsingBikeRaceId(long bikeRaceId, SQLiteDatabase database, Cursor cursor) {
 
         // HACK: Not using a LocalVariable here as it'll ruin the cursor.close() in the calling method.
         cursor = database.query(StageDetailTableOperation.TABLE_NAME, null, stageDetailTable.getWhereClauseForFk(), stageDetailTable.getWhereArgsForFk(bikeRaceId), null, null, null);
 
         return stageDetailTable.populateListFromCursor(cursor);
+    }
+
+    private List<String> queryStageDetailsTableForBikeRaceIdsUsingCategory(String whereClause, String[] whereArgs) {
+
+        List<String> bikeRaceIds = new ArrayList<>();
+        SQLiteDatabase database = getReadableDatabase();
+        boolean isDistinct = true;
+
+        Cursor cursor = database.query(isDistinct, StageDetailTableOperation.TABLE_NAME, stageDetailTable.getColumnsForFk(), whereClause, whereArgs, null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                bikeRaceIds.add(((Integer) cursor.getInt(cursor.getColumnIndex(StageDetailTableOperation.FK_COLUMN_BIKERACEID))).toString());
+            } while (cursor.moveToNext());
+        }
+
+        // TODO Investigate wether database and cursor variables need to be closed here.
+
+        return bikeRaceIds;
     }
 }
