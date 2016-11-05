@@ -35,3 +35,5 @@ in the [CyclingIrelandEventsRestService project's README file](https://github.co
 ## Version 2.0 Features
 
 * [ ] Add parts of the card for individual Stages of the `BikeRace`.
+* [ ] Add a Search to the Toolbar to search the local and remote
+      repositories for bike race names.
