@@ -7,6 +7,9 @@ import com.lukegjpotter.bikeracingireland.database.DatabaseConnection;
 import com.lukegjpotter.bikeracingireland.database.LocalDatabaseConnection;
 import com.lukegjpotter.bikeracingireland.database.RemoteDatabaseConnection;
 import com.lukegjpotter.bikeracingireland.model.BikeRace;
+import com.lukegjpotter.bikeracingireland.model.ProfileFilter;
+import com.lukegjpotter.bikeracingireland.utils.MonthManager;
+import com.lukegjpotter.bikeracingireland.utils.ProfileFilterUtils;
 
 import java.util.List;
 
@@ -44,5 +47,20 @@ public class BikeRaceListViewDataService {
 
     public void insertBikeRaces(List<BikeRace> bikeRaces) {
         ((LocalDatabaseConnection) localDatabaseConnection).insertBikeRaceList(bikeRaces);
+    }
+
+    public List<BikeRace> fetchBikeRacesForProfileFilter() {
+        ProfileFilter profileFilter = ProfileFilterUtils.getProfileFilter();
+
+        // Bike Races in the current month view.
+        List<BikeRace> bikeRaces = ((LocalDatabaseConnection) localDatabaseConnection).retrieveBikeRacesWithRaceTypeInCategoryForMonths(profileFilter.getRaceTypes(), profileFilter.getCategories(), MonthManager.getMonthsInListView());
+
+        if (bikeRaces.isEmpty()) {
+            // Bike Races in the rest of the year.
+            bikeRaces = ((LocalDatabaseConnection) localDatabaseConnection).retrieveBikeRacesWithRaceTypeInCategoryForMonths(profileFilter.getRaceTypes(), profileFilter.getCategories(), MonthManager.getRemainingMonthsInYear());
+        }
+        // Might need to get the races from the RemoteDatabaseConnection...
+
+        return bikeRaces;
     }
 }

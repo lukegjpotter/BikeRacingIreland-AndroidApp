@@ -61,4 +61,18 @@ public class MonthManager {
     public static Set<Integer> getMonthsInListView() {
         return sMonthsInListView;
     }
+
+    public static Set<Integer> getRemainingMonthsInYear() {
+
+        int monthsInYear = 12;
+        int monthToAddToSet = sCurrentMonthNumber;
+
+        Set<Integer> remainingMonthsInYear = new HashSet<>();
+
+        while (monthToAddToSet < monthsInYear) {
+            remainingMonthsInYear.add(monthToAddToSet);
+        }
+
+        return remainingMonthsInYear;
+    }
 }
