@@ -10,4 +10,5 @@
     <string name="register">Register</string>
     <string name="contact_organiser">Contact Organiser</string>
     <string name="stage_details_tostring">Stage Details toString()</string>
+    <string name="action_profile_filter">Profile Filter</string>
 </resources>
