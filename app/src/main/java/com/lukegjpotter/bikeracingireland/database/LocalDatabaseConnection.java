@@ -229,7 +229,7 @@ public class LocalDatabaseConnection extends SQLiteOpenHelper implements Databas
         whereArgsList.addAll(whereArgsForRaceTypeList);
         whereArgsList.addAll(whereArgsForSearchMonths);
         whereArgsList.addAll(whereArgsForCategoryList);
-        String[] whereArgs = (String[]) whereArgsList.toArray();
+        String[] whereArgs = whereArgsList.toArray(new String[whereArgsList.size()]);
 
         return queryBikeRaceTable(whereClause, whereArgs);
     }
