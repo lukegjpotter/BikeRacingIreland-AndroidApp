@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.lukegjpotter.bikeracingireland.initialdata.InitialData;
@@ -63,6 +65,15 @@ public class BikeRaceListActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         ProfileFilterUtils.storeProfileFilter();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.activity_bikerace_list_menu, menu);
+
+        return true;
     }
 
     @Override
