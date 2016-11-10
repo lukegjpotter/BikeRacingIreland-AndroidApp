@@ -104,6 +104,7 @@ public class BikeRaceListActivity extends AppCompatActivity {
             // Disable ProfileFilter, as it is already enabled.
             profileFilterMenuItem.setIcon(R.drawable.ic_face_black_48dp);
             ProfileFilterUtils.IS_PROFILE_FILTER_ENABLED = false;
+            // TODO Implement setting the RecyclerViewAdapter back to the full list of races in the month view.
         } else {
             // Enable ProfileFilter, as it is disabled.
             if (!ProfileFilterUtils.IS_PROFILE_FILTER_SET) {
