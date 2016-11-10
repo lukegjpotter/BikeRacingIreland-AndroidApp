@@ -215,6 +215,11 @@ public class LocalDatabaseConnection extends SQLiteOpenHelper implements Databas
             stageDetailsCategoryIndex++;
         }
 
+        // Remove the trailing "OR", for the next part of the query.
+        if (stageDetailsWhereClauseForCategory.endsWith(orConstant)) {
+            stageDetailsWhereClauseForCategory = Utils.removeLastOccurrenceInString(stageDetailsWhereClauseForCategory, orConstant);
+        }
+
         List<String> whereArgsForCategoryList = queryStageDetailsTableForBikeRaceIdsUsingCategory(stageDetailsWhereClauseForCategory, stageDetailsWhereArgsForCategoryArray);
         String whereClauseForCategory = bikeRaceTable.getWhereClauseForPkInRange(whereArgsForCategoryList.size());
 
