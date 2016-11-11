@@ -16,6 +16,7 @@ import com.lukegjpotter.bikeracingireland.utils.ProfileFilterUtils;
 import com.lukegjpotter.bikeracingireland.utils.Utils;
 import com.lukegjpotter.bikeracingireland.viewadapter.BikeRaceListRecyclerViewAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -104,7 +105,15 @@ public class BikeRaceListActivity extends AppCompatActivity {
             // Disable ProfileFilter, as it is already enabled.
             profileFilterMenuItem.setIcon(R.drawable.ic_face_black_48dp);
             ProfileFilterUtils.IS_PROFILE_FILTER_ENABLED = false;
-            // TODO Implement setting the RecyclerViewAdapter back to the full list of races in the month view.
+
+            List<BikeRace> bikeRacesInMonths = new ArrayList<>();
+
+            for (int monthNumber : MonthManager.getMonthsInListView()) {
+                bikeRacesInMonths = mDataService.fetchBikeRacesInMonthNumber(monthNumber);
+            }
+
+            mRecyclerView.setAdapter(new BikeRaceListRecyclerViewAdapter(mTwoPane, getSupportFragmentManager(), bikeRacesInMonths));
+
         } else {
             // Enable ProfileFilter, as it is disabled.
             if (!ProfileFilterUtils.IS_PROFILE_FILTER_SET) {
