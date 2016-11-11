@@ -14,26 +14,31 @@ in the [CyclingIrelandEventsRestService project's README file](https://github.co
 
 1. Use Android Studio to build and run the app on the Emulator.
 
-## Version Alpha Features - In Development
+## Version Alpha Features - Complete
 
 * [x] Read `BikeRace` objects from `CyclingIrelandEventsRestService`.
 * [x] Store `BikeRace` objects in a local database.
 * [x] When reading the REST Service, only read races to the end of the
       month.
-* [ ] Present `BikeRace` objects in a ListView for the Master Fragment.
-* [ ] Present `BikeRace` objects in the Details Fragment.
+* [x] Present `BikeRace` objects in a ListView for the Master Fragment.
+* [x] Present `BikeRace` objects in the Details Fragment.
+* [x] Add a `ProfileFilter` to the `ActionBar` to filter on the Category
+      of the User.
+
+## Version 1.0 Features - In Development
+
 * [ ] When the end of the ListView is reached, download the next month's
       races.
-
-## Version 1.0 Features
-
-* [ ] Add a Profile Filter to the ActionBar to filter on the Category of
-      the racer. 
+* [ ] User is able to define their `ProfileFilter`.
 * [ ] Use the Strava API and Google Maps Lite Mode to display the
-      routes, in CardView style.
+      routes, in `CardView` style.
+* [ ] Apply Styling to the User Interface
+* [ ] Apply an Icon to the App.
 
 ## Version 2.0 Features
 
-* [ ] Add parts of the card for individual Stages of the `BikeRace`.
 * [ ] Add a Search to the Toolbar to search the local and remote
       repositories for bike race names.
+* [ ] Enable the user to set a Calendar Event for the Race. Store which
+      races have Calendar 
+* [ ] Add parts of the card for individual Stages of the `BikeRace`.
