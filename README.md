@@ -27,13 +27,13 @@ in the [CyclingIrelandEventsRestService project's README file](https://github.co
 
 ## Version 1.0 Features - In Development
 
+* [x] Apply an Icon to the App.
 * [ ] When the end of the ListView is reached, download the next month's
       races.
 * [ ] User is able to define their `ProfileFilter`.
 * [ ] Use the Strava API and Google Maps Lite Mode to display the
       routes, in `CardView` style.
 * [ ] Apply Styling to the User Interface
-* [ ] Apply an Icon to the App.
 
 ## Version 2.0 Features
 
