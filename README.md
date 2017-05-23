@@ -42,3 +42,8 @@ in the [CyclingIrelandEventsRestService project's README file](https://github.co
 * [ ] Enable the user to set a Calendar Event for the Race. Store which
       races have Calendar 
 * [ ] Add parts of the card for individual Stages of the `BikeRace`.
+
+## Refactoring Tasks
+
+ * [ ] Use `Room` to reduce Database code. [Room Sample from Google](https://github.com/googlesamples/android-architecture-components).
+ * [ ] Use `ViewModel` and `LiveData` to maintain data when rotated.
