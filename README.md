@@ -3,6 +3,8 @@
 An Android app that will display the Bicycle Races in Ireland that are
 on the CyclingIreland Calendar.
 
+[![Dependency Status](https://www.versioneye.com/user/projects/59f44ead0fb24f1ec28638e4/badge.svg)](https://www.versioneye.com/user/projects/59f44ead0fb24f1ec28638e4)
+
 ## Initial Setup
 
 1. Follow the "Initial Database Setup" and "Build, Run and Test" steps
