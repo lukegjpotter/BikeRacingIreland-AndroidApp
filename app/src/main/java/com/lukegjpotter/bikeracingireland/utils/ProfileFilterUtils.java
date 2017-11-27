@@ -6,7 +6,7 @@ import android.preference.PreferenceManager;
 import com.google.gson.Gson;
 import com.lukegjpotter.bikeracingireland.constant.Constants;
 import com.lukegjpotter.bikeracingireland.enums.RaceType;
-import com.lukegjpotter.bikeracingireland.model.ProfileFilter;
+import com.lukegjpotter.bikeracingireland.model.entity.ProfileFilterEntity;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,28 +18,28 @@ public class ProfileFilterUtils {
 
     public static boolean IS_PROFILE_FILTER_ENABLED = false;
     public static boolean IS_PROFILE_FILTER_SET = false;
-    private static ProfileFilter sProfileFilter;
+    private static ProfileFilterEntity sProfileFilterEntity;
 
     public static void loadProfileFilter() {
 
         SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(Utils.getApplicationContext());
         String json = mPrefs.getString(Constants.SHARED_PREFS_PROFILE_FILTER_KEY, "");
-        sProfileFilter = new Gson().fromJson(json, ProfileFilter.class);
+        sProfileFilterEntity = new Gson().fromJson(json, ProfileFilterEntity.class);
 
-        if (sProfileFilter == null) {
+        if (sProfileFilterEntity == null) {
             // TODO Implement This Properly with User Set Settings.
-            ProfileFilter profileFilter = new ProfileFilter();
+            ProfileFilterEntity profileFilterEntity = new ProfileFilterEntity();
 
             Set<RaceType> raceTypes = new HashSet<>();
             raceTypes.add(RaceType.A1);
-            profileFilter.setRaceTypes(raceTypes);
+            profileFilterEntity.setRaceTypes(raceTypes);
 
             Set<String> categories = new HashSet<>();
             categories.add("Road Race");
             categories.add("Time Trial");
-            profileFilter.setCategories(categories);
+            profileFilterEntity.setCategories(categories);
 
-            ProfileFilterUtils.setProfileFilter(profileFilter);
+            ProfileFilterUtils.setProfileFilter(profileFilterEntity);
 
             storeProfileFilter();
         }
@@ -49,17 +49,17 @@ public class ProfileFilterUtils {
         SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(Utils.getApplicationContext());
 
         SharedPreferences.Editor prefsEditor = mPrefs.edit();
-        String json = new Gson().toJson(sProfileFilter);
+        String json = new Gson().toJson(sProfileFilterEntity);
         prefsEditor.putString(Constants.SHARED_PREFS_PROFILE_FILTER_KEY, json);
         prefsEditor.apply();
     }
 
-    public static ProfileFilter getProfileFilter() {
-        return sProfileFilter;
+    public static ProfileFilterEntity getProfileFilter() {
+        return sProfileFilterEntity;
     }
 
-    public static void setProfileFilter(ProfileFilter profileFilter) {
-        sProfileFilter = profileFilter;
+    private static void setProfileFilter(ProfileFilterEntity profileFilter) {
+        sProfileFilterEntity = profileFilter;
         IS_PROFILE_FILTER_SET = true;
     }
 }

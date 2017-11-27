@@ -7,7 +7,7 @@ import com.lukegjpotter.bikeracingireland.database.DatabaseConnection;
 import com.lukegjpotter.bikeracingireland.database.LocalDatabaseConnection;
 import com.lukegjpotter.bikeracingireland.database.RemoteDatabaseConnection;
 import com.lukegjpotter.bikeracingireland.model.BikeRace;
-import com.lukegjpotter.bikeracingireland.model.ProfileFilter;
+import com.lukegjpotter.bikeracingireland.model.entity.ProfileFilterEntity;
 import com.lukegjpotter.bikeracingireland.utils.MonthManager;
 import com.lukegjpotter.bikeracingireland.utils.ProfileFilterUtils;
 
@@ -50,7 +50,7 @@ public class BikeRaceListViewDataService {
     }
 
     public List<BikeRace> fetchBikeRacesForProfileFilter() {
-        ProfileFilter profileFilter = ProfileFilterUtils.getProfileFilter();
+        ProfileFilterEntity profileFilter = ProfileFilterUtils.getProfileFilter();
 
         // Bike Races in the current month view.
         List<BikeRace> bikeRaces = ((LocalDatabaseConnection) localDatabaseConnection).retrieveBikeRacesWithRaceTypeInCategoryForMonths(profileFilter.getRaceTypes(), profileFilter.getCategories(), MonthManager.getMonthsInListView());
