@@ -3,6 +3,7 @@ package com.lukegjpotter.bikeracingireland.model.roomdatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
 import com.lukegjpotter.bikeracingireland.model.dao.BikeRaceDao;
@@ -14,6 +15,7 @@ import com.lukegjpotter.bikeracingireland.model.entity.BikeRaceEntity;
  * Created by lukegjpotter on 27/11/2017.
  */
 @Database(entities = {BikeRaceEntity.class}, version = 1, exportSchema = false)
+@TypeConverters({DateConverters.class})
 public abstract class ApplicationDatabase extends RoomDatabase {
 
     private static ApplicationDatabase INSTANCE;
