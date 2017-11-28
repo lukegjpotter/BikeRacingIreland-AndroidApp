@@ -1,4 +1,4 @@
-package com.lukegjpotter.bikeracingireland.model.roomdatabase;
+package com.lukegjpotter.bikeracingireland.model.roomdatabase.util;
 
 import android.arch.persistence.room.TypeConverter;
 
