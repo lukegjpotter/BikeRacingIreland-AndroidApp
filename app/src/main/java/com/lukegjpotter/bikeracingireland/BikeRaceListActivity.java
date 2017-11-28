@@ -8,8 +8,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.lukegjpotter.bikeracingireland.initialdata.InitialData;
 import com.lukegjpotter.bikeracingireland.model.BikeRace;
+import com.lukegjpotter.bikeracingireland.model.roomdatabase.ApplicationDatabase;
+import com.lukegjpotter.bikeracingireland.model.roomdatabase.util.DatabaseInitializer;
 import com.lukegjpotter.bikeracingireland.service.BikeRaceListViewDataService;
 import com.lukegjpotter.bikeracingireland.utils.MonthManager;
 import com.lukegjpotter.bikeracingireland.utils.ProfileFilterUtils;
@@ -43,13 +44,14 @@ public class BikeRaceListActivity extends AppCompatActivity {
         ProfileFilterUtils.loadProfileFilter();
         mDataService = new BikeRaceListViewDataService(Utils.getApplicationContext());
         // Insert Initial Data for testing the app.
-        new InitialData(mDataService).insertInitialData();
+        //new InitialData(mDataService).insertInitialData();
+        DatabaseInitializer.populateAsync(ApplicationDatabase.getInstance(getApplicationContext()));
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.bikerace_list);
+        mRecyclerView = findViewById(R.id.bikerace_list);
         assert mRecyclerView != null;
         setupRecyclerView();
 

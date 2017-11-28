@@ -28,6 +28,9 @@ public interface BikeRaceDao {
     @Query("SELECT * FROM bikeraceentity, stagedetailentity WHERE raceType IN (:raceTypes) AND category IN (:categories) AND monthNumber IN (:searchMonths)")
     LiveData<List<BikeRaceEntity>> findBikeRacesWithRaceTypeInCategoryForMonths(Set<RaceType> raceTypes, Set<String> categories, Set<Integer> searchMonths);
 
+    @Query("SELECT COUNT(*) FROM bikeraceentity")
+    int rowCount();
+
     @Insert
     void insertBikeRaces(BikeRaceEntity... BikeRaces);
 
