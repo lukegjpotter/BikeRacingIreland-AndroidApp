@@ -7,7 +7,6 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.lukegjpotter.bikeracingireland.enums.RaceType;
 import com.lukegjpotter.bikeracingireland.model.entity.BikeRaceEntity;
 
 import java.util.List;
@@ -19,15 +18,45 @@ import java.util.Set;
 @Dao
 public interface BikeRaceDao {
 
+    /**
+     * Useful for the {@link com.lukegjpotter.bikeracingireland.BikeRaceDetailActivity} and
+     * {@link com.lukegjpotter.bikeracingireland.BikeRaceDetailFragment} for displaying full data.
+     *
+     * @param id The ID of the BikeRaceEntity to display
+     * @return
+     */
     @Query("SELECT * FROM bikeraceentity WHERE id = :id")
     LiveData<BikeRaceEntity> findBikeRaceById(long id);
 
+    /**
+     * Useful for adding new BikeRaceEntities to the
+     * {@link com.lukegjpotter.bikeracingireland.BikeRaceListActivity}.
+     *
+     * @param monthNumber The month number to search, it's January = 1 ... Dec = 12.
+     * @return
+     */
     @Query("SELECT * FROM bikeraceentity WHERE monthNumber = :monthNumber")
     LiveData<List<BikeRaceEntity>> findBikeRacesInMonth(int monthNumber);
 
-    @Query("SELECT * FROM bikeraceentity, stagedetailentity WHERE raceType IN (:raceTypes) AND category IN (:categories) AND monthNumber IN (:searchMonths)")
-    LiveData<List<BikeRaceEntity>> findBikeRacesWithRaceTypeInCategoryForMonths(Set<RaceType> raceTypes, Set<String> categories, Set<Integer> searchMonths);
+    /**
+     * Useful for the ProfileFilter when
+     * {@code StageDetailDao.findBikeRaceIdsByRaceTypesAndCategories(...)} has returned the
+     * BikeRaceEntity IDs and the {@link com.lukegjpotter.bikeracingireland.utils.MonthManager} has
+     * the months that are currently active in the
+     * {@link com.lukegjpotter.bikeracingireland.BikeRaceListActivity}
+     *
+     * @param ids
+     * @param months
+     * @return
+     */
+    @Query("SELECT * FROM bikeraceentity WHERE id IN (:ids) AND monthNumber in (:months)")
+    LiveData<List<BikeRaceEntity>> findBikeRacesByIdsAndMonths(Set<Long> ids, Set<Integer> months);
 
+    /**
+     * Used to determine if the Database is empty, to load Initia Data.
+     *
+     * @return
+     */
     @Query("SELECT COUNT(*) FROM bikeraceentity")
     int rowCount();
 

@@ -22,6 +22,12 @@ public interface StageDetailDao {
     @Query("SELECT * FROM stagedetailentity WHERE id = :id")
     LiveData<StageDetailEntity> findStageDetailById(long id);
 
+    @Query("SELECT * FROm stagedetailentity WHERE fkBikeRaceEntityId = :fkBikeRaceEntityId")
+    LiveData<List<StageDetailEntity>> findStageDetailsByBikeRaceId(long fkBikeRaceEntityId);
+
+    @Query("SELECT DISTINCT fkBikeRaceEntityId FROM stagedetailentity WHERE raceType IN (:raceTypes) AND category IN (:categories)")
+    LiveData<List<Long>> findBikeRaceIdsByRaceTypesAndCategories(Set<RaceType> raceTypes, Set<String> categories);
+
     @Query("SELECT * FROM stagedetailentity WHERE raceType IN (:raceTypes) AND category IN (:categories)")
     LiveData<List<StageDetailEntity>> findStageDetailsByRaceTypesAndCategories(Set<RaceType> raceTypes, Set<String> categories);
 
