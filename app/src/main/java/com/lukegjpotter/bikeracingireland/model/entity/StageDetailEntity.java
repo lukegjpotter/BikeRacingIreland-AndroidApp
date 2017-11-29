@@ -1,10 +1,13 @@
 package com.lukegjpotter.bikeracingireland.model.entity;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 import java.util.Date;
+
+import static android.arch.persistence.room.ForeignKey.CASCADE;
 
 /**
  * Created by lukegjpotter on 27/11/2017.
@@ -14,6 +17,8 @@ public class StageDetailEntity {
 
     @PrimaryKey
     private long id;
+    @ForeignKey(entity = BikeRaceEntity.class, parentColumns = "id", childColumns = "fkBikeRaceEntityId", onDelete = CASCADE)
+    private long fkBikeRaceEntityId;
     private Date date;
     private Integer raceNumber, stageNumber;
     private String location, raceType, category, signOnTime, startTime, routeLinkUrl;
@@ -54,12 +59,20 @@ public class StageDetailEntity {
         setRouteLinkUrl(routeLinkUrl);
     }
 
-    public long getId() {
+    public long get() {
         return id;
     }
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getFkBikeRaceEntityId() {
+        return fkBikeRaceEntityId;
+    }
+
+    public void setFkBikeRaceEntityId(long fkBikeRaceEntityId) {
+        this.fkBikeRaceEntityId = fkBikeRaceEntityId;
     }
 
     public Date getDate() {
