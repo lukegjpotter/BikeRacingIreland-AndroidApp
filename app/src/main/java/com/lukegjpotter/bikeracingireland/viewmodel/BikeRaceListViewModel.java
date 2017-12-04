@@ -5,7 +5,7 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
-import com.lukegjpotter.bikeracingireland.model.entity.BikeRaceEntity;
+import com.lukegjpotter.bikeracingireland.model.entity.BikeRaceWithStageDetails;
 import com.lukegjpotter.bikeracingireland.model.roomdatabase.ApplicationDatabase;
 import com.lukegjpotter.bikeracingireland.utils.MonthManager;
 
@@ -17,7 +17,7 @@ import java.util.List;
 
 public class BikeRaceListViewModel extends AndroidViewModel {
 
-    private final LiveData<List<BikeRaceEntity>> bikeRaces;
+    private final LiveData<List<BikeRaceWithStageDetails>> bikeRaces;
 
     public BikeRaceListViewModel(@NonNull Application application) {
         super(application);
@@ -27,7 +27,7 @@ public class BikeRaceListViewModel extends AndroidViewModel {
                 .findBikeRacesInMonth(MonthManager.currentMonthNumber());
     }
 
-    public LiveData<List<BikeRaceEntity>> getBikeRaces() {
+    public LiveData<List<BikeRaceWithStageDetails>> getBikeRaces() {
         return bikeRaces;
     }
 }

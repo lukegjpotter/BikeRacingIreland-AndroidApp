@@ -2,13 +2,10 @@ package com.lukegjpotter.bikeracingireland.model.entity;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
-import android.arch.persistence.room.Relation;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by lukegjpotter on 27/11/2017.
@@ -22,8 +19,6 @@ public class BikeRaceEntity {
     private String eventName, promotingClub, organiser, registrationLink, organiserPhoneNumber, organiserEmail,
             location, province;
     private int monthNumber;
-    @Relation(parentColumn = "id", entityColumn = "id", entity = StageDetailEntity.class)
-    private List<StageDetailEntity> stageDetails;
     @SerializedName("aplus")
     private boolean isAPlus;
     @SerializedName("a1")
@@ -72,7 +67,6 @@ public class BikeRaceEntity {
         setJunior(false);
         setYouth(false);
         setParacycling(false);
-        setStageDetails(new ArrayList<>());
     }
 
     public long getId() {
@@ -177,14 +171,6 @@ public class BikeRaceEntity {
 
     public void setMonthNumber(int monthNumber) {
         this.monthNumber = monthNumber;
-    }
-
-    public List<StageDetailEntity> getStageDetails() {
-        return stageDetails;
-    }
-
-    public void setStageDetails(List<StageDetailEntity> stageDetails) {
-        this.stageDetails = stageDetails;
     }
 
     public boolean isAPlus() {
@@ -305,16 +291,8 @@ public class BikeRaceEntity {
         StringBuilder sb = new StringBuilder();
         sb.append(this.getEventName()).append(" by ").append(this.getPromotingClub());
         sb.append(" in ").append(this.getLocation());
-        sb.append(". Stages: ").append(this.getStageDetails().size()).append(".");
-
-        for (StageDetailEntity stageDetail : this.getStageDetails()) {
-            sb.append(stageDetail.toString());
-        }
 
         return sb.toString();
     }
 
-    public void addStageDetail(StageDetailEntity stageDetail) {
-        stageDetails.add(stageDetail);
-    }
 }

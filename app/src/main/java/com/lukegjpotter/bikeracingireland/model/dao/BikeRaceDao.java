@@ -9,6 +9,7 @@ import android.arch.persistence.room.Transaction;
 import android.arch.persistence.room.Update;
 
 import com.lukegjpotter.bikeracingireland.model.entity.BikeRaceEntity;
+import com.lukegjpotter.bikeracingireland.model.entity.BikeRaceWithStageDetails;
 import com.lukegjpotter.bikeracingireland.view.activity.BikeRaceDetailActivity;
 import com.lukegjpotter.bikeracingireland.view.activity.BikeRaceDetailFragment;
 import com.lukegjpotter.bikeracingireland.view.activity.BikeRaceListActivity;
@@ -31,7 +32,7 @@ public interface BikeRaceDao {
      */
     @Transaction
     @Query("SELECT * FROM bikeraceentity WHERE id = :id")
-    LiveData<BikeRaceEntity> findBikeRaceById(long id);
+    LiveData<BikeRaceWithStageDetails> findBikeRaceById(long id);
 
     /**
      * Useful for adding new BikeRaceEntities to the
@@ -42,7 +43,7 @@ public interface BikeRaceDao {
      */
     @Transaction
     @Query("SELECT * FROM bikeraceentity WHERE monthNumber = :monthNumber")
-    LiveData<List<BikeRaceEntity>> findBikeRacesInMonth(int monthNumber);
+    LiveData<List<BikeRaceWithStageDetails>> findBikeRacesInMonth(int monthNumber);
 
     /**
      * Useful for the ProfileFilter when
@@ -57,7 +58,7 @@ public interface BikeRaceDao {
      */
     @Transaction
     @Query("SELECT * FROM bikeraceentity WHERE id IN (:ids) AND monthNumber in (:months)")
-    LiveData<List<BikeRaceEntity>> findBikeRacesByIdsAndMonths(Set<Long> ids, Set<Integer> months);
+    LiveData<List<BikeRaceWithStageDetails>> findBikeRacesByIdsAndMonths(Set<Long> ids, Set<Integer> months);
 
     /**
      * Used to determine if the Database is empty, to load Initia Data.
