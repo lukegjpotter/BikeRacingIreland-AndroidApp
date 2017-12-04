@@ -1,4 +1,4 @@
-package com.lukegjpotter.bikeracingireland.viewholder;
+package com.lukegjpotter.bikeracingireland.view.holder;
 
 
 import android.support.v7.widget.CardView;
@@ -23,11 +23,11 @@ public class BikeRaceListCardViewHolder extends RecyclerView.ViewHolder {
     public BikeRaceListCardViewHolder(View itemView) {
         super(itemView);
 
-        mCardView = (CardView) itemView.findViewById(R.id.card_view);
-        mRouteMap = (ImageView) itemView.findViewById(R.id.route_map);
-        mEventName = (TextView) itemView.findViewById(R.id.event_name);
-        mPromotingClub = (TextView) itemView.findViewById(R.id.promoting_club);
-        mLocation = (TextView) itemView.findViewById(R.id.location);
-        mStartDate = (TextView) itemView.findViewById(R.id.start_date);
+        mCardView = itemView.findViewById(R.id.card_view);
+        mRouteMap = itemView.findViewById(R.id.route_map);
+        mEventName = itemView.findViewById(R.id.event_name);
+        mPromotingClub = itemView.findViewById(R.id.promoting_club);
+        mLocation = itemView.findViewById(R.id.location);
+        mStartDate = itemView.findViewById(R.id.start_date);
     }
 }

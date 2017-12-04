@@ -15,7 +15,7 @@ import com.lukegjpotter.bikeracingireland.service.BikeRaceListViewDataService;
 import com.lukegjpotter.bikeracingireland.utils.MonthManager;
 import com.lukegjpotter.bikeracingireland.utils.ProfileFilterUtils;
 import com.lukegjpotter.bikeracingireland.utils.Utils;
-import com.lukegjpotter.bikeracingireland.viewadapter.BikeRaceListRecyclerViewAdapter;
+import com.lukegjpotter.bikeracingireland.view.adapter.BikeRaceListRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

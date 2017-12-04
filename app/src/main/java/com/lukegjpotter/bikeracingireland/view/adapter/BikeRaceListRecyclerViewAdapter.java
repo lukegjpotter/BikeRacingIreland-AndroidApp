@@ -1,4 +1,4 @@
-package com.lukegjpotter.bikeracingireland.viewadapter;
+package com.lukegjpotter.bikeracingireland.view.adapter;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
@@ -7,10 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lukegjpotter.bikeracingireland.R;
-import com.lukegjpotter.bikeracingireland.listeners.BikeRaceListCardOnClickListener;
 import com.lukegjpotter.bikeracingireland.model.BikeRace;
 import com.lukegjpotter.bikeracingireland.utils.Utils;
-import com.lukegjpotter.bikeracingireland.viewholder.BikeRaceListCardViewHolder;
+import com.lukegjpotter.bikeracingireland.view.holder.BikeRaceListCardViewHolder;
+import com.lukegjpotter.bikeracingireland.view.listeners.BikeRaceListCardOnClickListener;
 
 import java.util.List;
 

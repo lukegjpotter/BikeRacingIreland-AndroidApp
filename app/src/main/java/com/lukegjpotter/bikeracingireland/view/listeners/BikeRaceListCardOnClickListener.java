@@ -1,4 +1,4 @@
-package com.lukegjpotter.bikeracingireland.listeners;
+package com.lukegjpotter.bikeracingireland.view.listeners;
 
 import android.content.Context;
 import android.content.Intent;
