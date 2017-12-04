@@ -1,4 +1,4 @@
-package com.lukegjpotter.bikeracingireland;
+package com.lukegjpotter.bikeracingireland.view.activity;
 
 import android.app.Activity;
 import android.databinding.DataBindingUtil;
@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.lukegjpotter.bikeracingireland.R;
 import com.lukegjpotter.bikeracingireland.model.BikeRace;
 import com.lukegjpotter.bikeracingireland.model.StageDetail;
 import com.lukegjpotter.bikeracingireland.service.BikeRaceListViewDataService;

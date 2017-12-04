@@ -9,13 +9,9 @@
     android:divider="?android:attr/dividerHorizontal"
     android:orientation="horizontal"
     android:showDividers="middle"
-    tools:context="com.lukegjpotter.bikeracingireland.BikeRaceListActivity">
+    tools:context="com.lukegjpotter.bikeracingireland.view.activity.BikeRaceListActivity">
 
-    <!--
-    This layout is a two-pane layout for the BikeRaces
-    master/detail flow.
-    
-    -->
+    <!-- This layout is a two-pane layout for the BikeRaces master/detail flow. -->
 
     <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -26,7 +22,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
-        tools:context="com.lukegjpotter.bikeracingireland.BikeRaceListActivity"
+        tools:context="com.lukegjpotter.bikeracingireland.view.activity.BikeRaceListActivity"
         tools:listitem="@layout/bikerace_list_content" />
 
     <FrameLayout

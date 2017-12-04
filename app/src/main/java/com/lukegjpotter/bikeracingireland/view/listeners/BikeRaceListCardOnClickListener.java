@@ -6,9 +6,9 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
-import com.lukegjpotter.bikeracingireland.BikeRaceDetailActivity;
-import com.lukegjpotter.bikeracingireland.BikeRaceDetailFragment;
 import com.lukegjpotter.bikeracingireland.R;
+import com.lukegjpotter.bikeracingireland.view.activity.BikeRaceDetailActivity;
+import com.lukegjpotter.bikeracingireland.view.activity.BikeRaceDetailFragment;
 
 /**
  * The {@code OnClickListener} for the {@code BikeRaceListRecyclerViewAdapter}'s CardView.

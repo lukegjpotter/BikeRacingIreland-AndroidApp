@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.lukegjpotter.bikeracingireland.BikeRaceDetailFragment">
+    tools:context="com.lukegjpotter.bikeracingireland.view.activity.BikeRaceDetailFragment">
 
     <data>
-
         <import type="com.lukegjpotter.bikeracingireland.utils.Utils" />
-
         <variable
             name="bikeRace"
             type="com.lukegjpotter.bikeracingireland.model.BikeRace" />
@@ -43,7 +41,8 @@
                 android:id="@+id/promoting_club_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingRight="10dp"
+                android:paddingEnd="10dp"
+                android:paddingStart="0dp"
                 android:text="@{`By ` + bikeRace.promotingClub, default=By_Promoting_Club}"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -64,7 +63,8 @@
                 android:id="@+id/location_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingRight="10dp"
+                android:paddingEnd="10dp"
+                android:paddingStart="0dp"
                 android:text="@{`In ` + bikeRace.location, default=In_LukeVille}"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -93,7 +93,8 @@
                 android:id="@+id/stage_details_placeholder"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:paddingRight="10dp"
+                android:paddingEnd="10dp"
+                android:paddingStart="0dp"
                 android:text="@string/stage_details_tostring" />
 
         </LinearLayout>
@@ -123,14 +124,16 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:paddingRight="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="0dp"
                         android:text="@string/bookings_open" />
 
                     <TextView
                         android:id="@+id/bookings_open_date_details"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:paddingRight="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="0dp"
                         android:text="@{Utils.convertDateToUiString(bikeRace.bookingsOpenDate), default=02_01_16}" />
                 </LinearLayout>
 
@@ -141,14 +144,16 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:paddingRight="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="0dp"
                         android:text="@string/bookings_close" />
 
                     <TextView
                         android:id="@+id/bookings_close_date_details"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:paddingRight="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="0dp"
                         android:text="@{Utils.convertDateToUiString(bikeRace.bookingsOpenDate), default=05_01_16}" />
                 </LinearLayout>
             </LinearLayout>
@@ -181,14 +186,16 @@
                     android:id="@+id/organiser_name_details"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:paddingRight="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingStart="0dp"
                     android:text="@{bikeRace.organiser, default=Organiser_Name}" />
 
                 <TextView
                     android:id="@+id/organiser_phone_details"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:paddingRight="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingStart="0dp"
                     android:text="@{bikeRace.organiserPhoneNumber, default=Phone}" />
 
                 <TextView

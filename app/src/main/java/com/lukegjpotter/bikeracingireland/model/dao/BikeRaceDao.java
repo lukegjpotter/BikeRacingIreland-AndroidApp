@@ -9,6 +9,9 @@ import android.arch.persistence.room.Transaction;
 import android.arch.persistence.room.Update;
 
 import com.lukegjpotter.bikeracingireland.model.entity.BikeRaceEntity;
+import com.lukegjpotter.bikeracingireland.view.activity.BikeRaceDetailActivity;
+import com.lukegjpotter.bikeracingireland.view.activity.BikeRaceDetailFragment;
+import com.lukegjpotter.bikeracingireland.view.activity.BikeRaceListActivity;
 
 import java.util.List;
 import java.util.Set;
@@ -20,8 +23,8 @@ import java.util.Set;
 public interface BikeRaceDao {
 
     /**
-     * Useful for the {@link com.lukegjpotter.bikeracingireland.BikeRaceDetailActivity} and
-     * {@link com.lukegjpotter.bikeracingireland.BikeRaceDetailFragment} for displaying full data.
+     * Useful for the {@link BikeRaceDetailActivity} and
+     * {@link BikeRaceDetailFragment} for displaying full data.
      *
      * @param id The ID of the BikeRaceEntity to display
      * @return Bike race with the specified ID.
@@ -32,7 +35,7 @@ public interface BikeRaceDao {
 
     /**
      * Useful for adding new BikeRaceEntities to the
-     * {@link com.lukegjpotter.bikeracingireland.BikeRaceListActivity}.
+     * {@link BikeRaceListActivity}.
      *
      * @param monthNumber The month number to search, it's January = 1 ... Dec = 12.
      * @return Bike Races in the specified month.
@@ -46,7 +49,7 @@ public interface BikeRaceDao {
      * {@code StageDetailDao.findBikeRaceIdsByRaceTypesAndCategories(...)} has returned the
      * BikeRaceEntity IDs and the {@link com.lukegjpotter.bikeracingireland.utils.MonthManager} has
      * the months that are currently active in the
-     * {@link com.lukegjpotter.bikeracingireland.BikeRaceListActivity}
+     * {@link BikeRaceListActivity}
      *
      * @param ids The IDs to search.
      * @param months The months to search
