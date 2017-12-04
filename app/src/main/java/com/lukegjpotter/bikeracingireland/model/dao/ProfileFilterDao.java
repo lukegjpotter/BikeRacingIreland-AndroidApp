@@ -11,7 +11,6 @@ import com.lukegjpotter.bikeracingireland.model.entity.ProfileFilterEntity;
  * Created by lukegjpotter on 27/11/2017.
  */
 @Dao
-
 public interface ProfileFilterDao {
 
     @Insert

@@ -24,7 +24,7 @@ public interface BikeRaceDao {
      * {@link com.lukegjpotter.bikeracingireland.BikeRaceDetailFragment} for displaying full data.
      *
      * @param id The ID of the BikeRaceEntity to display
-     * @return
+     * @return Bike race with the specified ID.
      */
     @Transaction
     @Query("SELECT * FROM bikeraceentity WHERE id = :id")
@@ -35,7 +35,7 @@ public interface BikeRaceDao {
      * {@link com.lukegjpotter.bikeracingireland.BikeRaceListActivity}.
      *
      * @param monthNumber The month number to search, it's January = 1 ... Dec = 12.
-     * @return
+     * @return Bike Races in the specified month.
      */
     @Transaction
     @Query("SELECT * FROM bikeraceentity WHERE monthNumber = :monthNumber")
@@ -48,9 +48,9 @@ public interface BikeRaceDao {
      * the months that are currently active in the
      * {@link com.lukegjpotter.bikeracingireland.BikeRaceListActivity}
      *
-     * @param ids
-     * @param months
-     * @return
+     * @param ids The IDs to search.
+     * @param months The months to search
+     * @return The Bike Races with the specified IDs, that occour in the specified months.
      */
     @Transaction
     @Query("SELECT * FROM bikeraceentity WHERE id IN (:ids) AND monthNumber in (:months)")
@@ -59,7 +59,7 @@ public interface BikeRaceDao {
     /**
      * Used to determine if the Database is empty, to load Initia Data.
      *
-     * @return
+     * @return The number of rows in the database, or the number of bike races.
      */
     @Query("SELECT COUNT(*) FROM bikeraceentity")
     int rowCount();

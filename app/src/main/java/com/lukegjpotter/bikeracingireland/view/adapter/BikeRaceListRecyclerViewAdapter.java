@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class BikeRaceListRecyclerViewAdapter extends RecyclerView.Adapter<BikeRaceListCardViewHolder> {
 
-    FragmentManager mFragmentManager;
+    private FragmentManager mFragmentManager;
     private List<BikeRace> mBikeRaces;
     private boolean mIsTwoPaneLayout;
 

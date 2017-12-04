@@ -2,7 +2,6 @@ package com.lukegjpotter.bikeracingireland.model.entity;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 import java.util.Date;
@@ -39,24 +38,6 @@ public class StageDetailEntity {
         setSignOnTime("");
         setStartTime("");
         setRouteLinkUrl("");
-    }
-
-    @Ignore
-    public StageDetailEntity(Date date, String location, Integer raceNumber, Integer stageNumber, String raceType,
-                             Double kilometers, Double miles, String category, String signOnTime, String startTime,
-                             String routeLinkUrl) {
-
-        setDate(date);
-        setLocation(location);
-        setRaceNumber(raceNumber);
-        setStageNumber(stageNumber);
-        setRaceType(raceType);
-        setKilometers(kilometers);
-        setMiles(miles);
-        setCategory(category);
-        setSignOnTime(signOnTime);
-        setStartTime(startTime);
-        setRouteLinkUrl(routeLinkUrl);
     }
 
     public long getId() {

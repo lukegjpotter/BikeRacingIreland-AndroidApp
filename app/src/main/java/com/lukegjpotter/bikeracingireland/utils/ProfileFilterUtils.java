@@ -21,7 +21,7 @@ public class ProfileFilterUtils {
     private static ProfileFilterEntity sProfileFilterEntity;
 
     public static void loadProfileFilter() {
-
+        // TODO Move this to DatabaseInitializer.
         SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(Utils.getApplicationContext());
         String json = mPrefs.getString(Constants.SHARED_PREFS_PROFILE_FILTER_KEY, "");
         sProfileFilterEntity = new Gson().fromJson(json, ProfileFilterEntity.class);
@@ -46,6 +46,7 @@ public class ProfileFilterUtils {
     }
 
     public static void storeProfileFilter() {
+        // TODO Use Database to Store the ProfileFilter.
         SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(Utils.getApplicationContext());
 
         SharedPreferences.Editor prefsEditor = mPrefs.edit();

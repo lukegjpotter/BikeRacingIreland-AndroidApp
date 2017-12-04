@@ -62,7 +62,7 @@ public class BikeRace {
         setJunior(false);
         setYouth(false);
         setParacycling(false);
-        setStageDetails(new ArrayList<StageDetail>());
+        setStageDetails(new ArrayList<>());
     }
 
     public long getId() {

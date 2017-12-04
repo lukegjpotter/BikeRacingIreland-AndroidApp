@@ -10,23 +10,6 @@ public class StageDetail {
     private String location, raceType, category, signOnTime, startTime, routeLinkUrl;
     private Double kilometers, miles;
 
-    public StageDetail(Date date, String location, Integer raceNumber, Integer stageNumber, String raceType,
-                       Double kilometers, Double miles, String category, String signOnTime, String startTime,
-                       String routeLinkUrl) {
-
-        setDate(date);
-        setLocation(location);
-        setRaceNumber(raceNumber);
-        setStageNumber(stageNumber);
-        setRaceType(raceType);
-        setKilometers(kilometers);
-        setMiles(miles);
-        setCategory(category);
-        setSignOnTime(signOnTime);
-        setStartTime(startTime);
-        setRouteLinkUrl(routeLinkUrl);
-    }
-
     public StageDetail() {
         setDate(new Date(0L));
         setLocation("");

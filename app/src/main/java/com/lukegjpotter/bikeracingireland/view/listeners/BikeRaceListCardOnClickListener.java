@@ -17,7 +17,7 @@ import com.lukegjpotter.bikeracingireland.R;
  */
 public class BikeRaceListCardOnClickListener implements View.OnClickListener {
 
-    FragmentManager mFragmentManager;
+    private FragmentManager mFragmentManager;
     private boolean mIsTwoPaneLayout;
     private long mBikeRaceDatabasePk;
 

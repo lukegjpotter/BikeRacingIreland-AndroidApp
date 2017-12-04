@@ -54,7 +54,7 @@ public class BikeRaceDetailFragment extends Fragment {
         binding.setVariable(com.lukegjpotter.bikeracingireland.BR.bikeRace, mBikeRace);
 
         Activity activity = this.getActivity();
-        CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
+        CollapsingToolbarLayout appBarLayout = activity.findViewById(R.id.toolbar_layout);
 
         if (appBarLayout != null) {
             appBarLayout.setTitle(mBikeRace.getEventName());
@@ -67,7 +67,7 @@ public class BikeRaceDetailFragment extends Fragment {
 
     private void setupStageDetailsLayout(ViewDataBinding binding) {
 
-        LinearLayout stageDetailsLayout = (LinearLayout) binding.getRoot().findViewById(R.id.stage_details_layout);
+        LinearLayout stageDetailsLayout = binding.getRoot().findViewById(R.id.stage_details_layout);
 
         // Do not display the views if there is nothing to show.
         if (mBikeRace.getStageDetails().isEmpty()) {

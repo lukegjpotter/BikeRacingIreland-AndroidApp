@@ -63,9 +63,9 @@ public class Utils {
     /**
      * Removes the last occurrence of {@code removeThis} in {@code baseString}.
      *
-     * @param baseString
-     * @param removeThis
-     * @return
+     * @param baseString The base string to remove the ending of.
+     * @param removeThis The ending of the baseString to remove.
+     * @return The baseString with the ending remove.
      */
     public static String removeLastOccurrenceInString(String baseString, String removeThis) {
 
