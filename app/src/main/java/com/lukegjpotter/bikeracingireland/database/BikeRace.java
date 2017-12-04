@@ -1,4 +1,4 @@
-package com.lukegjpotter.bikeracingireland.model;
+package com.lukegjpotter.bikeracingireland.database;
 
 import com.google.gson.annotations.SerializedName;
 

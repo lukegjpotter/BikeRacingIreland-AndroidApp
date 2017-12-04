@@ -13,8 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lukegjpotter.bikeracingireland.R;
-import com.lukegjpotter.bikeracingireland.model.BikeRace;
-import com.lukegjpotter.bikeracingireland.model.StageDetail;
+import com.lukegjpotter.bikeracingireland.database.BikeRace;
+import com.lukegjpotter.bikeracingireland.database.StageDetail;
 import com.lukegjpotter.bikeracingireland.service.BikeRaceListViewDataService;
 import com.lukegjpotter.bikeracingireland.utils.Utils;
 

@@ -1,7 +1,7 @@
 package com.lukegjpotter.bikeracingireland.testresources;
 
-import com.lukegjpotter.bikeracingireland.model.BikeRace;
-import com.lukegjpotter.bikeracingireland.model.StageDetail;
+import com.lukegjpotter.bikeracingireland.database.BikeRace;
+import com.lukegjpotter.bikeracingireland.database.StageDetail;
 
 import java.util.ArrayList;
 import java.util.List;

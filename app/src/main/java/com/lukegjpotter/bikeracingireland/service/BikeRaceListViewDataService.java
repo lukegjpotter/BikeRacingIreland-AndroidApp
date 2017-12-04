@@ -3,10 +3,10 @@ package com.lukegjpotter.bikeracingireland.service;
 
 import android.content.Context;
 
+import com.lukegjpotter.bikeracingireland.database.BikeRace;
 import com.lukegjpotter.bikeracingireland.database.DatabaseConnection;
 import com.lukegjpotter.bikeracingireland.database.LocalDatabaseConnection;
 import com.lukegjpotter.bikeracingireland.database.RemoteDatabaseConnection;
-import com.lukegjpotter.bikeracingireland.model.BikeRace;
 import com.lukegjpotter.bikeracingireland.model.entity.ProfileFilterEntity;
 import com.lukegjpotter.bikeracingireland.model.roomdatabase.ApplicationDatabase;
 import com.lukegjpotter.bikeracingireland.utils.MonthManager;

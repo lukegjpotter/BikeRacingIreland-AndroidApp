@@ -10,7 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.lukegjpotter.bikeracingireland.R;
-import com.lukegjpotter.bikeracingireland.model.BikeRace;
+import com.lukegjpotter.bikeracingireland.database.BikeRace;
 import com.lukegjpotter.bikeracingireland.model.entity.ProfileFilterEntity;
 import com.lukegjpotter.bikeracingireland.model.roomdatabase.ApplicationDatabase;
 import com.lukegjpotter.bikeracingireland.model.roomdatabase.util.DatabaseInitializer;

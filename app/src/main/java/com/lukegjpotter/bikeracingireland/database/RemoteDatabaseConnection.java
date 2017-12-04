@@ -1,7 +1,6 @@
 package com.lukegjpotter.bikeracingireland.database;
 
 import com.lukegjpotter.bikeracingireland.R;
-import com.lukegjpotter.bikeracingireland.model.BikeRace;
 import com.lukegjpotter.bikeracingireland.service.json.JsonParsingService;
 import com.lukegjpotter.bikeracingireland.utils.Utils;
 

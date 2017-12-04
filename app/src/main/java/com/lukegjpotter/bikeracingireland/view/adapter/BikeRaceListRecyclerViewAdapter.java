@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lukegjpotter.bikeracingireland.R;
-import com.lukegjpotter.bikeracingireland.model.BikeRace;
+import com.lukegjpotter.bikeracingireland.database.BikeRace;
 import com.lukegjpotter.bikeracingireland.utils.Utils;
 import com.lukegjpotter.bikeracingireland.view.holder.BikeRaceListCardViewHolder;
 import com.lukegjpotter.bikeracingireland.view.listeners.BikeRaceListCardOnClickListener;

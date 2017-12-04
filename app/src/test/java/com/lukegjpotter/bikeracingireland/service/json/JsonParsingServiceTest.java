@@ -1,7 +1,7 @@
 package com.lukegjpotter.bikeracingireland.service.json;
 
-import com.lukegjpotter.bikeracingireland.model.BikeRace;
-import com.lukegjpotter.bikeracingireland.model.StageDetail;
+import com.lukegjpotter.bikeracingireland.database.BikeRace;
+import com.lukegjpotter.bikeracingireland.database.StageDetail;
 import com.lukegjpotter.bikeracingireland.testresources.TestResources;
 
 import org.junit.Test;

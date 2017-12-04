@@ -3,7 +3,6 @@ package com.lukegjpotter.bikeracingireland.database;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import com.lukegjpotter.bikeracingireland.model.StageDetail;
 import com.lukegjpotter.bikeracingireland.utils.Utils;
 
 import java.util.ArrayList;

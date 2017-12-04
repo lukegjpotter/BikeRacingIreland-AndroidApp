@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.lukegjpotter.bikeracingireland.constant.Constants;
-import com.lukegjpotter.bikeracingireland.model.BikeRace;
+import com.lukegjpotter.bikeracingireland.database.BikeRace;
 
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;

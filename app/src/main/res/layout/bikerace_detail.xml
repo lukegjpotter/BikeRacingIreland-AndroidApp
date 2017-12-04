@@ -7,7 +7,7 @@
         <import type="com.lukegjpotter.bikeracingireland.utils.Utils" />
         <variable
             name="bikeRace"
-            type="com.lukegjpotter.bikeracingireland.model.BikeRace" />
+            type="com.lukegjpotter.bikeracingireland.database.BikeRace" />
     </data>
 
     <LinearLayout

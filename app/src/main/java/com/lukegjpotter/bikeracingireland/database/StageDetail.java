@@ -1,4 +1,4 @@
-package com.lukegjpotter.bikeracingireland.model;
+package com.lukegjpotter.bikeracingireland.database;
 
 import java.util.Date;
 

@@ -6,8 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.lukegjpotter.bikeracingireland.enums.RaceType;
-import com.lukegjpotter.bikeracingireland.model.BikeRace;
-import com.lukegjpotter.bikeracingireland.model.StageDetail;
 import com.lukegjpotter.bikeracingireland.utils.Utils;
 
 import java.util.ArrayList;

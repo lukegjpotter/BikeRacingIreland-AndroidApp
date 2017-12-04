@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.text.TextUtils;
 
-import com.lukegjpotter.bikeracingireland.model.BikeRace;
 import com.lukegjpotter.bikeracingireland.utils.Utils;
 
 import java.util.ArrayList;
