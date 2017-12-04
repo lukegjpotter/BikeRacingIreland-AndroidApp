@@ -5,6 +5,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Transaction;
 import android.arch.persistence.room.Update;
 
 import com.lukegjpotter.bikeracingireland.model.entity.BikeRaceEntity;
@@ -25,6 +26,7 @@ public interface BikeRaceDao {
      * @param id The ID of the BikeRaceEntity to display
      * @return
      */
+    @Transaction
     @Query("SELECT * FROM bikeraceentity WHERE id = :id")
     LiveData<BikeRaceEntity> findBikeRaceById(long id);
 
@@ -35,6 +37,7 @@ public interface BikeRaceDao {
      * @param monthNumber The month number to search, it's January = 1 ... Dec = 12.
      * @return
      */
+    @Transaction
     @Query("SELECT * FROM bikeraceentity WHERE monthNumber = :monthNumber")
     LiveData<List<BikeRaceEntity>> findBikeRacesInMonth(int monthNumber);
 
@@ -49,6 +52,7 @@ public interface BikeRaceDao {
      * @param months
      * @return
      */
+    @Transaction
     @Query("SELECT * FROM bikeraceentity WHERE id IN (:ids) AND monthNumber in (:months)")
     LiveData<List<BikeRaceEntity>> findBikeRacesByIdsAndMonths(Set<Long> ids, Set<Integer> months);
 

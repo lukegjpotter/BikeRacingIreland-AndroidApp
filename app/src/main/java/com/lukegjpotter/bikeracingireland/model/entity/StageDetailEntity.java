@@ -59,7 +59,7 @@ public class StageDetailEntity {
         setRouteLinkUrl(routeLinkUrl);
     }
 
-    public long get() {
+    public long getId() {
         return id;
     }
 
