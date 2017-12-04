@@ -1,5 +1,6 @@
 package com.lukegjpotter.bikeracingireland.view.activity;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -10,13 +11,14 @@ import android.view.MenuItem;
 
 import com.lukegjpotter.bikeracingireland.R;
 import com.lukegjpotter.bikeracingireland.model.BikeRace;
+import com.lukegjpotter.bikeracingireland.model.entity.ProfileFilterEntity;
 import com.lukegjpotter.bikeracingireland.model.roomdatabase.ApplicationDatabase;
 import com.lukegjpotter.bikeracingireland.model.roomdatabase.util.DatabaseInitializer;
 import com.lukegjpotter.bikeracingireland.service.BikeRaceListViewDataService;
 import com.lukegjpotter.bikeracingireland.utils.MonthManager;
-import com.lukegjpotter.bikeracingireland.utils.ProfileFilterUtils;
 import com.lukegjpotter.bikeracingireland.utils.Utils;
 import com.lukegjpotter.bikeracingireland.view.adapter.BikeRaceListRecyclerViewAdapter;
+import com.lukegjpotter.bikeracingireland.viewmodel.ProfileFilterViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,7 @@ public class BikeRaceListActivity extends AppCompatActivity {
 
     BikeRaceListViewDataService mDataService;
     RecyclerView mRecyclerView;
+    private ProfileFilterViewModel profileFilterViewModel;
     // Whether or not the activity is in two-pane mode, i.e. running on a tablet device.
     private boolean mTwoPane;
 
@@ -40,13 +43,16 @@ public class BikeRaceListActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_bikerace_list);
 
+        // Insert Initial Data for testing the app.
+        DatabaseInitializer.populateAsync(ApplicationDatabase.getInstance(getApplicationContext()));
+
+        // Setup ProfileFilterViewModel.
+        profileFilterViewModel = ViewModelProviders.of(this).get(ProfileFilterViewModel.class);
+        profileFilterViewModel.getProfileFilter().observe(this, profileFilterEntity -> profileFilterEntity = new ProfileFilterEntity(profileFilterEntity));
+
         // Set up the Application Context and the DataService.
         Utils.setApplicationContext(getApplicationContext());
-        ProfileFilterUtils.loadProfileFilter();
         mDataService = new BikeRaceListViewDataService(Utils.getApplicationContext());
-        // Insert Initial Data for testing the app.
-        //new InitialData(mDataService).insertInitialData();
-        DatabaseInitializer.populateAsync(ApplicationDatabase.getInstance(getApplicationContext()));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -63,12 +69,6 @@ public class BikeRaceListActivity extends AppCompatActivity {
              */
             mTwoPane = true;
         }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        ProfileFilterUtils.storeProfileFilter();
     }
 
     @Override
@@ -104,10 +104,10 @@ public class BikeRaceListActivity extends AppCompatActivity {
     }
 
     private void profileFilterSelected(MenuItem profileFilterMenuItem) {
-        if (ProfileFilterUtils.IS_PROFILE_FILTER_ENABLED) {
+        if (profileFilterViewModel.isEnabled()) {
             // Disable ProfileFilter, as it is already enabled.
             profileFilterMenuItem.setIcon(R.drawable.ic_face_black_48dp);
-            ProfileFilterUtils.IS_PROFILE_FILTER_ENABLED = false;
+            profileFilterViewModel.setEnabled(false);
 
             List<BikeRace> bikeRacesInMonths = new ArrayList<>();
 
@@ -119,7 +119,7 @@ public class BikeRaceListActivity extends AppCompatActivity {
 
         } else {
             // Enable ProfileFilter, as it is disabled.
-            if (!ProfileFilterUtils.IS_PROFILE_FILTER_SET) {
+            if (!profileFilterViewModel.isPopulated()) {
                 setupProfileFilter();
             }
 
@@ -127,12 +127,13 @@ public class BikeRaceListActivity extends AppCompatActivity {
             mRecyclerView.setAdapter(new BikeRaceListRecyclerViewAdapter(mTwoPane, getSupportFragmentManager(), bikeRacesForProfileFilter));
 
             profileFilterMenuItem.setIcon(R.drawable.ic_face_white_48dp);
-            ProfileFilterUtils.IS_PROFILE_FILTER_ENABLED = true;
+            profileFilterViewModel.setEnabled(true);
         }
     }
 
     private void setupProfileFilter() {
-        // TODO Implement This Properly with User Set Settings.
-        ProfileFilterUtils.loadProfileFilter();
+        // TODO Implement This Properly with User Set Settings via a dialog and save to database.
+        ProfileFilterEntity profileFilterEntity = profileFilterViewModel.getProfileFilter().getValue();
+        profileFilterViewModel.updateProfileFilter(profileFilterEntity);
     }
 }

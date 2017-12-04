@@ -17,8 +17,9 @@ import java.util.Set;
 @Entity
 public class ProfileFilterEntity {
 
-    @PrimaryKey(autoGenerate = true)
-    private long id;
+    // There will only be one instance of the ProfileFiler, so the ID=1 is hardcoded.
+    @PrimaryKey
+    private long id = 1;
     @ColumnInfo(name = "racetype")
     private Set<RaceType> raceTypes;
     @ColumnInfo(name = "category")
@@ -30,14 +31,13 @@ public class ProfileFilterEntity {
     }
 
     @Ignore
-    public ProfileFilterEntity(Set<RaceType> raceTypes, Set<String> categories) {
-        this.raceTypes = raceTypes;
-        this.categories = categories;
+    public ProfileFilterEntity(ProfileFilterEntity profileFilterEntity) {
+        this.raceTypes = profileFilterEntity.getRaceTypes();
+        this.categories = profileFilterEntity.getCategories();
     }
 
     @Ignore
-    public ProfileFilterEntity(long id, Set<RaceType> raceTypes, Set<String> categories) {
-        this.id = id;
+    public ProfileFilterEntity(Set<RaceType> raceTypes, Set<String> categories) {
         this.raceTypes = raceTypes;
         this.categories = categories;
     }
