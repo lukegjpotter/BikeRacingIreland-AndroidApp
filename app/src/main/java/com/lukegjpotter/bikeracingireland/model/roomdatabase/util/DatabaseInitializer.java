@@ -2,15 +2,19 @@ package com.lukegjpotter.bikeracingireland.model.roomdatabase.util;
 
 import android.os.AsyncTask;
 
+import com.lukegjpotter.bikeracingireland.enums.RaceType;
 import com.lukegjpotter.bikeracingireland.model.entity.BikeRaceEntity;
 import com.lukegjpotter.bikeracingireland.model.entity.BikeRaceWithStageDetails;
+import com.lukegjpotter.bikeracingireland.model.entity.ProfileFilterEntity;
 import com.lukegjpotter.bikeracingireland.model.entity.StageDetailEntity;
 import com.lukegjpotter.bikeracingireland.model.roomdatabase.ApplicationDatabase;
 import com.lukegjpotter.bikeracingireland.utils.MonthManager;
 import com.lukegjpotter.bikeracingireland.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * To be used for Testing Purposes.
@@ -125,6 +129,16 @@ public class DatabaseInitializer {
         return brsd;
     }
 
+    private static ProfileFilterEntity getProfileFilterForA1Road() {
+
+        Set<RaceType> raceTypes = new HashSet<>();
+        raceTypes.add(RaceType.A1);
+        Set<String> categories = new HashSet<>();
+        categories.add("Road");
+
+        return new ProfileFilterEntity(raceTypes, categories);
+    }
+
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
 
         private final ApplicationDatabase database;
@@ -145,6 +159,10 @@ public class DatabaseInitializer {
                     database.bikeRaceDao().insertBikeRaces(brsd.bikeRaceEntity);
                     database.stageDetailDao().insertStageDetails(brsd.stageDetails.toArray(new StageDetailEntity[brsd.stageDetails.size()]));
                 }
+            }
+
+            if (database.profileFilterDao().rowCount() == 0) {
+                database.profileFilterDao().insertProfileFilters(getProfileFilterForA1Road());
             }
 
             return null;
