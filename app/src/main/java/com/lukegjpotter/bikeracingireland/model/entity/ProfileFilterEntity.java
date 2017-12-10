@@ -19,7 +19,7 @@ public class ProfileFilterEntity {
 
     // There will only be one instance of the ProfileFiler, so the ID=1 is hardcoded.
     @PrimaryKey
-    private long id = 1;
+    private long pkProfileFilterEntityId = 1;
     @ColumnInfo(name = "racetype")
     private Set<RaceType> raceTypes;
     @ColumnInfo(name = "category")
@@ -42,12 +42,12 @@ public class ProfileFilterEntity {
         this.categories = categories;
     }
 
-    public long getId() {
-        return id;
+    public long getPkProfileFilterEntityId() {
+        return pkProfileFilterEntityId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setPkProfileFilterEntityId(long pkProfileFilterEntityId) {
+        this.pkProfileFilterEntityId = pkProfileFilterEntityId;
     }
 
     public Set<RaceType> getRaceTypes() {

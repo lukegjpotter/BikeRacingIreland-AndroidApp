@@ -15,8 +15,8 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 public class StageDetailEntity {
 
     @PrimaryKey
-    private long id;
-    @ForeignKey(entity = BikeRaceEntity.class, parentColumns = "id", childColumns = "fkBikeRaceEntityId", onDelete = CASCADE)
+    private long pkStageDetailEntityId;
+    @ForeignKey(entity = BikeRaceEntity.class, parentColumns = "pkStageDetailEntityId", childColumns = "fkBikeRaceEntityId", onDelete = CASCADE)
     private long fkBikeRaceEntityId;
     private Date date;
     private Integer raceNumber, stageNumber;
@@ -40,12 +40,12 @@ public class StageDetailEntity {
         setRouteLinkUrl("");
     }
 
-    public long getId() {
-        return id;
+    public long getPkStageDetailEntityId() {
+        return pkStageDetailEntityId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setPkStageDetailEntityId(long pkStageDetailEntityId) {
+        this.pkStageDetailEntityId = pkStageDetailEntityId;
     }
 
     public long getFkBikeRaceEntityId() {

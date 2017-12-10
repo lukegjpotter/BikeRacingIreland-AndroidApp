@@ -14,6 +14,6 @@ public class BikeRaceWithStageDetails {
     @Embedded
     public BikeRaceEntity bikeRaceEntity;
 
-    @Relation(parentColumn = "id", entityColumn = "id", entity = StageDetailEntity.class)
+    @Relation(parentColumn = "pkBikeRaceEntityId", entityColumn = "fkBikeRaceEntityId", entity = StageDetailEntity.class)
     public List<StageDetailEntity> stageDetails;
 }

@@ -31,7 +31,7 @@ public interface BikeRaceDao {
      * @return Bike race with the specified ID.
      */
     @Transaction
-    @Query("SELECT * FROM bikeraceentity WHERE id = :id")
+    @Query("SELECT * FROM bikeraceentity WHERE pkBikeRaceEntityId = :id")
     LiveData<BikeRaceWithStageDetails> findBikeRaceById(long id);
 
     /**
@@ -57,8 +57,8 @@ public interface BikeRaceDao {
      * @return The Bike Races with the specified IDs, that occour in the specified months.
      */
     @Transaction
-    @Query("SELECT * FROM bikeraceentity WHERE id IN (:ids) AND monthNumber in (:months)")
-    LiveData<List<BikeRaceWithStageDetails>> findBikeRacesByIdsAndMonths(Set<Long> ids, Set<Integer> months);
+    @Query("SELECT * FROM bikeraceentity WHERE pkBikeRaceEntityId IN (:ids) AND monthNumber in (:months)")
+    LiveData<List<BikeRaceEntity>> findBikeRacesByIdsAndMonths(Set<Long> ids, Set<Integer> months);
 
     /**
      * Used to determine if the Database is empty, to load Initia Data.

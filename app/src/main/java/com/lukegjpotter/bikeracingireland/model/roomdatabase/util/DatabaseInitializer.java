@@ -3,6 +3,7 @@ package com.lukegjpotter.bikeracingireland.model.roomdatabase.util;
 import android.os.AsyncTask;
 
 import com.lukegjpotter.bikeracingireland.model.entity.BikeRaceEntity;
+import com.lukegjpotter.bikeracingireland.model.entity.BikeRaceWithStageDetails;
 import com.lukegjpotter.bikeracingireland.model.entity.StageDetailEntity;
 import com.lukegjpotter.bikeracingireland.model.roomdatabase.ApplicationDatabase;
 import com.lukegjpotter.bikeracingireland.utils.MonthManager;
@@ -24,10 +25,10 @@ public class DatabaseInitializer {
         new PopulateDbAsync(database).execute();
     }
 
-    private static BikeRaceEntity getFinnWheelersTTRace() {
+    private static BikeRaceWithStageDetails getFinnWheelersTTRace() {
 
         BikeRaceEntity bikeRace = new BikeRaceEntity();
-        bikeRace.setId(130L);
+        bikeRace.setPkBikeRaceEntityId(130L);
         bikeRace.setStartDate(Utils.convertStringToDate("20160605"));
         bikeRace.setMonthNumber(MonthManager.currentMonthNumber());
         bikeRace.setBookingsOpenDate(Utils.convertStringToDate("20160605"));
@@ -53,7 +54,8 @@ public class DatabaseInitializer {
         bikeRace.setYouth(false);
 
         StageDetailEntity stageDetail = new StageDetailEntity();
-        stageDetail.setId(434L);
+        stageDetail.setPkStageDetailEntityId(434L);
+        stageDetail.setFkBikeRaceEntityId(bikeRace.getPkBikeRaceEntityId());
         stageDetail.setDate(Utils.convertStringToDate("20160605"));
         stageDetail.setRaceNumber(1);
         stageDetail.setStageNumber(1);
@@ -65,15 +67,18 @@ public class DatabaseInitializer {
         stageDetail.setRouteLinkUrl("");
         stageDetail.setKilometers((double) 16);
         stageDetail.setMiles((double) 10);
-        bikeRace.addStageDetail(stageDetail);
 
-        return bikeRace;
+        BikeRaceWithStageDetails brsd = new BikeRaceWithStageDetails();
+        brsd.bikeRaceEntity = bikeRace;
+        brsd.stageDetails.add(stageDetail);
+
+        return brsd;
     }
 
-    private static BikeRaceEntity getMarylandWheelersRace() {
+    private static BikeRaceWithStageDetails getMarylandWheelersRace() {
 
         BikeRaceEntity bikeRace = new BikeRaceEntity();
-        bikeRace.setId(131L);
+        bikeRace.setPkBikeRaceEntityId(131L);
         bikeRace.setStartDate(Utils.convertStringToDate("20160606"));
         bikeRace.setMonthNumber(MonthManager.currentMonthNumber());
         bikeRace.setBookingsOpenDate(Utils.convertStringToDate("20160606"));
@@ -99,7 +104,8 @@ public class DatabaseInitializer {
         bikeRace.setYouth(false);
 
         StageDetailEntity stageDetail = new StageDetailEntity();
-        stageDetail.setId(435L);
+        stageDetail.setPkStageDetailEntityId(435L);
+        stageDetail.setFkBikeRaceEntityId(bikeRace.getPkBikeRaceEntityId());
         stageDetail.setDate(Utils.convertStringToDate("20160606"));
         stageDetail.setRaceNumber(1);
         stageDetail.setStageNumber(1);
@@ -111,9 +117,12 @@ public class DatabaseInitializer {
         stageDetail.setRouteLinkUrl("");
         stageDetail.setKilometers(48.3);
         stageDetail.setMiles((double) 30);
-        bikeRace.addStageDetail(stageDetail);
 
-        return bikeRace;
+        BikeRaceWithStageDetails brsd = new BikeRaceWithStageDetails();
+        brsd.bikeRaceEntity = bikeRace;
+        brsd.stageDetails.add(stageDetail);
+
+        return brsd;
     }
 
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
@@ -128,11 +137,14 @@ public class DatabaseInitializer {
         protected Void doInBackground(final Void... params) {
             // If the Database is empty, add the initial data.
             if (database.bikeRaceDao().rowCount() == 0) {
-                List<BikeRaceEntity> bikeRaces = new ArrayList<>();
+                List<BikeRaceWithStageDetails> bikeRaces = new ArrayList<>();
                 bikeRaces.add(getFinnWheelersTTRace());
                 bikeRaces.add(getMarylandWheelersRace());
 
-                database.bikeRaceDao().insertBikeRaces(bikeRaces.toArray(new BikeRaceEntity[bikeRaces.size()]));
+                for (BikeRaceWithStageDetails brsd : bikeRaces) {
+                    database.bikeRaceDao().insertBikeRaces(brsd.bikeRaceEntity);
+                    database.stageDetailDao().insertStageDetails(brsd.stageDetails.toArray(new StageDetailEntity[brsd.stageDetails.size()]));
+                }
             }
 
             return null;

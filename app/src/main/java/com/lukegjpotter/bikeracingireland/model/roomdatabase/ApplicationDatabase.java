@@ -12,15 +12,17 @@ import com.lukegjpotter.bikeracingireland.model.dao.StageDetailDao;
 import com.lukegjpotter.bikeracingireland.model.entity.BikeRaceEntity;
 import com.lukegjpotter.bikeracingireland.model.entity.ProfileFilterEntity;
 import com.lukegjpotter.bikeracingireland.model.entity.StageDetailEntity;
+import com.lukegjpotter.bikeracingireland.model.roomdatabase.util.CollectionConverters;
 import com.lukegjpotter.bikeracingireland.model.roomdatabase.util.DateConverters;
 
 /**
  * Created by lukegjpotter on 27/11/2017.
  */
 @Database(entities = {BikeRaceEntity.class, StageDetailEntity.class, ProfileFilterEntity.class}, version = 1, exportSchema = false)
-@TypeConverters({DateConverters.class})
+@TypeConverters({DateConverters.class, CollectionConverters.class})
 public abstract class ApplicationDatabase extends RoomDatabase {
 
+    private static final String DATABASE_NAME = "BikeRacingIrelandDatabase";
     private static ApplicationDatabase INSTANCE;
 
     public static ApplicationDatabase getInstance(Context context) {
@@ -28,7 +30,7 @@ public abstract class ApplicationDatabase extends RoomDatabase {
             INSTANCE = Room.databaseBuilder(
                     context.getApplicationContext(),
                     ApplicationDatabase.class,
-                    "BikeRacingIrelandDatabase")
+                    DATABASE_NAME)
                     .build();
         }
 

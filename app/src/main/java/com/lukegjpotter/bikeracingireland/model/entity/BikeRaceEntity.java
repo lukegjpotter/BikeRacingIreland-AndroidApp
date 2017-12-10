@@ -14,7 +14,7 @@ import java.util.Date;
 public class BikeRaceEntity {
 
     @PrimaryKey
-    private long id;
+    private long pkBikeRaceEntityId;
     private Date startDate, bookingsOpenDate, bookingsCloseDate;
     private String eventName, promotingClub, organiser, registrationLink, organiserPhoneNumber, organiserEmail,
             location, province;
@@ -44,7 +44,7 @@ public class BikeRaceEntity {
      * Empty Constructor for easy Event Building.
      */
     public BikeRaceEntity() {
-        setId(0L);
+        setPkBikeRaceEntityId(0L);
         setStartDate(new Date(0L));
         setMonthNumber(-1);
         setBookingsOpenDate(new Date(0L));
@@ -69,12 +69,12 @@ public class BikeRaceEntity {
         setParacycling(false);
     }
 
-    public long getId() {
-        return id;
+    public long getPkBikeRaceEntityId() {
+        return pkBikeRaceEntityId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setPkBikeRaceEntityId(long pkBikeRaceEntityId) {
+        this.pkBikeRaceEntityId = pkBikeRaceEntityId;
     }
 
     public Date getStartDate() {

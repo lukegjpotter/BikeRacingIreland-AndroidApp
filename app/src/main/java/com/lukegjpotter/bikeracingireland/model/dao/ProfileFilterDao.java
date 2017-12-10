@@ -15,7 +15,7 @@ import com.lukegjpotter.bikeracingireland.model.entity.ProfileFilterEntity;
 @Dao
 public interface ProfileFilterDao {
 
-    @Query("SELECT * FROM profilefilterentity WHERE id = 1 LIMIT 1")
+    @Query("SELECT * FROM profilefilterentity WHERE pkProfileFilterEntityId = 1 LIMIT 1")
     LiveData<ProfileFilterEntity> findProfileFilter();
 
     @Query("SELECT COUNT(*) FROM profilefilterentity")
