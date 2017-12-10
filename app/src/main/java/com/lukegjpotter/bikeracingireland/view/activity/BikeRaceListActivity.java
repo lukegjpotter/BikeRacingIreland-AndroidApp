@@ -1,27 +1,26 @@
 package com.lukegjpotter.bikeracingireland.view.activity;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.lukegjpotter.bikeracingireland.R;
-import com.lukegjpotter.bikeracingireland.database.BikeRace;
+import com.lukegjpotter.bikeracingireland.databinding.ActivityBikeraceListBinding;
 import com.lukegjpotter.bikeracingireland.model.entity.ProfileFilterEntity;
 import com.lukegjpotter.bikeracingireland.model.roomdatabase.ApplicationDatabase;
 import com.lukegjpotter.bikeracingireland.model.roomdatabase.util.DatabaseInitializer;
 import com.lukegjpotter.bikeracingireland.service.BikeRaceListViewDataService;
-import com.lukegjpotter.bikeracingireland.utils.MonthManager;
-import com.lukegjpotter.bikeracingireland.utils.Utils;
 import com.lukegjpotter.bikeracingireland.view.adapter.BikeRaceListRecyclerViewAdapter;
+import com.lukegjpotter.bikeracingireland.viewmodel.BikeRaceListViewModel;
 import com.lukegjpotter.bikeracingireland.viewmodel.ProfileFilterViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * An activity representing a list of BikeRaces. This activity has different presentations for
@@ -34,6 +33,7 @@ public class BikeRaceListActivity extends AppCompatActivity {
     BikeRaceListViewDataService mDataService;
     RecyclerView mRecyclerView;
     private ProfileFilterViewModel profileFilterViewModel;
+    private BikeRaceListViewModel bikeRaceListViewModel;
     // Whether or not the activity is in two-pane mode, i.e. running on a tablet device.
     private boolean mTwoPane;
 
@@ -41,7 +41,19 @@ public class BikeRaceListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_bikerace_list);
+        // The detail container view will be present only in the large-screen layouts (res/values-w900dp).
+        // If this view is present, then the activity should be in two-pane mode.
+        if (findViewById(R.id.bikerace_detail_container) != null) mTwoPane = true;
+
+        ActivityBikeraceListBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_bikerace_list);
+
+        setSupportActionBar(binding.toolbar);
+        binding.toolbar.setTitle(getTitle());
+
+        BikeRaceListRecyclerViewAdapter recyclerViewAdapter = new BikeRaceListRecyclerViewAdapter(mTwoPane, getSupportFragmentManager(), new ArrayList<>());
+        mRecyclerView = findViewById(R.id.bikerace_list);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(recyclerViewAdapter);
 
         // Insert Initial Data for testing the app.
         DatabaseInitializer.populateAsync(ApplicationDatabase.getInstance(getApplicationContext()));
@@ -50,25 +62,8 @@ public class BikeRaceListActivity extends AppCompatActivity {
         profileFilterViewModel = ViewModelProviders.of(this).get(ProfileFilterViewModel.class);
         profileFilterViewModel.getProfileFilter().observe(this, profileFilterEntity -> profileFilterEntity = new ProfileFilterEntity(profileFilterEntity));
 
-        // Set up the Application Context and the DataService.
-        Utils.setApplicationContext(getApplicationContext());
-        mDataService = new BikeRaceListViewDataService(Utils.getApplicationContext());
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle(getTitle());
-
-        mRecyclerView = findViewById(R.id.bikerace_list);
-        assert mRecyclerView != null;
-        setupRecyclerView();
-
-        if (findViewById(R.id.bikerace_detail_container) != null) {
-            /* The detail container view will be present only in the large-screen layouts
-             * (res/values-w900dp). If this view is present, then the activity should be in
-             * two-pane mode.
-             */
-            mTwoPane = true;
-        }
+        bikeRaceListViewModel = ViewModelProviders.of(this).get(BikeRaceListViewModel.class);
+        bikeRaceListViewModel.getBikeRaces().observe(this, recyclerViewAdapter::setBikeRaces);
     }
 
     @Override
@@ -95,45 +90,26 @@ public class BikeRaceListActivity extends AppCompatActivity {
         }
     }
 
-    private void setupRecyclerView() {
-        // TODO Make the MonthNumber Dynamically changed based on current month and scrolling of the view.
-        int monthNumber = MonthManager.currentMonthNumber();
-        // TODO Make a Thread out of this call ...Somewhere.
-        List<BikeRace> bikeRaces = mDataService.fetchBikeRacesInMonthNumber(monthNumber);
-        mRecyclerView.setAdapter(new BikeRaceListRecyclerViewAdapter(mTwoPane, getSupportFragmentManager(), bikeRaces));
-    }
-
     private void profileFilterSelected(MenuItem profileFilterMenuItem) {
         if (profileFilterViewModel.isEnabled()) {
             // Disable ProfileFilter, as it is already enabled.
             profileFilterMenuItem.setIcon(R.drawable.ic_face_black_48dp);
             profileFilterViewModel.setEnabled(false);
 
-            List<BikeRace> bikeRacesInMonths = new ArrayList<>();
-
-            for (int monthNumber : MonthManager.getMonthsInListView()) {
-                bikeRacesInMonths = mDataService.fetchBikeRacesInMonthNumber(monthNumber);
-            }
-
-            mRecyclerView.setAdapter(new BikeRaceListRecyclerViewAdapter(mTwoPane, getSupportFragmentManager(), bikeRacesInMonths));
+            bikeRaceListViewModel.setBikeRacesToMonths();
 
         } else {
             // Enable ProfileFilter, as it is disabled.
             if (!profileFilterViewModel.isPopulated()) {
-                setupProfileFilter();
+                // TODO Implement This Properly with User Set Settings via a dialog and save to database.
+                ProfileFilterEntity profileFilterEntity = profileFilterViewModel.getProfileFilter().getValue();
+                profileFilterViewModel.updateProfileFilter(profileFilterEntity);
             }
-
-            List<BikeRace> bikeRacesForProfileFilter = mDataService.fetchBikeRacesForProfileFilter();
-            mRecyclerView.setAdapter(new BikeRaceListRecyclerViewAdapter(mTwoPane, getSupportFragmentManager(), bikeRacesForProfileFilter));
 
             profileFilterMenuItem.setIcon(R.drawable.ic_face_white_48dp);
             profileFilterViewModel.setEnabled(true);
-        }
-    }
 
-    private void setupProfileFilter() {
-        // TODO Implement This Properly with User Set Settings via a dialog and save to database.
-        ProfileFilterEntity profileFilterEntity = profileFilterViewModel.getProfileFilter().getValue();
-        profileFilterViewModel.updateProfileFilter(profileFilterEntity);
+            bikeRaceListViewModel.setBikeRacesToProfileFilterAndMonths();
+        }
     }
 }

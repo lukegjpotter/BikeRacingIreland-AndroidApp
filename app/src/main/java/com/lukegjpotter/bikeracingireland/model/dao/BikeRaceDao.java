@@ -46,6 +46,16 @@ public interface BikeRaceDao {
     LiveData<List<BikeRaceWithStageDetails>> findBikeRacesInMonth(int monthNumber);
 
     /**
+     * Useful for when multiple months have been loaded in the RecyclerView.
+     *
+     * @param months The months to search.
+     * @return The bike races in the specified months.
+     */
+    @Transaction
+    @Query("SELECT * FROM bikeraceentity WHERE monthNumber IN (:months)")
+    LiveData<List<BikeRaceWithStageDetails>> findBikeRacesInMonths(Set<Integer> months);
+
+    /**
      * Useful for the ProfileFilter when
      * {@code StageDetailDao.findBikeRaceIdsByRaceTypesAndCategories(...)} has returned the
      * BikeRaceEntity IDs and the {@link com.lukegjpotter.bikeracingireland.utils.MonthManager} has
@@ -57,8 +67,8 @@ public interface BikeRaceDao {
      * @return The Bike Races with the specified IDs, that occour in the specified months.
      */
     @Transaction
-    @Query("SELECT * FROM bikeraceentity WHERE pkBikeRaceEntityId IN (:ids) AND monthNumber in (:months)")
-    LiveData<List<BikeRaceEntity>> findBikeRacesByIdsAndMonths(Set<Long> ids, Set<Integer> months);
+    @Query("SELECT * FROM bikeraceentity WHERE pkBikeRaceEntityId IN (:ids) AND monthNumber IN (:months)")
+    LiveData<List<BikeRaceWithStageDetails>> findBikeRacesByIdsAndMonths(List<Long> ids, Set<Integer> months);
 
     /**
      * Used to determine if the Database is empty, to load Initia Data.
