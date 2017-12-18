@@ -1,6 +1,7 @@
 package com.lukegjpotter.bikeracingireland.view.activity;
 
 import android.app.Activity;
+import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
@@ -13,10 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lukegjpotter.bikeracingireland.R;
-import com.lukegjpotter.bikeracingireland.database.BikeRace;
-import com.lukegjpotter.bikeracingireland.database.StageDetail;
-import com.lukegjpotter.bikeracingireland.service.BikeRaceListViewDataService;
-import com.lukegjpotter.bikeracingireland.utils.Utils;
+import com.lukegjpotter.bikeracingireland.model.entity.BikeRaceWithStageDetails;
+import com.lukegjpotter.bikeracingireland.model.entity.StageDetailEntity;
+import com.lukegjpotter.bikeracingireland.viewmodel.BikeRaceDetailViewModel;
 
 /**
  * A fragment representing a single BikeRace detail screen.
@@ -27,7 +27,7 @@ public class BikeRaceDetailFragment extends Fragment {
     // The fragment argument representing the item ID that this fragment represents.
     public static final String ARG_ITEM_ID = "item_id";
 
-    private BikeRace mBikeRace;
+    private BikeRaceWithStageDetails bikeRace;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the fragment (e.g. upon
@@ -40,11 +40,11 @@ public class BikeRaceDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        BikeRaceDetailViewModel bikeRaceDetailViewModel = ViewModelProviders.of(this).get(BikeRaceDetailViewModel.class);
+
         if (getArguments().containsKey(ARG_ITEM_ID)) {
-            long databasePk = Long.valueOf(getArguments().getString(ARG_ITEM_ID));
-            // TODO In a real-world scenario, use a Loader to load content from a content provider.
-            BikeRaceListViewDataService dataService = new BikeRaceListViewDataService(Utils.getApplicationContext());
-            mBikeRace = dataService.fetchBikeRaceByPk(databasePk);
+            long bikeRaceId = Long.valueOf(getArguments().getString(ARG_ITEM_ID));
+            bikeRaceDetailViewModel.getBikeRace(bikeRaceId).observe(this, bikeRaceWithStageDetails -> bikeRace = bikeRaceWithStageDetails);
         }
     }
 
@@ -52,13 +52,13 @@ public class BikeRaceDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         ViewDataBinding binding = DataBindingUtil.inflate(inflater, R.layout.bikerace_detail, container, false);
-        binding.setVariable(com.lukegjpotter.bikeracingireland.BR.bikeRace, mBikeRace);
+        binding.setVariable(com.lukegjpotter.bikeracingireland.BR.bikeRace, bikeRace);
 
         Activity activity = this.getActivity();
         CollapsingToolbarLayout appBarLayout = activity.findViewById(R.id.toolbar_layout);
 
         if (appBarLayout != null) {
-            appBarLayout.setTitle(mBikeRace.getEventName());
+            appBarLayout.setTitle(bikeRace.bikeRaceEntity.getEventName());
         }
 
         setupStageDetailsLayout(binding);
@@ -71,7 +71,7 @@ public class BikeRaceDetailFragment extends Fragment {
         LinearLayout stageDetailsLayout = binding.getRoot().findViewById(R.id.stage_details_layout);
 
         // Do not display the views if there is nothing to show.
-        if (mBikeRace.getStageDetails().isEmpty()) {
+        if (bikeRace.stageDetails.isEmpty()) {
             stageDetailsLayout.removeAllViews();
             return;
         }
@@ -79,7 +79,7 @@ public class BikeRaceDetailFragment extends Fragment {
         // Remove the placeholder text.
         stageDetailsLayout.removeView(binding.getRoot().findViewById(R.id.stage_details_placeholder));
 
-        for (StageDetail stageDetail : mBikeRace.getStageDetails()) {
+        for (StageDetailEntity stageDetail : bikeRace.stageDetails) {
             TextView stageDetailsTextView = new TextView(binding.getRoot().getContext());
             stageDetailsTextView.setText(stageDetail.toString());
             stageDetailsTextView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
