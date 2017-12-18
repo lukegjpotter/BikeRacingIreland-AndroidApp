@@ -56,7 +56,7 @@ public class BikeRaceRepository {
             BikeRaceEntity bikeRaceEntity = bikeRaceWithStageDetails.bikeRaceEntity;
             List<StageDetailEntity> stageDetailEntities = bikeRaceWithStageDetails.stageDetails;
 
-            long fkBikeRaceId = bikeRaceDao.insertBikeRaces(bikeRaceEntity);
+            long fkBikeRaceId = bikeRaceDao.insertBikeRaces(bikeRaceEntity).get(0);
             stageDetailEntities.forEach(stageDetailEntity -> stageDetailEntity.setFkBikeRaceEntityId(fkBikeRaceId));
             stageDetailDao.insertStageDetails(stageDetailEntities.toArray(new StageDetailEntity[stageDetailEntities.size()]));
         }
