@@ -11,6 +11,7 @@ import com.lukegjpotter.bikeracingireland.model.entity.BikeRaceWithStageDetails;
 import com.lukegjpotter.bikeracingireland.utils.Utils;
 import com.lukegjpotter.bikeracingireland.view.holder.BikeRaceListCardViewHolder;
 import com.lukegjpotter.bikeracingireland.view.listeners.BikeRaceListCardOnClickListener;
+import com.lukegjpotter.bikeracingireland.view.listeners.OnBottomReachedListener;
 
 import java.util.List;
 
@@ -20,13 +21,14 @@ import java.util.List;
 public class BikeRaceListRecyclerViewAdapter extends RecyclerView.Adapter<BikeRaceListCardViewHolder> {
 
     private FragmentManager mFragmentManager;
-    private List<BikeRaceWithStageDetails> mBikeRaces;
+    private List<BikeRaceWithStageDetails> bikeRaces;
     private boolean mIsTwoPaneLayout;
+    private OnBottomReachedListener onBottomReachedListener;
 
     public BikeRaceListRecyclerViewAdapter(boolean isTwoPaneLayout, FragmentManager fragmentManager, List<BikeRaceWithStageDetails> bikeRaces) {
         mIsTwoPaneLayout = isTwoPaneLayout;
         mFragmentManager = fragmentManager;
-        mBikeRaces = bikeRaces;
+        this.bikeRaces = bikeRaces;
     }
 
     @Override
@@ -37,24 +39,33 @@ public class BikeRaceListRecyclerViewAdapter extends RecyclerView.Adapter<BikeRa
 
     @Override
     public void onBindViewHolder(BikeRaceListCardViewHolder holder, int position) {
-        holder.mBikeRaceDatabasePk = mBikeRaces.get(position).bikeRaceEntity.getPkBikeRaceEntityId();
+
+        if (position == bikeRaces.size() - 1) {
+            onBottomReachedListener.onBottomReached(position);
+        }
+
+        holder.mBikeRaceDatabasePk = bikeRaces.get(position).bikeRaceEntity.getPkBikeRaceEntityId();
         BikeRaceListCardOnClickListener cardOnClickListener = new BikeRaceListCardOnClickListener(mIsTwoPaneLayout, mFragmentManager, holder.mBikeRaceDatabasePk);
         holder.mCardView.setOnClickListener(cardOnClickListener);
 
         /*holder.mRouteMap;*/ // TODO: Use the Strava API to Populate the MapView
 
-        holder.mEventName.setText(mBikeRaces.get(position).bikeRaceEntity.getEventName());
-        holder.mPromotingClub.setText(mBikeRaces.get(position).bikeRaceEntity.getPromotingClub());
-        holder.mLocation.setText(mBikeRaces.get(position).bikeRaceEntity.getLocation());
-        holder.mStartDate.setText(Utils.convertDateToString(mBikeRaces.get(position).bikeRaceEntity.getStartDate()));
+        holder.mEventName.setText(bikeRaces.get(position).bikeRaceEntity.getEventName());
+        holder.mPromotingClub.setText(bikeRaces.get(position).bikeRaceEntity.getPromotingClub());
+        holder.mLocation.setText(bikeRaces.get(position).bikeRaceEntity.getLocation());
+        holder.mStartDate.setText(Utils.convertDateToString(bikeRaces.get(position).bikeRaceEntity.getStartDate()));
     }
 
     @Override
     public int getItemCount() {
-        return mBikeRaces.size();
+        return bikeRaces.size();
     }
 
     public void setBikeRaces(List<BikeRaceWithStageDetails> BikeRaces) {
-        this.mBikeRaces = BikeRaces;
+        this.bikeRaces = BikeRaces;
+    }
+
+    public void setOnBottomReachedListener(OnBottomReachedListener onBottomReachedListener) {
+        this.onBottomReachedListener = onBottomReachedListener;
     }
 }

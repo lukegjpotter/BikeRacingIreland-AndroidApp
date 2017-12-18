@@ -15,7 +15,7 @@ import com.lukegjpotter.bikeracingireland.databinding.ActivityBikeraceListBindin
 import com.lukegjpotter.bikeracingireland.model.entity.ProfileFilterEntity;
 import com.lukegjpotter.bikeracingireland.model.roomdatabase.ApplicationDatabase;
 import com.lukegjpotter.bikeracingireland.model.roomdatabase.util.DatabaseInitializer;
-import com.lukegjpotter.bikeracingireland.service.BikeRaceListViewDataService;
+import com.lukegjpotter.bikeracingireland.utils.MonthManager;
 import com.lukegjpotter.bikeracingireland.view.adapter.BikeRaceListRecyclerViewAdapter;
 import com.lukegjpotter.bikeracingireland.viewmodel.BikeRaceListViewModel;
 import com.lukegjpotter.bikeracingireland.viewmodel.ProfileFilterViewModel;
@@ -30,7 +30,6 @@ import java.util.ArrayList;
  */
 public class BikeRaceListActivity extends AppCompatActivity {
 
-    BikeRaceListViewDataService mDataService;
     RecyclerView mRecyclerView;
     private ProfileFilterViewModel profileFilterViewModel;
     private BikeRaceListViewModel bikeRaceListViewModel;
@@ -54,6 +53,11 @@ public class BikeRaceListActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.bikerace_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(recyclerViewAdapter);
+
+        recyclerViewAdapter.setOnBottomReachedListener(position -> {
+            bikeRaceListViewModel.loadFollowingMonthsBikeRaces();
+            MonthManager.reachedBottomOfListView();
+        });
 
         // Insert Initial Data for testing the app.
         DatabaseInitializer.populateAsync(ApplicationDatabase.getInstance(getApplicationContext()));
