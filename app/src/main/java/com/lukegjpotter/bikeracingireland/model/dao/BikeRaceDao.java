@@ -79,7 +79,7 @@ public interface BikeRaceDao {
     int rowCount();
 
     @Insert
-    void insertBikeRaces(BikeRaceEntity... BikeRaces);
+    long insertBikeRaces(BikeRaceEntity... BikeRaces);
 
     @Update
     void updateBikeRaces(BikeRaceEntity... BikeRaces);
