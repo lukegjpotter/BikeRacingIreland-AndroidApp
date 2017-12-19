@@ -9,6 +9,7 @@ import com.lukegjpotter.bikeracingireland.model.entity.BikeRaceEntity;
 import com.lukegjpotter.bikeracingireland.model.entity.BikeRaceWithStageDetails;
 import com.lukegjpotter.bikeracingireland.model.entity.StageDetailEntity;
 import com.lukegjpotter.bikeracingireland.model.roomdatabase.ApplicationDatabase;
+import com.lukegjpotter.bikeracingireland.repository.retrofit.BikeRaceRetrofitRepository;
 
 import java.util.List;
 
@@ -42,9 +43,10 @@ public class BikeRaceRepository {
 
         // If it's not present in the local database, use the REST Service.
         if (bikeRaces.getValue().isEmpty()) {
-            bikeRaces = null; // Get from Retrofit...
+            List<BikeRaceWithStageDetails> bikeRacesInMonth = BikeRaceRetrofitRepository.getInstance().bikeRacesInMonthNumber(monthNumber);
+            bikeRaces.getValue().addAll(bikeRacesInMonth);
 
-            // Save the Downloaded Bike Races.
+            // Save the Downloaded Bike Races, Retrofit will have populated the data.
             saveBikeRaces(bikeRaces.getValue());
         }
 
