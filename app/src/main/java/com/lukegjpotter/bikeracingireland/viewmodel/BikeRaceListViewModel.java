@@ -6,15 +6,20 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.support.annotation.NonNull;
 
-import com.lukegjpotter.bikeracingireland.enums.RaceType;
 import com.lukegjpotter.bikeracingireland.model.entity.BikeRaceWithStageDetails;
 import com.lukegjpotter.bikeracingireland.model.entity.ProfileFilterEntity;
+import com.lukegjpotter.bikeracingireland.model.enums.RaceType;
 import com.lukegjpotter.bikeracingireland.model.roomdatabase.ApplicationDatabase;
 import com.lukegjpotter.bikeracingireland.utils.MonthManager;
 
 import java.util.List;
 
 /**
+ * This is the ViewModel for the BikeRaceListActivity.
+ *
+ * It will manipulate the contents of the List of BikeRaces to suit the needs of the RecyclerView.
+ * This will change depending on the months that are active and the status of the ProfileFilter.
+ *
  * Created by lukegjpotter on 29/11/2017.
  */
 

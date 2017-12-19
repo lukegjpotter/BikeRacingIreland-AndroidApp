@@ -5,7 +5,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
-import com.lukegjpotter.bikeracingireland.enums.RaceType;
+import com.lukegjpotter.bikeracingireland.model.enums.RaceType;
 
 import java.util.HashSet;
 import java.util.Set;

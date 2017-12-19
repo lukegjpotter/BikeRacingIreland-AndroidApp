@@ -1,4 +1,4 @@
-package com.lukegjpotter.bikeracingireland.enums;
+package com.lukegjpotter.bikeracingireland.model.enums;
 
 public enum RaceType {
 

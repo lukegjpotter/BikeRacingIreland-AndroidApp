@@ -4,13 +4,16 @@ import android.arch.persistence.room.TypeConverter;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.lukegjpotter.bikeracingireland.enums.RaceType;
+import com.lukegjpotter.bikeracingireland.model.enums.RaceType;
 
 import java.lang.reflect.Type;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * Converters for the RoomDatabase.
+ * This class keeps the Converters for Collections together.
+ *
  * Created by lukegjpotter on 09/12/2017.
  */
 

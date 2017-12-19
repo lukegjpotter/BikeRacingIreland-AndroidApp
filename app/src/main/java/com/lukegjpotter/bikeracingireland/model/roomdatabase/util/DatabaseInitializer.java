@@ -2,11 +2,11 @@ package com.lukegjpotter.bikeracingireland.model.roomdatabase.util;
 
 import android.os.AsyncTask;
 
-import com.lukegjpotter.bikeracingireland.enums.RaceType;
 import com.lukegjpotter.bikeracingireland.model.entity.BikeRaceEntity;
 import com.lukegjpotter.bikeracingireland.model.entity.BikeRaceWithStageDetails;
 import com.lukegjpotter.bikeracingireland.model.entity.ProfileFilterEntity;
 import com.lukegjpotter.bikeracingireland.model.entity.StageDetailEntity;
+import com.lukegjpotter.bikeracingireland.model.enums.RaceType;
 import com.lukegjpotter.bikeracingireland.model.roomdatabase.ApplicationDatabase;
 import com.lukegjpotter.bikeracingireland.utils.MonthManager;
 import com.lukegjpotter.bikeracingireland.utils.Utils;
