@@ -18,24 +18,25 @@ in the [CyclingIrelandEventsRestService project's README file](https://github.co
 
 ## Version Alpha Features - Complete
 
-* [x] Read `BikeRace` objects from `CyclingIrelandEventsRestService`.
-* [x] Store `BikeRace` objects in a local database.
+* [x] Read `BikeRaceWithStageDetails` objects from `CyclingIrelandEventsRestService`.
+* [x] Store `BikeRaceWithStageDetails` objects in a local database.
 * [x] When reading the REST Service, only read races to the end of the
       month.
-* [x] Present `BikeRace` objects in a ListView for the Master Fragment.
-* [x] Present `BikeRace` objects in the Details Fragment.
+* [x] Present `BikeRaceWithStageDetails` objects in a ListView for the Master Fragment.
+* [x] Present `BikeRaceWithStageDetails` objects in the Details Fragment.
 * [x] Add a `ProfileFilter` to the `ActionBar` to filter on the Category
       of the User.
 
 ## Version 1.0 Features - In Development
 
 * [x] Apply an Icon to the App.
-* [ ] When the end of the ListView is reached, download the next month's
+* [x] When the end of the ListView is reached, download the next month's
       races.
+* [ ] Retest with Android Oreo Components.
 * [ ] User is able to define their `ProfileFilter`.
+* [ ] Apply Styling to the User Interface
 * [ ] Use the Strava API and Google Maps Lite Mode to display the
       routes, in `CardView` style.
-* [ ] Apply Styling to the User Interface
 
 ## Version 2.0 Features
 
@@ -47,5 +48,6 @@ in the [CyclingIrelandEventsRestService project's README file](https://github.co
 
 ## Refactoring Tasks
 
- * [ ] Use `Room` to reduce Database code. [Room Sample from Google](https://github.com/googlesamples/android-architecture-components).
- * [ ] Use `ViewModel` and `LiveData` to maintain data when rotated.
+* [x] Use `Room` to reduce Database code. [Room Sample from Google](https://github.com/googlesamples/android-architecture-components).
+* [x] Use `ViewModel` and `LiveData` to maintain data when rotated.
+* [ ] Remove the code for the components that Room and Lifecycles replaces.
