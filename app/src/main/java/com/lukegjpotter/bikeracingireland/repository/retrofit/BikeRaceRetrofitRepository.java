@@ -2,6 +2,8 @@ package com.lukegjpotter.bikeracingireland.repository.retrofit;
 
 import android.support.annotation.NonNull;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.lukegjpotter.bikeracingireland.constant.Constants;
 import com.lukegjpotter.bikeracingireland.model.entity.BikeRaceWithStageDetails;
 
@@ -27,12 +29,18 @@ public class BikeRaceRetrofitRepository {
     private BikeRaceRetrofitClient bikeRaceRetrofitClient;
 
     private BikeRaceRetrofitRepository() {
-        OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
+        OkHttpClient okHttpClient = new OkHttpClient
+                .Builder()
+                .build();
+
+        Gson gson = new GsonBuilder()
+                .setDateFormat(Constants.DATE_FORMAT)
+                .create();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.REST_BASE_URL_LOCAL)
                 .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
         bikeRaceRetrofitClient = retrofit.create(BikeRaceRetrofitClient.class);
@@ -51,7 +59,6 @@ public class BikeRaceRetrofitRepository {
         call.enqueue(new Callback<List<BikeRaceWithStageDetails>>() {
             @Override
             public void onResponse(@NonNull Call<List<BikeRaceWithStageDetails>> call, @NonNull Response<List<BikeRaceWithStageDetails>> response) {
-
             }
 
             @Override

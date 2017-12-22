@@ -23,10 +23,12 @@ public class BikeRaceRepository {
     private static BikeRaceRepository INSTANCE;
     private BikeRaceDao bikeRaceDao;
     private StageDetailDao stageDetailDao;
+    private BikeRaceRetrofitRepository bikeRaceRetrofitRepository;
 
     private BikeRaceRepository(Context context) {
         this.bikeRaceDao = ApplicationDatabase.getInstance(context).bikeRaceDao();
         this.stageDetailDao = ApplicationDatabase.getInstance(context).stageDetailDao();
+        bikeRaceRetrofitRepository = BikeRaceRetrofitRepository.getInstance();
     }
 
     public static BikeRaceRepository getInstance(Context context) {
@@ -43,7 +45,7 @@ public class BikeRaceRepository {
 
         // If it's not present in the local database, use the REST Service.
         if (bikeRaces.getValue().isEmpty()) {
-            List<BikeRaceWithStageDetails> bikeRacesInMonth = BikeRaceRetrofitRepository.getInstance().bikeRacesInMonthNumber(monthNumber);
+            List<BikeRaceWithStageDetails> bikeRacesInMonth = bikeRaceRetrofitRepository.bikeRacesInMonthNumber(monthNumber);
             bikeRaces.getValue().addAll(bikeRacesInMonth);
 
             // Save the Downloaded Bike Races, Retrofit will have populated the data.
