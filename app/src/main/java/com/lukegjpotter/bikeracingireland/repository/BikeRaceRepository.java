@@ -81,7 +81,7 @@ public class BikeRaceRepository {
         }
     }
 
-    public LiveData<List<BikeRaceWithStageDetails>> getBikeRacesToProfileFilterAndMonths() {
+    public LiveData<List<BikeRaceWithStageDetails>> findBikeRacesForProfileFilterAndMonths() {
 
         ProfileFilterEntity profileFilterEntity = profileFilterDao.findProfileFilter().getValue();
 
@@ -102,5 +102,10 @@ public class BikeRaceRepository {
                 .getValue();
 
         return bikeRaceDao.findBikeRacesByIdsAndMonths(ids, MonthManager.getMonthsInListView());
+    }
+
+    public LiveData<BikeRaceWithStageDetails> findBikeRaceById(long pkBikeRaceEntityId) {
+
+        return bikeRaceDao.findBikeRaceById(pkBikeRaceEntityId);
     }
 }

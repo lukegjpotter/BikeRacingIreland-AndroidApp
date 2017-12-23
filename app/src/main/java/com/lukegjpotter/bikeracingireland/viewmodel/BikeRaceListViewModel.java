@@ -43,7 +43,7 @@ public class BikeRaceListViewModel extends AndroidViewModel {
 
     public void setBikeRacesToProfileFilterAndMonths() {
         bikeRacesMutableLiveData.setValue(
-                repository.getBikeRacesToProfileFilterAndMonths().getValue());
+                repository.findBikeRacesForProfileFilterAndMonths().getValue());
     }
 
     public void setBikeRacesToMonths() {

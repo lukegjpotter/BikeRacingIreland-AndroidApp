@@ -5,17 +5,18 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
-import com.lukegjpotter.bikeracingireland.model.dao.ProfileFilterDao;
 import com.lukegjpotter.bikeracingireland.model.entity.ProfileFilterEntity;
-import com.lukegjpotter.bikeracingireland.model.roomdatabase.ApplicationDatabase;
+import com.lukegjpotter.bikeracingireland.repository.ProfileFilterRepository;
 
 /**
+ * The ViewModel for the ProfileFilter
+ *
  * Created by lukegjpotter on 04/12/2017.
  */
 
 public class ProfileFilterViewModel extends AndroidViewModel {
 
-    private final ProfileFilterDao profileFilterDao;
+    private ProfileFilterRepository repository;
     private LiveData<ProfileFilterEntity> profileFilter;
     private boolean isEnabled;
 
@@ -23,9 +24,9 @@ public class ProfileFilterViewModel extends AndroidViewModel {
     public ProfileFilterViewModel(@NonNull Application application) {
         super(application);
 
-        profileFilterDao = ApplicationDatabase.getInstance(application.getApplicationContext()).profileFilterDao();
+        repository = ProfileFilterRepository.getInstance(application.getApplicationContext());
 
-        profileFilter = profileFilterDao.findProfileFilter();
+        profileFilter = repository.findProfileFilter();
     }
 
     public LiveData<ProfileFilterEntity> getProfileFilter() {
@@ -33,7 +34,7 @@ public class ProfileFilterViewModel extends AndroidViewModel {
     }
 
     public void updateProfileFilter(ProfileFilterEntity profileFilter) {
-        profileFilterDao.updateProfileFilters(profileFilter);
+        repository.updateProfileFilters(profileFilter);
     }
 
     public boolean isEnabled() {
@@ -41,10 +42,11 @@ public class ProfileFilterViewModel extends AndroidViewModel {
     }
 
     public void setEnabled(boolean enabled) {
+        repository.setEnabled(enabled);
         isEnabled = enabled;
     }
 
     public boolean isPopulated() {
-        return profileFilterDao.rowCount() > 0;
+        return repository.hasData();
     }
 }

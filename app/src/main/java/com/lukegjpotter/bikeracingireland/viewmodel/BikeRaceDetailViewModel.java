@@ -5,9 +5,8 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
-import com.lukegjpotter.bikeracingireland.model.dao.BikeRaceDao;
 import com.lukegjpotter.bikeracingireland.model.entity.BikeRaceWithStageDetails;
-import com.lukegjpotter.bikeracingireland.model.roomdatabase.ApplicationDatabase;
+import com.lukegjpotter.bikeracingireland.repository.BikeRaceRepository;
 
 /**
  * This is the ViewModel that will be used by the BikeRaceDetailFragment.
@@ -16,20 +15,20 @@ import com.lukegjpotter.bikeracingireland.model.roomdatabase.ApplicationDatabase
  */
 public class BikeRaceDetailViewModel extends AndroidViewModel {
 
+    private final BikeRaceRepository repository;
     private LiveData<BikeRaceWithStageDetails> bikeRace;
-    private BikeRaceDao bikeRaceDao;
 
 
     public BikeRaceDetailViewModel(@NonNull Application application) {
         super(application);
 
-        bikeRaceDao = ApplicationDatabase.getInstance(application.getApplicationContext()).bikeRaceDao();
+        repository = BikeRaceRepository.getInstance(application.getApplicationContext());
         bikeRace = null;
     }
 
     public LiveData<BikeRaceWithStageDetails> getBikeRace(long bikeRaceID) {
 
-        bikeRace = bikeRaceDao.findBikeRaceById(bikeRaceID);
+        bikeRace = repository.findBikeRaceById(bikeRaceID);
 
         return bikeRace;
     }
