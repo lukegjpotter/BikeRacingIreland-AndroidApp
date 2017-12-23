@@ -1,25 +1,18 @@
 package com.lukegjpotter.bikeracingireland.testresources;
 
-import com.lukegjpotter.bikeracingireland.database.BikeRace;
-import com.lukegjpotter.bikeracingireland.database.StageDetail;
+import com.lukegjpotter.bikeracingireland.model.entity.BikeRaceEntity;
+import com.lukegjpotter.bikeracingireland.model.entity.BikeRaceWithStageDetails;
+import com.lukegjpotter.bikeracingireland.model.entity.StageDetailEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TestResources {
 
-    public String getSingleRaceFilename() {
-        return "./src/test/res/SingleRace.json";
-    }
+    public BikeRaceWithStageDetails getSingleRace() {
 
-    public String getMultipleRaceFilename() {
-        return "./src/test/res/MultipleRaces.json";
-    }
-
-    public BikeRace getSingleRace() {
-
-        BikeRace bikeRace = new BikeRace();
-        bikeRace.setId(130L);
+        BikeRaceEntity bikeRace = new BikeRaceEntity();
+        bikeRace.setPkBikeRaceEntityId(130L);
         bikeRace.setStartDate(TestUtils.convertStringToDate("20160605"));
         bikeRace.setMonthNumber(6);
         bikeRace.setBookingsOpenDate(TestUtils.convertStringToDate("20160605"));
@@ -28,8 +21,8 @@ public class TestResources {
         bikeRace.setPromotingClub("Finn Wheelers");
         bikeRace.setOrganiser("Tony Brogan");
         bikeRace.setRegistrationLink("");
-        bikeRace.setOrganiserPhoneNumber("+353877932118");
-        bikeRace.setOrganiserEmail("tonybrog@gmail.com");
+        bikeRace.setOrganiserPhoneNumber("+353877932000");
+        bikeRace.setOrganiserEmail("tonybrog@email.com");
         bikeRace.setLocation("Glenfin Road, Ballybofey");
         bikeRace.setProvince("");
 
@@ -44,8 +37,8 @@ public class TestResources {
         bikeRace.setJunior(true);
         bikeRace.setYouth(false);
 
-        StageDetail stageDetail = new StageDetail();
-        stageDetail.setId(434L);
+        StageDetailEntity stageDetail = new StageDetailEntity();
+        stageDetail.setPkStageDetailEntityId(434L);
         stageDetail.setDate(TestUtils.convertStringToDate("20160605"));
         stageDetail.setRaceNumber(1);
         stageDetail.setStageNumber(1);
@@ -57,13 +50,16 @@ public class TestResources {
         stageDetail.setRouteLinkUrl("");
         stageDetail.setKilometers((double) 16);
         stageDetail.setMiles((double) 10);
-        bikeRace.addStageDetail(stageDetail);
 
-        return bikeRace;
+        BikeRaceWithStageDetails bikeRaceWithStageDetails = new BikeRaceWithStageDetails();
+        bikeRaceWithStageDetails.bikeRaceEntity = bikeRace;
+        bikeRaceWithStageDetails.stageDetails.add(stageDetail);
+
+        return bikeRaceWithStageDetails;
     }
 
-    public List<BikeRace> getMultipleRace() {
-        List<BikeRace> bikeRaces = new ArrayList<>();
+    public List<BikeRaceWithStageDetails> getMultipleRace() {
+        List<BikeRaceWithStageDetails> bikeRaces = new ArrayList<>();
 
         bikeRaces.add(getSingleRace());
         bikeRaces.add(getOtherSingleRace());
@@ -71,10 +67,10 @@ public class TestResources {
         return bikeRaces;
     }
 
-    private BikeRace getOtherSingleRace() {
+    private BikeRaceWithStageDetails getOtherSingleRace() {
 
-        BikeRace bikeRace = new BikeRace();
-        bikeRace.setId(131L);
+        BikeRaceEntity bikeRace = new BikeRaceEntity();
+        bikeRace.setPkBikeRaceEntityId(131L);
         bikeRace.setStartDate(TestUtils.convertStringToDate("20160606"));
         bikeRace.setMonthNumber(6);
         bikeRace.setBookingsOpenDate(TestUtils.convertStringToDate("20160606"));
@@ -83,8 +79,8 @@ public class TestResources {
         bikeRace.setPromotingClub("Maryland Wheelers");
         bikeRace.setOrganiser("Phil Holland");
         bikeRace.setRegistrationLink("");
-        bikeRace.setOrganiserPhoneNumber("+447766655644");
-        bikeRace.setOrganiserEmail("phil.holland4@btopenworld.com");
+        bikeRace.setOrganiserPhoneNumber("+447766655000");
+        bikeRace.setOrganiserEmail("phil.holland4@email.com");
         bikeRace.setLocation("Carr Road, Lisburn");
         bikeRace.setProvince("");
 
@@ -99,8 +95,8 @@ public class TestResources {
         bikeRace.setJunior(true);
         bikeRace.setYouth(false);
 
-        StageDetail stageDetail = new StageDetail();
-        stageDetail.setId(435L);
+        StageDetailEntity stageDetail = new StageDetailEntity();
+        stageDetail.setPkStageDetailEntityId(435L);
         stageDetail.setDate(TestUtils.convertStringToDate("20160606"));
         stageDetail.setRaceNumber(1);
         stageDetail.setStageNumber(1);
@@ -112,8 +108,11 @@ public class TestResources {
         stageDetail.setRouteLinkUrl("");
         stageDetail.setKilometers(48.3);
         stageDetail.setMiles((double) 30);
-        bikeRace.addStageDetail(stageDetail);
 
-        return bikeRace;
+        BikeRaceWithStageDetails bikeRaceWithStageDetails = new BikeRaceWithStageDetails();
+        bikeRaceWithStageDetails.bikeRaceEntity = bikeRace;
+        bikeRaceWithStageDetails.stageDetails.add(stageDetail);
+
+        return bikeRaceWithStageDetails;
     }
 }

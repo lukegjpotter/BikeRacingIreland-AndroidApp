@@ -3,13 +3,11 @@ package com.lukegjpotter.bikeracingireland.viewmodel;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MediatorLiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
 import com.lukegjpotter.bikeracingireland.model.entity.BikeRaceWithStageDetails;
-import com.lukegjpotter.bikeracingireland.model.entity.ProfileFilterEntity;
-import com.lukegjpotter.bikeracingireland.model.enums.RaceType;
-import com.lukegjpotter.bikeracingireland.model.roomdatabase.ApplicationDatabase;
+import com.lukegjpotter.bikeracingireland.repository.BikeRaceRepository;
 import com.lukegjpotter.bikeracingireland.utils.MonthManager;
 
 import java.util.List;
@@ -25,53 +23,46 @@ import java.util.List;
 
 public class BikeRaceListViewModel extends AndroidViewModel {
 
-    private final ApplicationDatabase database;
-    private MediatorLiveData<List<BikeRaceWithStageDetails>> bikeRacesMediatorLiveData;
+    private final BikeRaceRepository repository;
+    private MutableLiveData<List<BikeRaceWithStageDetails>> bikeRacesMutableLiveData;
 
 
     public BikeRaceListViewModel(@NonNull Application application) {
         super(application);
 
-        this.database = ApplicationDatabase.getInstance(application.getApplicationContext());
-        LiveData<List<BikeRaceWithStageDetails>> bikeRacesLiveData = database.bikeRaceDao().findBikeRacesInMonth(MonthManager.currentMonthNumber());
+        bikeRacesMutableLiveData = new MutableLiveData<>();
+        repository = BikeRaceRepository.getInstance(application.getApplicationContext());
 
-        bikeRacesMediatorLiveData.addSource(bikeRacesLiveData, value -> bikeRacesMediatorLiveData.setValue(value));
+        bikeRacesMutableLiveData.setValue(
+                repository.findBikeRacesInMonths(MonthManager.currentMonthNumber()).getValue());
     }
 
     public LiveData<List<BikeRaceWithStageDetails>> getBikeRaces() {
-        return bikeRacesMediatorLiveData;
+        return bikeRacesMutableLiveData;
     }
 
     public void setBikeRacesToProfileFilterAndMonths() {
-        ProfileFilterEntity profileFilterEntity = database.profileFilterDao().findProfileFilter().getValue();
-
-        if (profileFilterEntity == null) {
-            setBikeRacesToMonths();
-            return;
-        }
-
-        String[] raceTypes = new String[profileFilterEntity.getRaceTypes().size()];
-        int i = 0;
-        for (RaceType raceType : profileFilterEntity.getRaceTypes()) {
-            raceTypes[i] = raceType.toString();
-            i++;
-        }
-
-        String[] categories = profileFilterEntity.getCategories().toArray(new String[profileFilterEntity.getCategories().size()]);
-
-        List<Long> ids = database.stageDetailDao().findBikeRaceIdsByRaceTypesAndCategories(raceTypes, categories).getValue();
-        LiveData<List<BikeRaceWithStageDetails>> bikeRacesLiveData = database.bikeRaceDao().findBikeRacesByIdsAndMonths(ids, MonthManager.getMonthsInListView());
-
-        bikeRacesMediatorLiveData.addSource(bikeRacesLiveData, value -> bikeRacesMediatorLiveData.setValue(value));
+        bikeRacesMutableLiveData.setValue(
+                repository.getBikeRacesToProfileFilterAndMonths().getValue());
     }
 
     public void setBikeRacesToMonths() {
-        LiveData<List<BikeRaceWithStageDetails>> bikeRacesLiveData = database.bikeRaceDao().findBikeRacesInMonths(MonthManager.getMonthsInListView());
-        bikeRacesMediatorLiveData.addSource(bikeRacesLiveData, value -> bikeRacesMediatorLiveData.setValue(value));
+        bikeRacesMutableLiveData.setValue(
+                repository.findBikeRacesInMonths(
+                        MonthManager
+                                .getMonthsInListView()
+                                .toArray(new Integer[MonthManager.getMonthsInListView().size()]))
+                        .getValue());
     }
 
     public void loadFollowingMonthsBikeRaces() {
-        LiveData<List<BikeRaceWithStageDetails>> bikeRacesLiveData = database.bikeRaceDao().findBikeRacesInMonth(MonthManager.nextMonthNumberForListView());
-        bikeRacesMediatorLiveData.addSource(bikeRacesLiveData, value -> bikeRacesMediatorLiveData.setValue(value));
+        // TODO: Is ProFileFilterActive.
+        LiveData<List<BikeRaceWithStageDetails>> nextMonthsBikeRacesLiveData =
+                repository.findBikeRacesInMonths(MonthManager.nextMonthNumberForListView());
+
+        List<BikeRaceWithStageDetails> existingBikeRaces = bikeRacesMutableLiveData.getValue();
+        existingBikeRaces.addAll(nextMonthsBikeRacesLiveData.getValue());
+
+        bikeRacesMutableLiveData.setValue(existingBikeRaces);
     }
 }

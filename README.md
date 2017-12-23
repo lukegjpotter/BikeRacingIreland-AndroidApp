@@ -32,7 +32,6 @@ in the [CyclingIrelandEventsRestService project's README file](https://github.co
 * [x] Apply an Icon to the App.
 * [x] When the end of the ListView is reached, download the next month's
       races.
-* [ ] Retest with Android Oreo Components.
 * [ ] User is able to define their `ProfileFilter`.
 * [ ] Apply Styling to the User Interface
 * [ ] Use the Strava API and Google Maps Lite Mode to display the
@@ -46,8 +45,9 @@ in the [CyclingIrelandEventsRestService project's README file](https://github.co
       races have Calendar 
 * [ ] Add parts of the card for individual Stages of the `BikeRace`.
 
-## Refactoring Tasks
+## Android Oreo Refactoring Tasks
 
 * [x] Use `Room` to reduce Database code. [Room Sample from Google](https://github.com/googlesamples/android-architecture-components).
 * [x] Use `ViewModel` and `LiveData` to maintain data when rotated.
-* [ ] Remove the code for the components that Room and Lifecycles replaces.
+* [x] Remove the code for the components that Room and Lifecycles replaces.
+* [ ] Retest with Android Oreo Components.

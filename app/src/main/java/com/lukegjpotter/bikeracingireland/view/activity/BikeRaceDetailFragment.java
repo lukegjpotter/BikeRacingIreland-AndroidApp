@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.lukegjpotter.bikeracingireland.BR;
 import com.lukegjpotter.bikeracingireland.R;
 import com.lukegjpotter.bikeracingireland.model.entity.BikeRaceWithStageDetails;
 import com.lukegjpotter.bikeracingireland.model.entity.StageDetailEntity;
@@ -40,19 +41,24 @@ public class BikeRaceDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        BikeRaceDetailViewModel bikeRaceDetailViewModel = ViewModelProviders.of(this).get(BikeRaceDetailViewModel.class);
+        BikeRaceDetailViewModel bikeRaceDetailViewModel =
+                ViewModelProviders.of(this).get(BikeRaceDetailViewModel.class);
 
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             long bikeRaceId = Long.valueOf(getArguments().getString(ARG_ITEM_ID));
-            bikeRaceDetailViewModel.getBikeRace(bikeRaceId).observe(this, bikeRaceWithStageDetails -> bikeRace = bikeRaceWithStageDetails);
+            bikeRaceDetailViewModel
+                    .getBikeRace(bikeRaceId)
+                    .observe(this,
+                            bikeRaceWithStageDetails -> bikeRace = bikeRaceWithStageDetails);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        ViewDataBinding binding = DataBindingUtil.inflate(inflater, R.layout.bikerace_detail, container, false);
-        binding.setVariable(com.lukegjpotter.bikeracingireland.BR.bikeRace, bikeRace);
+        ViewDataBinding binding = DataBindingUtil.inflate(
+                inflater, R.layout.bikerace_detail, container, false);
+        binding.setVariable(BR.bikeRace, bikeRace.bikeRaceEntity);
 
         Activity activity = this.getActivity();
         CollapsingToolbarLayout appBarLayout = activity.findViewById(R.id.toolbar_layout);
@@ -82,7 +88,10 @@ public class BikeRaceDetailFragment extends Fragment {
         for (StageDetailEntity stageDetail : bikeRace.stageDetails) {
             TextView stageDetailsTextView = new TextView(binding.getRoot().getContext());
             stageDetailsTextView.setText(stageDetail.toString());
-            stageDetailsTextView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            stageDetailsTextView.setLayoutParams(
+                    new ViewGroup.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT));
 
             stageDetailsLayout.addView(stageDetailsTextView);
         }
