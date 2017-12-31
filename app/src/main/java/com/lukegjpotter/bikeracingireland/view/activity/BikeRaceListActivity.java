@@ -31,7 +31,7 @@ import java.util.ArrayList;
  */
 public class BikeRaceListActivity extends AppCompatActivity {
 
-    RecyclerView mRecyclerView;
+    RecyclerView recyclerView;
     private ProfileFilterViewModel profileFilterViewModel;
     private BikeRaceListViewModel bikeRaceListViewModel;
     // Whether or not the activity is in two-pane mode, i.e. running on a tablet device.
@@ -50,15 +50,20 @@ public class BikeRaceListActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
         binding.toolbar.setTitle(getTitle());
 
-        BikeRaceListRecyclerViewAdapter recyclerViewAdapter = new BikeRaceListRecyclerViewAdapter(mTwoPane, getSupportFragmentManager(), new ArrayList<>());
-        mRecyclerView = findViewById(R.id.bikerace_list);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(recyclerViewAdapter);
+        BikeRaceListRecyclerViewAdapter recyclerViewAdapter =
+                new BikeRaceListRecyclerViewAdapter(mTwoPane, getSupportFragmentManager(), new ArrayList<>());
+        recyclerView = findViewById(R.id.bikerace_list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(recyclerViewAdapter);
 
         recyclerViewAdapter.setOnBottomReachedListener(position -> {
             bikeRaceListViewModel.loadFollowingMonthsBikeRaces();
             MonthManager.reachedBottomOfListView();
         });
+
+        binding.floatingActionButton.setOnClickListener(
+                view -> recyclerView.getLayoutManager()
+                        .smoothScrollToPosition(recyclerView, new RecyclerView.State(), 0));
 
         // Insert Initial Data for testing the app.
         DatabaseInitializer.populateAsync(ApplicationDatabase.getInstance(getApplicationContext()));
@@ -68,7 +73,8 @@ public class BikeRaceListActivity extends AppCompatActivity {
 
         // Setup ProfileFilterViewModel.
         profileFilterViewModel = ViewModelProviders.of(this).get(ProfileFilterViewModel.class);
-        profileFilterViewModel.getProfileFilter().observe(this, profileFilterEntity -> profileFilterEntity = new ProfileFilterEntity(profileFilterEntity));
+        profileFilterViewModel.getProfileFilter().observe(this,
+                profileFilterEntity -> profileFilterEntity = new ProfileFilterEntity(profileFilterEntity));
 
         bikeRaceListViewModel = ViewModelProviders.of(this).get(BikeRaceListViewModel.class);
         bikeRaceListViewModel.getBikeRaces().observe(this, recyclerViewAdapter::setBikeRaces);
