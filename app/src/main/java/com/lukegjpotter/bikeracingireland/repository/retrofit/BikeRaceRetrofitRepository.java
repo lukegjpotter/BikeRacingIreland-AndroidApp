@@ -29,8 +29,7 @@ public class BikeRaceRetrofitRepository {
     private BikeRaceRetrofitClient bikeRaceRetrofitClient;
 
     private BikeRaceRetrofitRepository() {
-        OkHttpClient okHttpClient = new OkHttpClient
-                .Builder()
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .build();
 
         Gson gson = new GsonBuilder()

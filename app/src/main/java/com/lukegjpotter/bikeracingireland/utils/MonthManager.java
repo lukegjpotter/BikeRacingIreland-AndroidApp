@@ -14,6 +14,13 @@ public class MonthManager {
     private static Set<Integer> sMonthsInListView = new HashSet<>();
 
     /**
+     * Preventing Instancing with a Private Constructor.
+     */
+    private MonthManager() {
+        throw new AssertionError("Class should not be instantiated");
+    }
+
+    /**
      * Returns the Current Month Number.
      *
      * @return The Current Month Number.

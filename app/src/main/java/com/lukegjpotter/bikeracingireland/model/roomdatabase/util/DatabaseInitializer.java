@@ -25,6 +25,13 @@ import java.util.Set;
 
 public class DatabaseInitializer {
 
+    /**
+     * Preventing Instancing with a Private Constructor.
+     */
+    private DatabaseInitializer() {
+        throw new AssertionError("Class should not be instantiated");
+    }
+
     public static void populateAsync(final ApplicationDatabase database) {
         new PopulateDbAsync(database).execute();
     }

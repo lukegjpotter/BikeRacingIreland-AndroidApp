@@ -16,16 +16,22 @@ import java.util.Set;
  *
  * Created by lukegjpotter on 09/12/2017.
  */
-
 public class CollectionConverters {
 
+    /**
+     * Preventing Instancing with a Private Constructor.
+     */
+    private CollectionConverters() {
+        throw new AssertionError("Class should not be instantiated");
+    }
+
     @TypeConverter
-    public String stringSetToString(Set<String> stringSet) {
+    public static String stringSetToString(Set<String> stringSet) {
         return (stringSet == null || stringSet.isEmpty()) ? null : new Gson().toJson(stringSet);
     }
 
     @TypeConverter
-    public Set<String> stringSetfromString(String string) {
+    public static Set<String> stringToStringSet(String string) {
         if (string == null || string.isEmpty()) return null;
 
         Type setType = new TypeToken<HashSet<String>>() {
@@ -34,12 +40,12 @@ public class CollectionConverters {
     }
 
     @TypeConverter
-    public String racetTypeSetToString(Set<RaceType> raceTypeSetSet) {
-        return (raceTypeSetSet == null || raceTypeSetSet.isEmpty()) ? null : new Gson().toJson(raceTypeSetSet);
+    public static String raceTypeSetToString(Set<RaceType> raceTypeSet) {
+        return (raceTypeSet == null || raceTypeSet.isEmpty()) ? null : new Gson().toJson(raceTypeSet);
     }
 
     @TypeConverter
-    public Set<RaceType> raceTypeSetfromString(String string) {
+    public static Set<RaceType> stringToRaceTypeSet(String string) {
         if (string == null || string.isEmpty()) return null;
 
         Type setType = new TypeToken<HashSet<RaceType>>() {

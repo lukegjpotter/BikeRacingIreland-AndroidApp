@@ -13,6 +13,13 @@ public class Utils {
 
     private static Context APPLICATION_CONTEXT;
 
+    /**
+     * Preventing Instancing with a Private Constructor.
+     */
+    private Utils() {
+        throw new AssertionError("Class should not be instantiated");
+    }
+
     public static String convertDateToString(Date date) {
 
         try {

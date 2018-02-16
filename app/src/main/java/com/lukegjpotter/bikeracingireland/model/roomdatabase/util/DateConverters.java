@@ -5,14 +5,24 @@ import android.arch.persistence.room.TypeConverter;
 import java.util.Date;
 
 /**
+ * Converters for the RoomDatabase.
+ * This class keeps the Converters for Date Objects together.
+ *
  * Created by lukegjpotter on 28/11/2017.
  */
 
 public class DateConverters {
 
+    /**
+     * Preventing Instancing with a Private Constructor.
+     */
+    private DateConverters() {
+        throw new AssertionError("Class should not be instantiated");
+    }
+
     @TypeConverter
-    public static Date fromTimestamp(Long value) {
-        return value == null ? null : new Date(value);
+    public static Date timestampToDate(Long timestamp) {
+        return timestamp == null ? null : new Date(timestamp);
     }
 
     @TypeConverter
