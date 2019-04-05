@@ -2,15 +2,15 @@ apply plugin: 'com.android.application'
 
 android {
 
-    compileSdkVersion 26
+    compileSdkVersion 28
 
     defaultConfig {
         applicationId "com.lukegjpotter.bikeracingireland"
-        minSdkVersion 24
-        targetSdkVersion 26
+        minSdkVersion 23
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -35,26 +35,32 @@ android {
 }
 
 dependencies {
-    // Compile the Java code
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     // Android SDK Libs
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support:cardview-v7:26.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-    implementation 'com.android.support:design:26.1.0'
-    implementation "android.arch.lifecycle:extensions:1.1.1"
-    implementation "android.arch.paging:runtime:1.0.0-alpha4-1"
-    implementation "android.arch.persistence.room:runtime:1.0.0"
-    annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
+    implementation "com.google.android.material:material:1.0.0"
+    implementation "androidx.appcompat:appcompat:1.1.0-alpha04"
+    implementation "androidx.cardview:cardview:1.0.0"
+    implementation "androidx.constraintlayout:constraintlayout:1.1.3"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
+    implementation "androidx.lifecycle:lifecycle-common-java8:2.0.0"
+    implementation "androidx.lifecycle:lifecycle-reactivestreams:2.0.0"
+    implementation "androidx.paging:paging-runtime:2.1.0"
+    implementation "androidx.recyclerview:recyclerview:1.0.0"
+    implementation "androidx.room:room-runtime:2.1.0-alpha06"
+    // Annotation Processors
+    annotationProcessor "androidx.room:room-compiler:2.1.0-alpha06"
     // Source Code Testing
-    testImplementation 'junit:junit:4.12'
-    testImplementation "android.arch.core:core-testing:1.1.1"
-    testImplementation "android.arch.persistence.room:testing:1.0.0"
+    testImplementation "junit:junit:4.12"
+    testImplementation "androidx.arch.core:core-testing:2.1.0-alpha01"
+    testImplementation "androidx.paging:paging-common:2.1.0"
+    testImplementation "androidx.room:room-testing:2.1.0-alpha06"
     // Android UI Testing
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation "androidx.test:core:1.2.0-alpha03"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.2.0-alpha03"
+    androidTestImplementation "androidx.test.ext:junit:1.1.0"
+    androidTestImplementation "androidx.test:runner:1.2.0-alpha03"
+    androidTestImplementation "androidx.test:rules:1.2.0-alpha03"
     // Non-Android SDK Libs
-    implementation 'com.google.code.gson:gson:2.8.2'
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation "com.google.code.gson:gson:2.8.5"
+    implementation "com.squareup.retrofit2:retrofit:2.5.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.5.0"
 }
