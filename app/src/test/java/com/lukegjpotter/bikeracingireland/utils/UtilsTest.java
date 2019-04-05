@@ -49,7 +49,7 @@ public class UtilsTest {
         int expected = 1;
         int actual = Utils.convertBooleanToInteger(true);
 
-        assertTrue(actual == expected);
+        assertEquals(actual, expected);
     }
 
     @Test
@@ -57,7 +57,7 @@ public class UtilsTest {
         int expected = 0;
         int actual = Utils.convertBooleanToInteger(false);
 
-        assertTrue(actual == expected);
+        assertEquals(actual, expected);
     }
 
     // --------------------- convertIntegerToBoolean ----------------------- //

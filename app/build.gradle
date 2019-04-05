@@ -28,6 +28,10 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
+    // Gradle automatically adds 'android.test.runner' as a dependency.
+    useLibrary 'android.test.runner'
+    useLibrary 'android.test.base'
+    useLibrary 'android.test.mock'
 
     dataBinding {
         enabled = true
@@ -50,6 +54,7 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:2.1.0-alpha06"
     // Source Code Testing
     testImplementation "junit:junit:4.12"
+    testImplementation "org.mockito:mockito-core:2.26.0"
     testImplementation "androidx.arch.core:core-testing:2.1.0-alpha01"
     testImplementation "androidx.paging:paging-common:2.1.0"
     testImplementation "androidx.room:room-testing:2.1.0-alpha06"
